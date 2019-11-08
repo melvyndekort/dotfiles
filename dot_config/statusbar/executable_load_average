@@ -1,0 +1,19 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+	1) st -e htop ;;
+	3) notify-send "Load module " "\- Shows the average system load.
+- Click to run htop." ;;
+esac
+
+load="$(awk '{print $1}' /proc/loadavg)"
+cpus="$(nproc)"
+
+printf "%s\n" "$load" "$load"
+
+awk -v cpus=$cpus -v cpuload=$load '
+BEGIN {
+  if (cpus <= cpuload) {
+    exit 33;
+  }
+}'

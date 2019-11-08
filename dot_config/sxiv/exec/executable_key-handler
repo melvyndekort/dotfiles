@@ -1,0 +1,21 @@
+#!/bin/sh
+
+while read FILE
+do
+  if [ ! -f "$FILE" ]; then
+    notify-send "That file ($FILE) does not exist!"
+    exit 1
+  fi
+
+  case "$1" in
+    "C-c")
+      echo -n "$FILE" | xclip -selection clipboard
+      ;;
+    "C-d")
+      rm -f "$FILE"
+      ;;
+    "C-w")
+      set-wallpaper "$FILE"
+      ;;
+  esac
+done

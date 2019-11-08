@@ -1,0 +1,22 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+  2) pavucontrol & ;;
+  1) amixer -q -D pulse sset Master toggle ;;
+  4) amixer -q -D pulse sset Master 5%+ ;;
+  5) amixer -q -D pulse sset Master 5%- ;;
+	3) notify-send " Volume module" "\- Click to mute
+- Middle click to launch pavucontrol.
+- Scroll to change."
+esac
+
+VOL=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%')
+STATE=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $4 }')
+
+printf "%s\n" "$VOL%" "$VOL%"
+
+if [[ "$STATE" == "off" || "$VOL" -eq "0" ]]; then
+  echo "#6272A4"
+elif [ "$VOL" -gt "70" ]; then
+  exit 33
+fi

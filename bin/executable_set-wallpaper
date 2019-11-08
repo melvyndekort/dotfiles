@@ -1,0 +1,12 @@
+#!/bin/bash
+
+FILE="$(realpath -s $1)"
+
+if [ ! -f "$FILE" ]; then
+  echo "$FILE is not a valid file"
+  exit 1
+fi
+
+convert "$FILE" $HOME/.config/wallpaper.png
+xwallpaper --zoom ~/.config/wallpaper.png
+notify-send -i "$FILE" "Wallpaper changed."
