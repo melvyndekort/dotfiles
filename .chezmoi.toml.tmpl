@@ -1,0 +1,7 @@
+{{- $email := promptString "email" -}}
+
+[gpg]
+  recipient = "melvyn@mdekort.nl"
+
+[data]
+  email = "{{ $email }}"

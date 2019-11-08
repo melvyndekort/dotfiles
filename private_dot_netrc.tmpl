@@ -1,0 +1,7 @@
+machine ix.io
+login {{ (index (lastpass "ix.io") 0).username }}
+password {{ (index (lastpass "ix.io") 0).password }}
+
+machine api.bitbucket.org
+login {{ (index (lastpass "Bitbucket API") 0).username }}
+password {{ (index (lastpass "Bitbucket API") 0).password -}}

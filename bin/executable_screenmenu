@@ -1,0 +1,135 @@
+#!/bin/sh
+
+ENTRIES=(
+'laptop '
+'desktop 度度'
+'dock-clone '
+'dock-expand-1 度度 '
+'dock-expand-2 度度 '
+'dock-expand-3  度度'
+'dock-expand-4  度度'
+'hdmi-clone '
+'hdmi-expand-1  度'
+'hdmi-expand-2  度度')
+
+YESNO=(
+'yes'
+'no')
+
+SELECTED=$(printf "%s\n" "${ENTRIES[@]}" | rofi -dmenu -p " Choose your display setup:" | cut -d' ' -f1)
+[[ -z "$SELECTED" ]] && exit 0
+
+LOCK=$(printf "%s\n" "${YESNO[@]}" | rofi -dmenu -p " Enable screen locking?")
+[[ -z "$LOCK" ]] && exit 0
+
+case $(echo "$SELECTED" | cut -d' ' -f2-) in
+  desktop)
+    xrandr \
+      --output DP-1 --primary --mode 1680x1050 --pos 0x0 \
+      --output DVI-I-1 --mode 1680x1050 --pos 1680x0 \
+      --output DP-0 --off \
+      --output DVI-I-0 --off ;;
+
+  laptop)
+    xrandr \
+      --output eDP-1 --primary --mode 1920x1080 --pos 0x0 \
+      --output DP-1 --off \
+      --output DP-2 --off \
+      --output HDMI-1 --off \
+      --output HDMI-2 --off \
+      --output DVI-I-1-1 --off \
+      --output DVI-I-2-2 --off ;;
+
+  dock-clone)
+    xrandr \
+      --output eDP-1 --primary --mode 1920x1080 --pos 0x0 \
+      --output DVI-I-1-1 --same-as eDP-1 \
+      --output DVI-I-2-2 --same-as eDP-1 \
+      --output DP-1 --off \
+      --output DP-2 --off \
+      --output HDMI-1 --off \
+      --output HDMI-2 --off ;;
+
+  dock-expand-1)
+    xrandr \
+      --output DVI-I-1-1 --primary --mode 1920x1080 --pos 0x0 \
+      --output DVI-I-2-2 --mode 1920x1080 --pos 1920x0 \
+      --output eDP-1 --mode 1920x1080 --pos 3840x504 \
+      --output DP-1 --off \
+      --output DP-2 --off \
+      --output HDMI-1 --off \
+      --output HDMI-2 --off ;;
+
+  dock-expand-2)
+    xrandr \
+      --output DVI-I-2-2 --primary --mode 1920x1080 --pos 0x0 \
+      --output DVI-I-1-1 --mode 1920x1080 --pos 1920x0 \
+      --output eDP-1 --mode 1920x1080 --pos 3840x504 \
+      --output DP-1 --off \
+      --output DP-2 --off \
+      --output HDMI-1 --off \
+      --output HDMI-2 --off ;;
+
+  dock-expand-3)
+    xrandr \
+      --output eDP-1 --primary --mode 1920x1080 --pos 0x504 \
+      --output DVI-I-1-1 --mode 1920x1080 --pos 1920x0 \
+      --output DVI-I-2-2 --mode 1920x1080 --pos 3840x0 \
+      --output DP-1 --off \
+      --output DP-2 --off \
+      --output HDMI-1 --off \
+      --output HDMI-2 --off ;;
+
+  dock-expand-4)
+    xrandr \
+      --output eDP-1 --primary --mode 1920x1080 --pos 0x504 \
+      --output DVI-I-2-2 --mode 1920x1080 --pos 1920x0 \
+      --output DVI-I-1-1 --mode 1920x1080 --pos 3840x0 \
+      --output DP-1 --off \
+      --output DP-2 --off \
+      --output HDMI-1 --off \
+      --output HDMI-2 --off ;;
+
+  hdmi-clone)
+    xrandr \
+      --output eDP-1 --primary --mode 1920x1080 --pos 0x0 \
+      --output DP-1 --off \
+      --output DP-2 --off \
+      --output HDMI-1 --same-as eDP-1 \
+      --output HDMI-2 --off \
+      --output DVI-I-1-1 --off \
+      --output DVI-I-2-2 --off ;;
+
+  hdmi-expand-1)
+    xrandr \
+      --output eDP-1 --primary --mode 1920x1080 --pos 0x0 \
+      --output HDMI-1 --mode 1920x1080 --pos 1920x0 \
+      --output HDMI-2 --off \
+      --output DP-1 --off \
+      --output DP-2 --off \
+      --output DVI-I-1-1 --off \
+      --output DVI-I-2-2 --off ;;
+
+  hdmi-expand-2)
+    xrandr \
+      --output eDP-1 --primary --mode 1920x1080 --pos 0x0 \
+      --output HDMI-1 --mode 1920x1080 --pos 1920x0 \
+      --output HDMI-2 --mode 1920x1080 --pos 3840x0 \
+      --output DP-1 --off \
+      --output DP-2 --off \
+      --output DVI-I-1-1 --off \
+      --output DVI-I-2-2 --off ;;
+esac
+
+case "$LOCK" in
+  no)
+    xset dpms 0 0 0
+    xset s 0 0
+    ;;
+  *)
+    xset dpms 0 0 0
+    xset s 120 30
+    ;;
+esac
+
+notify-send "Configured display setup: $SELECTED"

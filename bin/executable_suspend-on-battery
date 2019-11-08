@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -f /sys/class/power_supply/BAT0/status ]; then
+  if [ 'Discharging' == "$(cat /sys/class/power_supply/BAT0/status)" ]; then
+    echo 'The system is running on battery'
+    echo systemctl suspend
+  else
+    echo 'The system is not running on a battery'
+  fi
+else
+  echo 'The system is not running on a battery'
+fi

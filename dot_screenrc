@@ -1,0 +1,20 @@
+defscrollback 20000
+
+# define default shell
+shell $SHELL
+
+# don't display the copyright page
+startup_message off
+
+# Enable scrolling
+termcapinfo xterm ti@:te@
+
+# Enable statusline at the bottom
+hardstatus on
+hardstatus alwayslastline
+hardstatus string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H%{..Y} %d-%m-%Y %c "
+
+# Enable ssh-agent forwarding
+source $HOME/.ssh-pageant-${USER}
+source $HOME/.keychain/${HOSTNAME}-sh
+
