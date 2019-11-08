@@ -1,0 +1,70 @@
+! URxvt settings
+Xft.dpi:               96
+Xft.antialias:         true
+Xft.rgba:              rgb
+Xft.hinting:           true
+Xft.hintstyle:         hintslight
+
+URxvt.depth:           32
+URxvt.geometry:        256x96
+URxvt.fading:          30
+URxvt.urgentOnBell:    true
+URxvt.visualBell:      true
+URxvt.loginShell:      true
+URxvt.saveLines:       1000
+URxvt.internalBorder:  3
+URxvt.lineSpace:       0
+
+! Font Setup
+URxvt.allow_bold:      false
+URxvt.font:            xft:Hack Nerd Font Mono:autohint=true:size=10
+
+! Scrollbar
+URxvt.scrollBar:       false
+
+! Cursor
+URxvt.cursorBlink:     true
+URxvt.cursorUnderline: false
+
+! Pointer
+URxvt.pointerBlank:    false
+
+! Extension
+URxvt.perl-ext-common: resize-font
+
+
+! Colors (Arc Dark)
+*.background: #383C4A
+*.foreground: #D2D2D2
+
+!black
+*color0: #383c4a
+*color8: #404552
+
+!red
+*color1: #9A4138
+*color9: #E7766B
+
+!green
+*color2: #4BEC90
+*color10: #3CBF75
+
+!yellow
+*color3: #D8D782
+*color11: #CFCD63
+
+!blue
+*color4: #5294e2
+*color12: #579CEF
+
+!magenta
+*color5: #CE50DD
+*color13: #E7766B
+
+!cyan
+*color6: #6BE5E7
+*color14: #90FDFF
+
+!white
+*color7: #CCCCCC
+*color15: #FFFFFF

@@ -1,0 +1,12 @@
+rofi.theme:             dracula
+rofi.font:              Hack Nerd Font 11
+rofi.modi:              drun,run,window,ssh
+rofi.show-icons:        true
+rofi.sidebar-mode:      true
+rofi.columns:           2
+rofi.terminal:          st
+rofi.parse-hosts:       false
+rofi.parse-known-hosts: false
+rofi.display-drun:      Application
+rofi.display-window:    Window
+rofi.display-ssh:       SSH

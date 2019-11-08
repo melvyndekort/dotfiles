@@ -1,0 +1,16 @@
+#   _               _              
+#  | |__   __ _ ___| |__  _ __ ___ 
+#  | '_ \ / _` / __| '_ \| '__/ __|
+# _| |_) | (_| \__ \ | | | | | (__ 
+#(_)_.__/ \__,_|___/_| |_|_|  \___|
+#                                  
+
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/src/portbase-bin:$PATH"
+
+##########################
+# bash sensible defaults #
+##########################
+if [ -f ~/.sensible.bash ]; then
+  source ~/.sensible.bash
+fi
+

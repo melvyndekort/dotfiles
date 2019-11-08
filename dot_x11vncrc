@@ -1,0 +1,18 @@
+# This will do in most single user machine
+display :0.0
+
+# password file
+rfbauth .vnc/passwd
+
+# Use this default port
+rfbport 5900
+
+# Without this x11vnc will die after serving one connection.
+forever
+
+# Optional (changes background into solid color) 
+solid darkblue
+
+# Client-side caching scheme
+ncache
+
