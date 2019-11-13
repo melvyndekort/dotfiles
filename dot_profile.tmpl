@@ -105,10 +105,12 @@ if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
   git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 fi
 
+{{- if eq .email "m.de.kort@portbase.com" }}
 # Work related stuff
 export ARTIFACTORY_URL="https://{{ (index (lastpass "Artifactory - readonly") 0).username -}}:{{ urlquery ((index (lastpass "Artifactory - readonly") 0).password) -}}@artifactory.portbase.io/artifactory"
 alias wpcs-build="mvn -T C1 clean package -DskipTests -Dnaomi.skip -Dmaven.antrun.skip -pl \!naomi/naomi-maven-plugin-test"
 alias sqlplus='docker container run --rm -it --network host melvyndekort/sqlplus'
+{{- end }}
 
 # start the windows manager
 if [ "$(tty)" = "/dev/tty1" ]; then
