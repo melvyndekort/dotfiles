@@ -47,6 +47,9 @@ xwallpaper --zoom ~/.config/wallpaper.png &
 # screen locker
 xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
 
+# set default cursor to arrow
+xsetroot -cursor_name left_ptr
+
 # notification & applets
 dropbox &
 nm-applet &
