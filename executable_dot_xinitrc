@@ -54,6 +54,7 @@ xsetroot -cursor_name left_ptr
 dropbox &
 nm-applet &
 dunst &
+udiskie -t &
 
 # user applications that always run
 st &
