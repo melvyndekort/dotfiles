@@ -55,6 +55,7 @@ dropbox &
 nm-applet &
 dunst &
 udiskie &
+owncloud &
 
 # user applications that always run
 st &
