@@ -20,10 +20,10 @@ client.background       #282A36
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec --no-startup-id st
+bindsym $mod+Return exec --no-startup-id termite
 
 # start a file manager
-bindsym $mod+Shift+Return exec --no-startup-id st -e ranger
+bindsym $mod+Shift+Return exec --no-startup-id termite -e ranger
 
 # kill focused window
 bindsym $mod+Shift+q kill
