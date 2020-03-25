@@ -57,7 +57,7 @@ dunst &
 udiskie &
 
 # user applications that always run
-st &
+termite &
 google-chrome-stable &
 slack &
 whatschrome &
