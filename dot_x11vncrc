@@ -1,8 +1,8 @@
 # This will do in most single user machine
 display :0.0
 
-# password file
-rfbauth .vnc/passwd
+# disable authentication
+nopw
 
 # Use this default port
 rfbport 5900
