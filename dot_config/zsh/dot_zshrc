@@ -74,17 +74,22 @@ zstyle :omz:plugins:ssh-agent identities $(echo $KEYS | cut -d ' ' -f1-)
 # Auto rehash
 zstyle ':completion:*' rehash true
 
+#Setup ZSH autocompletion
+fpath=(
+  ~/.awsume/zsh-autocomplete
+  $fpath
+)
+
 # Load the oh-my-zsh framework
 source $ZSH/oh-my-zsh.sh
 
-# Edit command line
+# Load ZSH command line edit through editor
 autoload edit-command-line
 zle -N edit-command-line
 bindkey '^Xe' edit-command-line
 
+# Load ZSH bulk renamer
 autoload zmv
-
-fpath=(/usr/local/share/zsh/site-functions $fpath)
 
 # Control-space accepts the autosuggestion
 bindkey '^ ' autosuggest-accept
