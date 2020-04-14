@@ -1,36 +1,32 @@
 #!/bin/sh
 
 ENTRIES=(
-'laptop '
-'desktop 度度'
-'dock-clone '
-'dock-expand-1 度度 '
-'dock-expand-2 度度 '
-'dock-expand-3  度度'
-'dock-expand-4  度度'
-'hdmi-clone '
-'hdmi-expand-1  度'
-'hdmi-expand-2  度度')
+'01 laptop '
+'02 desktop 度度'
+'03 desktop 度'
+'04 dock-clone '
+'05 dock-expand-1 度度 '
+'06 dock-expand-2 度度 '
+'07 dock-expand-3  度度'
+'08 dock-expand-4  度度'
+'09 hdmi-clone '
+'10 hdmi-expand-1  度'
+'11 hdmi-expand-2  度度')
 
 YESNO=(
 'yes'
 'no')
 
-SELECTED=$(printf "%s\n" "${ENTRIES[@]}" | rofi -dmenu -p " Choose your display setup:" | cut -d' ' -f1)
+SELECTED=$(printf "%s\n" "${ENTRIES[@]}" | rofi -dmenu -p " Choose your display setup:")
+IDENTIFIER=$(echo $SELECTED | cut -d' ' -f1)
+LABEL=$(echo $SELECTED | cut -d' ' -f2)
 [[ -z "$SELECTED" ]] && exit 0
 
 LOCK=$(printf "%s\n" "${YESNO[@]}" | rofi -dmenu -p " Enable screen locking?")
 [[ -z "$LOCK" ]] && exit 0
 
-case $(echo "$SELECTED" | cut -d' ' -f2-) in
-  desktop)
-    xrandr \
-      --output DP-1 --primary --mode 1680x1050 --pos 0x0 \
-      --output DVI-I-1 --mode 1680x1050 --pos 1680x0 \
-      --output DP-0 --off \
-      --output DVI-I-0 --off ;;
-
-  laptop)
+case $(echo "$IDENTIFIER" | cut -d' ' -f2-) in
+  01)
     xrandr \
       --output eDP-1 --primary --mode 1920x1080 --pos 0x0 \
       --output DP-1 --off \
@@ -40,7 +36,21 @@ case $(echo "$SELECTED" | cut -d' ' -f2-) in
       --output DVI-I-1-1 --off \
       --output DVI-I-2-2 --off ;;
 
-  dock-clone)
+  02)
+    xrandr \
+      --output DP-1 --primary --mode 1680x1050 --pos 0x0 \
+      --output DVI-I-1 --mode 1680x1050 --pos 1680x0 \
+      --output DP-0 --off \
+      --output DVI-I-0 --off ;;
+
+  03)
+    xrandr \
+      --output DP-1 --primary --mode 1680x1050 --pos 0x0 \
+      --output DVI-I-1 --off \
+      --output DP-0 --off \
+      --output DVI-I-0 --off ;;
+
+  04)
     xrandr \
       --output eDP-1 --primary --mode 1920x1080 --pos 0x0 \
       --output DVI-I-1-1 --same-as eDP-1 \
@@ -50,7 +60,7 @@ case $(echo "$SELECTED" | cut -d' ' -f2-) in
       --output HDMI-1 --off \
       --output HDMI-2 --off ;;
 
-  dock-expand-1)
+  05)
     xrandr \
       --output DVI-I-1-1 --primary --mode 1920x1080 --pos 0x0 \
       --output DVI-I-2-2 --mode 1920x1080 --pos 1920x0 \
@@ -60,7 +70,7 @@ case $(echo "$SELECTED" | cut -d' ' -f2-) in
       --output HDMI-1 --off \
       --output HDMI-2 --off ;;
 
-  dock-expand-2)
+  06)
     xrandr \
       --output DVI-I-2-2 --primary --mode 1920x1080 --pos 0x0 \
       --output DVI-I-1-1 --mode 1920x1080 --pos 1920x0 \
@@ -70,7 +80,7 @@ case $(echo "$SELECTED" | cut -d' ' -f2-) in
       --output HDMI-1 --off \
       --output HDMI-2 --off ;;
 
-  dock-expand-3)
+  07)
     xrandr \
       --output eDP-1 --primary --mode 1920x1080 --pos 0x504 \
       --output DVI-I-1-1 --mode 1920x1080 --pos 1920x0 \
@@ -80,7 +90,7 @@ case $(echo "$SELECTED" | cut -d' ' -f2-) in
       --output HDMI-1 --off \
       --output HDMI-2 --off ;;
 
-  dock-expand-4)
+  08)
     xrandr \
       --output eDP-1 --primary --mode 1920x1080 --pos 0x504 \
       --output DVI-I-2-2 --mode 1920x1080 --pos 1920x0 \
@@ -90,7 +100,7 @@ case $(echo "$SELECTED" | cut -d' ' -f2-) in
       --output HDMI-1 --off \
       --output HDMI-2 --off ;;
 
-  hdmi-clone)
+  09)
     xrandr \
       --output eDP-1 --primary --mode 1920x1080 --pos 0x0 \
       --output DP-1 --off \
@@ -100,7 +110,7 @@ case $(echo "$SELECTED" | cut -d' ' -f2-) in
       --output DVI-I-1-1 --off \
       --output DVI-I-2-2 --off ;;
 
-  hdmi-expand-1)
+  10)
     xrandr \
       --output eDP-1 --primary --mode 1920x1080 --pos 0x0 \
       --output HDMI-1 --mode 1920x1080 --pos 1920x0 \
@@ -110,7 +120,7 @@ case $(echo "$SELECTED" | cut -d' ' -f2-) in
       --output DVI-I-1-1 --off \
       --output DVI-I-2-2 --off ;;
 
-  hdmi-expand-2)
+  11)
     xrandr \
       --output eDP-1 --primary --mode 1920x1080 --pos 0x0 \
       --output HDMI-1 --mode 1920x1080 --pos 1920x0 \
@@ -132,4 +142,4 @@ case "$LOCK" in
     ;;
 esac
 
-notify-send "Configured display setup: $SELECTED"
+notify-send "Configured display setup: $LABEL"
