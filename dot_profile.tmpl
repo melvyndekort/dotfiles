@@ -70,7 +70,7 @@ alias di='docker image'
 alias ds='docker system'
 
 # Run specific docker containers
-alias alpine='docker container run --rm -it alpine:3.8 /bin/sh'
+alias alpine='docker container run --rm -it alpine:3.11 /bin/sh'
 alias tor='docker container run --rm -it -p 3128:3128 -p 9050:9050 melvyndekort/toroxy'
 alias nginx='docker container run --rm -it -v `pwd`:/usr/share/nginx/html:ro -p 80:80 nginx:1.15.8'
 alias wol='docker container run --rm -it --net host melvyndekort/wol'
