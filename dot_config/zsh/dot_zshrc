@@ -28,8 +28,8 @@ ZSH=/usr/share/oh-my-zsh/
 # Set name of the theme to load
 #ZSH_THEME=""
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+[[ -f ~/.config/zsh/.p10k.zsh ]] && source ~/.config/zsh/.p10k.zsh
 
 # Uncomment the following line to use hyphen-insensitive completion.
 HYPHEN_INSENSITIVE="true"
