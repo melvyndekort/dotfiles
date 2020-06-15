@@ -10,3 +10,5 @@
   cleanup = !git remote prune origin && git gc && git clean -dfx && git checkout . && git stash clear
 [diff]
 	tool = meld
+[pull]
+	rebase = true
