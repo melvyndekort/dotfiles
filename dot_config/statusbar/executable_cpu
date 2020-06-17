@@ -2,7 +2,7 @@
 
 case $BLOCK_BUTTON in
 	1) notify-send "Top CPU consumers" "$(ps axh -o comm:30,%cpu --sort=-%cpu | sed 's/$/%/' | head)" ;;
-	3) notify-send "CPU module " "\- Shows CPU temperature.
+	2) notify-send "CPU module " "\- Shows CPU temperature.
 - Click to show intensive processes.
 - % is of single core." ;;
 esac
