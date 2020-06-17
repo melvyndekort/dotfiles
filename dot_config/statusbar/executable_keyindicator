@@ -2,7 +2,7 @@
 
 case $BLOCK_BUTTON in
   1) notify-send "X user preferences" "$(xset -q)" ;;
-	3) notify-send "Key indicator module " "\- Shows the current state of CAPS Lock key.
+	2) notify-send "Key indicator module " "\- Shows the current state of CAPS Lock key.
 - Click to show all X user preferences." ;;
 esac
 

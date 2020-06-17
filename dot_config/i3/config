@@ -25,10 +25,6 @@ bindsym $mod+Return exec --no-startup-id termite
 # start a file manager
 bindsym $mod+Shift+Return exec --no-startup-id termite -e ranger
 
-# show buienradar
-for_window [instance="buienradar"] floating enable
-bindsym $mod+b exec mpv --no-osd-bar --x11-name='buienradar' --loop-file=inf 'https://api.buienradar.nl/image/1.0/RadarMapNL?w=500&h=512'
-
 # kill focused window
 bindsym $mod+Shift+q kill
 bindsym $mod+q kill
@@ -150,18 +146,9 @@ workspace $ws1 output primary
 
 bindsym $mod+m move workspace to output left
 
-# assign apps to specific workspaces
-assign [class="URxvt"] $ws1
-assign [class="Google-chrome"] $ws2
-assign [class="Firefox"] $ws2
-assign [class="Code"] $ws3
-assign [class="Subl3"] $ws3
-assign [class="Org.gnome.Nautilus"] $ws4
-assign [class="Thunar"] $ws4
-assign [class="Pcmanfm"] $ws4
-assign [class="Spotify"] $ws5
-assign [class="vlc"] $ws5
-assign [class="Slack"] $ws6
+# float special windows
+for_window [title="myforecast"] floating enable, resize set 1010 710, move position center
+for_window [instance="buienradar"] floating enable, resize set 550 550, move position center
 
 # reload the configuration file
 bindsym $mod+Shift+c reload

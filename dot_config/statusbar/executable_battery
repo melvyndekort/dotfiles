@@ -2,7 +2,7 @@
 
 case $BLOCK_BUTTON in
   1) notify-send "ACPI information" "$(acpi -V)" ;;
-	3) notify-send "ACPI module" "\- Shows battery status.
+	2) notify-send "ACPI module" "\- Shows battery status.
 - Click to show all ACPI info." ;;
 esac
 

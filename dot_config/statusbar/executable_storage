@@ -5,7 +5,7 @@ case $BLOCK_BUTTON in
   2) notify-send "Filesystem module " "\- Shows used space in /home filesystem.
 - Click to see the filesystem listings of all filesystems.
 - Right click to see all block devices" ;;
-3) notify-send "Block devices" "$(lsblk -o NAME,TYPE,FSTYPE,LABEL,FSSIZE,FSUSED,FSAVAIL,FSUSE%,MOUNTPOINT)" ;;
+  3) notify-send "Block devices" "$(lsblk -o NAME,TYPE,FSTYPE,LABEL,FSSIZE,FSUSED,FSAVAIL,FSUSE%,MOUNTPOINT)" ;;
 esac
 
 df -BG /home | sed -n 2p | tr -d 'G%' | awk '{
