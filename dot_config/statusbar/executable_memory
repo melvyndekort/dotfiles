@@ -2,7 +2,7 @@
 
 case $BLOCK_BUTTON in
 	1) notify-send "Top memory consumers" "$(ps axh -o comm:20,%mem --sort=-%mem | sed 's/$/%/' | head)" ;;
-	3) notify-send "Memory module" "\- Shows Memory Used/Total.
+	2) notify-send "Memory module" "\- Shows Memory Used/Total.
 - Click to show memory hogs." ;;
 esac
 
