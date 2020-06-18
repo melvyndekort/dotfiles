@@ -160,10 +160,10 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -f 'pango:Hack Nerd Font 10' -t warning -m 'Want to exit i3?' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # configure the display setup
-bindsym $mod+F8 exec screenmenu
+bindsym $mod+F8 exec "rofi -show Display && rofi -show Autolock"
 
 # manual power management
-bindsym $mod+F12 exec powermenu
+bindsym $mod+F12 exec "rofi -show Power"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
