@@ -1,9 +1,11 @@
 #!/bin/sh
 
 case $BLOCK_BUTTON in
-	1) termite -e htop & ;;
-	2) notify-send "Load module " "\- Shows the average system load.
-- Click to run htop." ;;
+	1) notify-send "Top CPU consumers" "$(ps axh -o comm:30,%cpu --sort=-%cpu | sed 's/$/%/' | head)" ;;
+	2) notify-send "Load module " "\- Shows the average system load
+- Left click to show biggest CPU consumers
+- Right click to run htop" ;;
+	3) termite -e htop & ;;
 esac
 
 load="$(awk '{print $1}' /proc/loadavg)"
