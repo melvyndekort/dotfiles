@@ -1,6 +1,6 @@
 rofi.theme:             dracula
 rofi.font:              Hack Nerd Font 11
-rofi.modi:              drun,run,window,ssh
+rofi.modi:              drun,run,window,ssh,Display:~/.config/rofi/display.sh,Autolock:~/.config/rofi/autolock.sh,Power:~/.config/rofi/power.sh
 rofi.show-icons:        true
 rofi.sidebar-mode:      true
 rofi.columns:           2
