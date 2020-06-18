@@ -7,7 +7,7 @@ case $BLOCK_BUTTON in
 esac
 
 MASK="$(xset -q | grep 'LED mask' | awk '{print $NF}')"
-if [ $((0x$MASK & 0x1)) == 1 ]; then
+if [ $(( 0x$MASK & 0x1 )) -eq 1 ]; then
   printf "%s\n" " CAPS" "CAPS" "#FFB86C"
 else
   printf "%s\n" " CAPS" "CAPS" "#6272A4"
