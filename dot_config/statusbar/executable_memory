@@ -5,7 +5,7 @@ case $BLOCK_BUTTON in
 	2) notify-send "Memory module" "\- Shows memory Used/Total
 - Left click to show memory hogs
 - Right click to run htop" ;;
-	3) termite -e htop & ;;
+	3) $TERMINAL -e htop & ;;
 esac
 
 free -h | awk '/^Mem:/ {print $3 "/" $2}'

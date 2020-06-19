@@ -9,6 +9,7 @@
 # Export some default variables
 export EDITOR='vim'
 export BROWSER='google-chrome-stable'
+export TERMINAL='termite'
 export PAGER='less'
 export LESS="-XR"
 
@@ -36,6 +37,7 @@ export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
 
 # Set MISC aliases
+alias rm='rm -I'
 alias v='vim'
 alias more='less'
 alias lspath='for i in $(echo $PATH | sed "s/:/\ /g"); do find $i -maxdepth 1 -xtype f -executable; done | sort -u'
