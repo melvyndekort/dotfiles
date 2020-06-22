@@ -5,7 +5,7 @@ case $BLOCK_BUTTON in
 	2) notify-send "Load module " "\- Shows the average system load
 - Left click to show biggest CPU consumers
 - Right click to run htop" ;;
-	3) $TERMINAL -e htop & ;;
+	3) $TERMINAL -e htop >/dev/null 2>&1 & ;;
 esac
 
 load="$(awk '{print $1}' /proc/loadavg)"
