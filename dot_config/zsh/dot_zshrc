@@ -55,7 +55,7 @@ ZSH_CUSTOM=~/.oh-my-zsh/custom
 # Change foreground color of the autosuggest plugin
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
 
-plugins=(archlinux autojump aws catimg common-aliases copyfile docker docker-compose extract git git-extras gpg-agent history mvn nmap pip rsync ssh-agent sudo systemd terraform tmux vscode)
+plugins=(archlinux autojump aws catimg common-aliases copyfile docker docker-compose emoji extract git git-extras gpg-agent history mvn nmap pip rsync ssh-agent sudo systemd terraform tmux vscode zsh-interactive-cd)
 
 # Autostart tmux on zsh startup
 ZSH_TMUX_AUTOSTART="false"
