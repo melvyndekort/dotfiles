@@ -1,10 +1,6 @@
 #!/bin/sh
 
-OIFS="$IFS"
-IFS=$'\n'
-
 for i in $(find . -type f -name \*.mkv); do
-  mediainfo "$i" | grep x265 > /dev/null && echo $i
+  CODEC=$(mediainfo --Output=JSON $i | jq -r '.media.track[] | select(."@type" == "Video") | .Encoded_Library_Name')
+  [ "$CODEC" = "x265" ]; echo $i
 done
-
-IFS="$OIFS"
