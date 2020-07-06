@@ -1,0 +1,22 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+  1) amixer -q -D pulse sset Capture toggle ;;
+	2) notify-send " Microphone module" "\- Click to mute/unmute
+- Right click to launch mixer
+- Scroll to change" ;;
+  3) $TERMINAL -t mypulsemixer -e pulsemixer >/dev/null 2>&1 & ;;
+  4) amixer -q -D pulse sset Capture 5%+ ;;
+  5) amixer -q -D pulse sset Capture 5%- ;;
+esac
+
+VOL=$(amixer -D pulse sget Capture | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%')
+STATE=$(amixer -D pulse sget Capture | grep 'Left:' | awk -F'[][]' '{ print $4 }')
+
+if [ "$STATE" = "off" -o "$VOL" -eq "0" ]; then
+  printf " %s\n" "$VOL%" "$VOL%"
+  echo "#6272A4"
+else
+  printf " %s\n" "$VOL%" "$VOL%"
+  echo "#FFB86C"
+fi

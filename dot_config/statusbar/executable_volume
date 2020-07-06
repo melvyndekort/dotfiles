@@ -13,10 +13,13 @@ esac
 VOL=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%')
 STATE=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $4 }')
 
-printf "%s\n" "$VOL%" "$VOL%"
 
 if [ "$STATE" = "off" -o "$VOL" -eq "0" ]; then
+  printf "婢 %s\n" "$VOL%" "$VOL%"
   echo "#6272A4"
 elif [ "$VOL" -gt "70" ]; then
+  printf "墳 %s\n" "$VOL%" "$VOL%"
   exit 33
+else
+  printf "奄 %s\n" "$VOL%" "$VOL%"
 fi
