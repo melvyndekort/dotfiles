@@ -6,8 +6,8 @@ case $BLOCK_BUTTON in
 - Right click to launch mixer
 - Scroll to change" ;;
   3) $TERMINAL -t mypulsemixer -e pulsemixer >/dev/null 2>&1 & ;;
-  4) amixer -q -D pulse sset Capture 5%+ ;;
-  5) amixer -q -D pulse sset Capture 5%- ;;
+  4) amixer -q -D pulse sset Capture 10%+ ;;
+  5) amixer -q -D pulse sset Capture 10%- ;;
 esac
 
 VOL=$(amixer -D pulse sget Capture | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%')
