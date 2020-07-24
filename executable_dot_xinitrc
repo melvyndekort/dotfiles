@@ -38,6 +38,9 @@ xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
 # set default cursor to arrow
 xsetroot -cursor_name left_ptr
 
+# disable pointing stick on laptop
+xinput disable "DualPoint Stick"
+
 # notification & applets
 dropbox &
 nm-applet &
