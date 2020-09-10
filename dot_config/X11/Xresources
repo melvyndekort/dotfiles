@@ -1,6 +1,7 @@
 ! font configuration
-UXTerm*faceName: Hack Nerd Font Mono
-UXTerm*faceSize: 10
+UXTerm*faceName:   Hack Nerd Font Mono
+UXTerm*faceSize:   10
+UXTerm*renderFont: true
 
 ! enable support for 256 colors
 UXTerm*termName: xterm-256color
@@ -8,7 +9,7 @@ UXTerm*termName: xterm-256color
 ! long buffer
 UXTerm*savelines: 16384
 
-! double-click to select whole URLs :D
+! double-click to select whole URLs
 UXTerm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 
 ! enable visual bell
@@ -16,9 +17,12 @@ UXTerm*visualBell: true
 
 ! copy and paste support
 UXTerm*VT100.Translations: #override \
-                 Shift <Key>Insert:    insert-selection(SELECT) \n\
-                 Ctrl Shift <Key>V:    insert-selection(SELECT) \n\
-                 Ctrl Shift <Key>C:    copy-selection(SELECT)
+  Shift <Key>Insert: insert-selection(SELECT) \n\
+  Ctrl Shift <Key>V: insert-selection(SELECT) \n\
+  Ctrl Shift <Key>C: copy-selection(SELECT) \n\
+  Ctrl <Key>minus:   smaller-vt-font() \n\
+  Ctrl <Key>plus:    larger-vt-font() \n\
+  Ctrl <Key>0:       set-vt-font(d)
 
 ! special
 *.foreground:  #f8f8f2
