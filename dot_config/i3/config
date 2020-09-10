@@ -153,7 +153,7 @@ for_window [instance="buienradar"] floating enable, resize set 550 550, move pos
 
 # calculator
 for_window [title="mycalc"] floating enable, resize set 600 400, move position center
-bindsym $mod+c exec --no-startup-id uxterm -t mycalc -e "bc -q"
+bindsym $mod+c exec --no-startup-id uxterm -title mycalc -e "bc -q"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -235,7 +235,7 @@ bar {
   position top
   tray_output primary
 
-  font pango:Hack Nerd Font 10
+  font pango:Hack Nerd Font 12
   height 25
 
   colors {
