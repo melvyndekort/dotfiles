@@ -100,9 +100,9 @@ bindsym $mod+Home exec --no-startup-id sxiv -tf ~/Pictures/wallpapers
 bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
 
 # screenshot
-bindsym Print exec "scrot screenshot.png -d 1 -o -e 'xclip -selection clipboard -t image/png -i $f && sleep 1 && rm -f $f' && notify-send 'Screenshot copied to clipboard'"
-bindsym $mod+Print exec "scrot screenshot.png -d 1 -o -u -e 'xclip -selection clipboard -t image/png -i $f && sleep 1 && rm -f $f' && notify-send 'Screenshot copied to clipboard'"
-bindsym --release Shift+$mod+Print exec "scrot screenshot.png -d 1 -o -l 'style=dash,width=3' -s -e 'xclip -selection clipboard -t image/png -i $f && sleep 1 && rm -f $f' && notify-send 'Selection copied to clipboard'"
+bindsym Print exec "shotgun - | xclip -t 'image/png' -selection clipboard"
+bindsym $mod+Print exec "shotgun -i $(xdotool getmouselocation --shell | grep WINDOW | cut -d'=' -f2) - | xclip -t 'image/png' -selection clipboard"
+bindsym --release Shift+$mod+Print exec "shotgun $(hacksaw -f '-i %i -g %g') - | xclip -t 'image/png' -selection clipboard"
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
