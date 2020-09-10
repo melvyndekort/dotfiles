@@ -1,0 +1,205 @@
+#           _              
+#   _______| |__  _ __ ___ 
+#  |_  / __| '_ \| '__/ __|
+# _ / /\__ \ | | | | | (__ 
+#(_)___|___/_| |_|_|  \___|
+#                          
+
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/src/portbase-bin:$PATH"
+
+. ~/.profile
+
+autoload bashcompinit
+bashcompinit
+
+if [ -f "/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme" ]; then
+  source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+fi
+
+# Path to your oh-my-zsh installation.
+ZSH=/usr/share/oh-my-zsh/
+
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+[[ -f ~/.config/zsh/.p10k.zsh ]] && source ~/.config/zsh/.p10k.zsh
+
+# Uncomment the following line to use hyphen-insensitive completion.
+HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="false"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files under VCS as dirty.
+#DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time stamp shown in the history command output.
+HIST_STAMPS="yyyy-mm-dd"
+
+# Would you like to use another custom folder than $ZSH/custom?
+ZSH_CUSTOM=/usr/share/zsh
+
+# Change foreground color of the autosuggest plugin
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=7'
+
+plugins=(archlinux autojump aws catimg common-aliases copyfile docker docker-compose emoji extract fzf git git-extras gpg-agent history mvn nmap pip rsync ssh-agent sudo systemd terraform tmux vscode zsh-interactive-cd zsh-autosuggestions history-substring-search zsh-syntax-highlighting)
+
+# Autostart tmux on zsh startup
+ZSH_TMUX_AUTOSTART="false"
+
+KEYS=""
+for KEY in melvyn_ed25519 melvyn portbase portbase_ed25519; do
+  if [ -f "$HOME/.ssh/$KEY" ]; then
+    if [ ! -f "$HOME/.ssh/$KEY.pub" ]; then
+      ssh-keygen -y -f "$HOME/.ssh/$KEY" > "$HOME/.ssh/$KEY.pub"
+    fi
+    KEYS="$KEYS $KEY"
+  fi
+done
+
+# SSH agent configuration
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+zstyle :omz:plugins:ssh-agent identities $(echo $KEYS | cut -d ' ' -f1-)
+
+# Auto rehash
+zstyle ':completion:*' rehash true
+
+#Setup ZSH autocompletion
+fpath=(
+  ~/.awsume/zsh-autocomplete
+  $fpath
+)
+
+# Load the oh-my-zsh framework
+source $ZSH/oh-my-zsh.sh
+
+# Load ZSH command line edit through editor
+autoload edit-command-line
+zle -N edit-command-line
+bindkey '^Xe' edit-command-line
+
+# Load ZSH bulk renamer
+autoload zmv
+
+# Some bindkeys for autosuggest
+bindkey '^f' autosuggest-accept
+bindkey '^j' history-substring-search-down
+bindkey '^k' history-substring-search-up
+
+# Uset aliases which were set in plugins
+unalias fd
+
+# Set exa aliases
+alias l='exa -l'
+alias la='exa -a'
+alias ll='exa -lah'
+alias ls='exa --color=auto'
+
+# Set bat aliases
+alias cat='bat'
+
+# Set docker aliases
+alias d='docker'
+alias dc='docker container'
+alias di='docker image'
+alias dn='docker network'
+alias ds='docker system'
+alias dv='docker volume'
+
+# Set MISC aliases
+alias rm='rm -I'
+alias netstat='echo NETSTAT is unavailable on Arch, please use \"ss -natl\"'
+alias lspath='for i in $(echo $PATH | sed "s/:/\ /g"); do find $i -maxdepth 1 -xtype f -executable; done | sort -u'
+alias setclip='xclip -selection clipboard'
+alias getclip='xclip -o -selection clipboard'
+alias syncwatch='watch grep -e Dirty: -e Writeback: /proc/meminfo'
+alias ripcd='abcde -d /dev/cdrom'
+alias cm="chezmoi"
+alias r="ranger"
+alias v='vim'
+alias yt="youtube-dl --add-metadata -ic"
+alias yta="youtube-dl --add-metadata -xic"
+alias tf='terraform'
+alias rg="rg -S --no-ignore --hidden --glob '!{.git,node_modules,**/.terraform}/**'"
+alias pdf="mupdf"
+alias img='sxiv'
+
+# Set I3WM aliases
+alias ci3="vim $HOME/.config/i3/config"
+alias cib="vim $HOME/.config/i3/i3blocks.conf"
+alias wi3="cd $HOME/.config/i3"
+alias wib="cd $HOME/.config/statusbar"
+
+# Run specific docker containers
+alias alpine='docker container run --rm -it alpine:3.12 /bin/sh'
+alias tor='docker container run --rm -it -p 3128:3128 -p 9050:9050 melvyndekort/toroxy'
+alias nginx='docker container run --rm -it -v `pwd`:/usr/share/nginx/html:ro -p 80:80 nginx:1.19.0'
+alias wol='docker container run --rm -it --net host melvyndekort/wol'
+
+# Set MISC functions
+ix() {
+    local opts
+    local OPTIND
+    [ -f "$HOME/.netrc" ] && opts='-n'
+    while getopts ":hd:i:n:" x; do
+        case $x in
+            h) echo "ix [-d ID] [-i ID] [-n N] [opts]"; return;;
+            d) $echo curl $opts -X DELETE ix.io/$OPTARG; return;;
+            i) opts="$opts -X PUT"; local id="$OPTARG";;
+            n) opts="$opts -F read:1=$OPTARG";;
+        esac
+    done
+    shift $(($OPTIND - 1))
+    [ -t 0 ] && {
+        local filename="$1"
+        shift
+        [ "$filename" ] && {
+            curl $opts -F f:1=@"$filename" $* ix.io/$id
+            return
+        }
+        echo "^C to cancel, ^D to send."
+    }
+    curl $opts -F f:1='<-' $* ix.io/$id
+}
+
+# Generate the public key fingerpirnt
+ssh-fingerprint() {
+  ssh-keyscan $@ | ssh-keygen -l -E md5 -f -
+}
+
+# Generate an MFA token
+mfa() {
+  if pacman -qQ oath-toolkit > /dev/null; then
+    if [ -f $HOME/.mfa/$1.mfa ]; then
+      oathtool --base32 --totp "$(cat ~/.mfa/${1}.mfa)" ;
+    else
+      echo "MFA config ${1} does not exist"
+    fi
+  else
+    sudo pacman -S oath-toolkit
+  fi
+}
+
+# TMUX configuration
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+  git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+fi
+
+{{if eq .email "m.de.kort@portbase.com" }}
+# Work related stuff
+export ARTIFACTORY_URL="https://{{ (index (lastpass "Artifactory - readonly") 0).username -}}:{{ urlquery ((index (lastpass "Artifactory - readonly") 0).password) -}}@artifactory.portbase.io/artifactory"
+alias wpcs-build="mvn -T C1 clean package -DskipTests -Dnaomi.skip -Dmaven.antrun.skip -pl \!naomi/naomi-maven-plugin-test"
+alias sqlplus='docker container run --rm -it --network host melvyndekort/sqlplus'
+
+# Find the account id of an AWS account
+acct() {
+  grep -C3 $1 $HOME/.config/aws/config
+}
+{{- end }}
+
+#AWSume alias to source the AWSume script
+alias awsume=". awsume"
