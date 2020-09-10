@@ -38,21 +38,22 @@ xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
 # set default cursor to arrow
 xsetroot -cursor_name left_ptr
 
+{{- if eq .chezmoi.hostname "ka01pwiltp071" }}
 # disable pointing stick on laptop
 xinput disable "DualPoint Stick"
 
-# notification & applets
-dropbox &
 nm-applet &
+{{- end }}
+
+# applets
+dropbox &
 dunst &
 udiskie &
 
 # user applications that always run
-termite &
+uxterm &
 google-chrome-stable &
 slack &
 whatschrome &
 
 exec i3
-#sxhkd &
-#exec bspwm
