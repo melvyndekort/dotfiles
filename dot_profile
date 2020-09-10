@@ -36,6 +36,7 @@ export ANDROID_SDK_HOME="$XDG_CONFIG_HOME/android"
 export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
+export _Z_DATA="$XDG_DATA_HOME"/z
 
 # Set some defaults
 alias abcde="abcde -c $XDG_CONFIG_HOME/abcde/abcde.conf"
