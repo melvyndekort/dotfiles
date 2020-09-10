@@ -56,4 +56,10 @@ google-chrome-stable &
 slack &
 whatschrome &
 
+# auto-reload X11 resources
+{
+  cd $HOME/.config/X11
+  watchexec -- xrdb Xresources &
+}
+
 exec i3
