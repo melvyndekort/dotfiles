@@ -235,7 +235,7 @@ bar {
   position top
   tray_output primary
 
-  font pango:Hack Nerd Font 12
+  font pango:Hack Nerd Font 10
   height 25
 
   colors {

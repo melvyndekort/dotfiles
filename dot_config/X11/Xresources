@@ -1,6 +1,6 @@
 ! font configuration
 UXTerm*faceName: Hack Nerd Font Mono
-UXTerm*faceSize: 12
+UXTerm*faceSize: 10
 
 ! enable support for 256 colors
 UXTerm*termName: xterm-256color
