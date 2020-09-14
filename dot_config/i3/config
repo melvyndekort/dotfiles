@@ -94,7 +94,7 @@ bindsym XF86AudioMicMute exec amixer -q -D pulse sset Capture toggle && pkill -R
 bindsym XF86MonBrightnessUp exec brightnessctl s +10% # increase screen brightness
 bindsym XF86MonBrightnessDown exec brightnessctl s 10%- # decrease screen brightness
 
-bindsym $mod+Home exec --no-startup-id sxiv -tf ~/Pictures/wallpapers
+bindsym $mod+Home exec --no-startup-id sxiv -tf ~/Sync/wallpapers
 
 # key indicator
 bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
