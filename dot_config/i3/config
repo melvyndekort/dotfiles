@@ -99,6 +99,9 @@ bindsym $mod+Home exec --no-startup-id sxiv -tf ~/Sync/wallpapers
 # key indicator
 bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
 
+# controll Android device through USB
+bindsym --release $mod+p exec --no-startup-id scrcpy --shortcut-mod lctrl -w
+
 # screenshot
 bindsym Print exec "shotgun - | xclip -t 'image/png' -selection clipboard"
 bindsym $mod+Print exec "shotgun -i $(xdotool getmouselocation --shell | grep WINDOW | cut -d'=' -f2) - | xclip -t 'image/png' -selection clipboard"
