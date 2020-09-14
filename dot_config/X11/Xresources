@@ -1,3 +1,6 @@
+! set desired DPI setting
+Xfg.dpi: 96
+
 ! font configuration
 UXTerm*faceName:   Hack Nerd Font Mono
 UXTerm*faceSize:   10
