@@ -38,6 +38,9 @@ export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
 export _Z_DATA="$XDG_DATA_HOME"/z
 
+# Fix DPI issue with alacritty
+export WINIT_HIDPI_FACTOR=1
+
 # Set some defaults
 alias abcde="abcde -c $XDG_CONFIG_HOME/abcde/abcde.conf"
 alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
