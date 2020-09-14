@@ -9,7 +9,7 @@ case $BLOCK_BUTTON in
 - right click to show the weather forecast"
     ;;
   3)
-    $TERMINAL -title myforecast -e "zsh -c 'curl -sL wttr.in | less'" >/dev/null 2>&1 &
+    $TERMINAL -t myforecast -e "zsh -c 'curl -sL wttr.in | less'" >/dev/null 2>&1 &
     ;;
 esac
 
