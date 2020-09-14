@@ -10,7 +10,7 @@
 export EDITOR='vim'
 export BROWSER='google-chrome-stable'
 export XIVIEWER='sxiv'
-export TERMINAL='uxterm'
+export TERMINAL='alacritty'
 export PAGER='less'
 export LESS="-XR"
 
