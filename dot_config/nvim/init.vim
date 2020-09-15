@@ -13,6 +13,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -38,6 +39,10 @@ nnoremap <F4> :set nonu!<CR>
 nnoremap <F5> <Esc>:1,$!xmllint --format -<CR>
 nnoremap <C-N> :next<CR>
 nnoremap <C-P> :prev<CR>
+nnoremap <silent> <C-p> :Files<CR>
+nnoremap <silent> <C-g> :GFiles<CR>
+nnoremap <silent> <C-o> :Buffers<CR>
+nnoremap <C-f> :Rg! 
 nnoremap <C-Y> :NERDTreeToggle<CR>
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
