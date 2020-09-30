@@ -28,10 +28,11 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 fi
 
 # setup graphics part of window manager
-compton &
+picom --backend glx &
 xwallpaper --zoom ~/.config/wallpaper.png &
 
 # screen locker
+export XSECURELOCK_NO_COMPOSITE=1
 xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
 
 # set default cursor to arrow
