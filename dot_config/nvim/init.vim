@@ -33,33 +33,22 @@ set pastetoggle=<F9>
 set number relativenumber
 set nu rnu
 
-nnoremap <F2> :set hlsearch!<CR>
-nnoremap <F3> :set nowrap!<CR>
-nnoremap <F4> :set nonu!<CR>
-nnoremap <F5> <Esc>:1,$!xmllint --format -<CR>
+let mapleader = '\'
+
 nnoremap <C-N> :next<CR>
 nnoremap <C-P> :prev<CR>
-nnoremap <silent> <C-p> :Files<CR>
-nnoremap <silent> <C-g> :GFiles<CR>
-nnoremap <silent> <C-o> :Buffers<CR>
-nnoremap <C-f> :Rg! 
-nnoremap <C-Y> :NERDTreeToggle<CR>
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap Q @q
-nnoremap Y y$
-nnoremap <C-w>e :e $MYVIMRC<CR>
-nnoremap <C-w>r :so $MYVIMRC<CR>
 
-inoremap <> <><Left>
-inoremap () ()<Left>
-inoremap {} {}<Left>
-inoremap [] []<Left>
-inoremap "" ""<Left>
-inoremap '' ''<Left>
-inoremap `` ``<Left>
+nnoremap <C-Y> :NERDTreeToggle<CR>
+
+nnoremap <leader>g    :GFiles<CR>
+nnoremap <leader>f    :Files<CR>
+nnoremap <leader><CR> :Buffers<CR>
+nnoremap <leader>l    :Lines<CR>
+nnoremap <leader>h    :History<CR>
+
+nnoremap <leader>w    :set wrap!<CR>
+
+nnoremap Y y$
 
 inoremap <C-k> <Up>
 inoremap <C-j> <Down>
