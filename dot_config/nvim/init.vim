@@ -14,6 +14,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'junegunn/fzf.vim'
+Plug 'voldikss/vim-floaterm'
 
 call plug#end()
 
@@ -38,7 +39,7 @@ let mapleader = '\'
 nnoremap <C-N> :next<CR>
 nnoremap <C-P> :prev<CR>
 
-nnoremap <C-Y> :NERDTreeToggle<CR>
+nnoremap <leader>n    :NERDTreeToggle<CR>
 
 nnoremap <leader>g    :GFiles<CR>
 nnoremap <leader>f    :Files<CR>
@@ -46,15 +47,33 @@ nnoremap <leader><CR> :Buffers<CR>
 nnoremap <leader>l    :Lines<CR>
 nnoremap <leader>h    :History<CR>
 
+nnoremap <leader>t    :FloatermNew<CR>
+nnoremap <leader>r    :FloatermNew ranger<CR>
+
 nnoremap <leader>w    :set wrap!<CR>
 
+" Yank until eol
 nnoremap Y y$
 
+" Copy to clipboard
+vnoremap <leader>y  "+y
+nnoremap <leader>Y  "+yg_
+nnoremap <leader>y  "+y
+nnoremap <leader>yy  "+yy
+
+" Paste from clipboard
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
+
+" Move in insert mode
 inoremap <C-k> <Up>
 inoremap <C-j> <Down>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 
+" Indenting
 nnoremap <Tab>   >>
 nnoremap <S-Tab> <<
 vnoremap <Tab>   >><Esc>gv
