@@ -1,11 +1,10 @@
 # i3 config file (v4)
-#
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font is used in the bar {} block below.
-font pango:Hack Nerd Font 10
+font pango:DejaVu Sans Mono, Font Awesome 5 Brands, Font Awesome 5 Free Solid, Font Awesome 5 Free Regular 10
 
 # class                 border  bground text    indicator child_border
 client.focused          #BD93F9 #BD93F9 #F8F8F2 #ff5555   #BD93F9
@@ -107,18 +106,23 @@ bindsym Print exec "shotgun - | xclip -t 'image/png' -selection clipboard"
 bindsym $mod+Print exec "shotgun -i $(xdotool getmouselocation --shell | grep WINDOW | cut -d'=' -f2) - | xclip -t 'image/png' -selection clipboard"
 bindsym --release Shift+$mod+Print exec "shotgun $(hacksaw -f '-i %i -g %g') - | xclip -t 'image/png' -selection clipboard"
 
+# dunst
+bindsym --release Control+space exec --no-startup-id dunstctl close
+bindsym --release Control+shift+space exec --no-startup-id dunstctl close-all
+bindsym --release Control+grave exec --no-startup-id dunstctl history-pop
+
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1: Terminals "
-set $ws2 "2: Browser "
-set $ws3 "3: Code "
-set $ws4 "4: Files "
-set $ws5 "5: Media "
-set $ws6 "6: Chats "
-set $ws7 "7: Misc "
-set $ws8 "8: Misc "
-set $ws9 "9: Misc "
-set $ws10 "10: Misc "
+set $ws1 "1 "
+set $ws2 "2 "
+set $ws3 "3 "
+set $ws4 "4 "
+set $ws5 "5 "
+set $ws6 "6 "
+set $ws7 "7 "
+set $ws8 "8 "
+set $ws9 "9 "
+set $ws10 "10 "
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -172,6 +176,9 @@ bindsym $mod+F8 exec "rofi -show Display && rofi -show Autolock"
 
 # manual power management
 bindsym $mod+F12 exec "rofi -show Power"
+
+# lastpass picker
+bindsym $mod+F10 exec "rofi -show LastPass"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -236,6 +243,7 @@ exec_always --no-startup-id sh ~/.config/default-screen-setup
 bar {
   i3bar_command i3bar --transparency
   status_command i3blocks -c ~/.config/i3/i3blocks.conf
+
   position top
   tray_output primary
 
