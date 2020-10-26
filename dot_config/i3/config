@@ -159,8 +159,8 @@ for_window [title="myforecast"] floating enable, resize set 1010 725, move posit
 for_window [instance="buienradar"] floating enable, resize set 550 550, move position center
 
 # calculator
-for_window [title="mycalc"] floating enable, resize set 600 400, move position center
-bindsym $mod+c exec --no-startup-id alacritty -t mycalc -e bc -q
+for_window [title="galculator"] floating enable, move position center
+bindsym $mod+c exec --no-startup-id galculator
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
