@@ -8,7 +8,7 @@ esac
 
 MASK="$(xset -q | grep 'LED mask' | awk '{print $NF}')"
 if [ $(( 0x$MASK & 0x1 )) -eq 1 ]; then
-  printf "%s\n" " CAPS" "CAPS" "#FFB86C"
+  printf "%s\n" " CAPS" "CAPS" "#FFB86C"
 else
-  printf "%s\n" " CAPS" "CAPS" "#6272A4"
+  printf "%s\n" " CAPS" "CAPS" "#6272A4"
 fi
