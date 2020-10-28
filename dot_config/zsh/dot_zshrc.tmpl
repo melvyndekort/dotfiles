@@ -112,8 +112,9 @@ alias cat='bat'
 alias hex='hexyl'
 
 # Set MISC aliases
+alias rm='rm -Iv'
+alias cp='cp -v'
 alias ssh='TERM=xterm-256color ssh'
-alias rm='rm -I'
 alias netstat='echo NETSTAT is unavailable on Arch, please use \"ss -natl\"'
 alias lspath='for i in $(echo $PATH | sed "s/:/\ /g"); do find $i -maxdepth 1 -xtype f -executable; done | sort -u'
 alias setclip='xclip -selection clipboard'
