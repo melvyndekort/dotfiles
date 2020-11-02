@@ -1,0 +1,9 @@
+{
+    "editor.fontFamily": "'Hack Nerd Font Mono'",
+    "editor.tabSize": 2,
+    "editor.wordWrapColumn": 200,
+    "window.autoDetectColorScheme": true,
+    "terminal.external.linuxExec": "alacritty",
+    "update.mode": "none",
+    "files.autoSave": "onFocusChange"
+}
