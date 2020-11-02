@@ -29,11 +29,8 @@ fi
 
 # setup graphics part of window manager
 picom -b --config .config/picom/picom.conf
+set-wallpaper $(realpath $(ls -1 ~/Sync/pictures/wallpapers/* | sort -R | head -n 1))
 xwallpaper --zoom ~/.config/wallpaper.png &
-
-# screen locker
-export XSECURELOCK_NO_COMPOSITE=1
-xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
 
 # set default cursor to arrow
 xsetroot -cursor_name left_ptr
