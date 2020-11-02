@@ -5,8 +5,15 @@ set -e
 lpass show --field="Private Key" "GPG melvyn@mdekort.nl" | gpg --import -
 
 echo
-echo 'Please trust the imported private key:'
-echo '  gpg --edit-key melvyn@mdekort.nl'
 echo
-echo '# at the prompt: trust'
-echo '# choose option 5'
+echo '============================================================================'
+echo '  Now importing the private GPG key, you need to ultimately trust the key:'
+echo '    # enter 5<RETURN>'
+echo '    # enter y<RETURN>'
+echo '============================================================================'
+echo
+echo
+
+export XDG_DATA_HOME=$HOME/.local/share
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+gpg --edit-key melvyn@mdekort.nl trust quit
