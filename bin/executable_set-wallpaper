@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 FILE="$(realpath -s $1)"
 
@@ -7,6 +7,9 @@ if [ ! -f "$FILE" ]; then
   exit 1
 fi
 
-convert "$FILE" $HOME/.config/wallpaper.png
-xwallpaper --zoom ~/.config/wallpaper.png
-notify-send -i "$FILE" "Wallpaper changed."
+TARGET="${HOME}/.config/wallpaper.png"
+CURRES="$(xrandr | awk '/*/ {print $1}' | head -n 1)"
+convert "$FILE" "$TARGET"
+betterlockscreen -u "$TARGET" -r $CURRES -b 0.5
+xwallpaper --zoom "$TARGET"
+notify-send -i "Wallpaper changed."
