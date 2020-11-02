@@ -2,7 +2,11 @@
 
 set -e
 
-lpass show --field="Private Key" "GPG melvyn@mdekort.nl" | gpg --import -
+export XDG_DATA_HOME=$HOME/.local/share
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+export GPG_TTY=$(tty)
+
+lpass show --field="Private Key" "GPG melvyn@mdekort.nl" | gpg --import
 
 echo
 echo
@@ -14,6 +18,4 @@ echo '==========================================================================
 echo
 echo
 
-export XDG_DATA_HOME=$HOME/.local/share
-export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 gpg --edit-key melvyn@mdekort.nl trust quit
