@@ -5,6 +5,8 @@ set -e
 export XDG_DATA_HOME=$HOME/.local/share
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export GPG_TTY=$(tty)
+mkdir -p $GNUPGHOME
+chmod 700 $GNUPGHOME
 
 lpass show --field="Private Key" "GPG melvyn@mdekort.nl" | gpg --import
 
