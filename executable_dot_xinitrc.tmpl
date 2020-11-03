@@ -32,6 +32,9 @@ picom -b --config .config/picom/picom.conf
 set-wallpaper $(realpath $(ls -1 ~/Sync/pictures/wallpapers/* | sort -R | head -n 1))
 xwallpaper --zoom ~/.config/wallpaper.png &
 
+# start lockscreen
+xss-lock -- betterlockscreen -l dimblur
+
 # set default cursor to arrow
 xsetroot -cursor_name left_ptr
 

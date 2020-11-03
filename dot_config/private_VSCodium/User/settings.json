@@ -7,5 +7,6 @@
     "update.mode": "none",
     "files.autoSave": "onFocusChange",
     "files.enableTrash": false,
-    "workbench.colorTheme": "Dracula At Night"
+    "workbench.colorTheme": "Dracula At Night",
+    "workbench.startupEditor": "newUntitledFile"
 }

@@ -80,8 +80,8 @@ bindsym $mod+a focus parent
 bindsym $mod+Shift+a focus child
 
 # lock the window manager
-bindsym --release $mod+x exec --no-startup-id betterlockscreen -l dimblur
-bindsym --release $mod+Shift+x exec --no-startup-id betterlockscreen -s dimblur
+bindsym --release $mod+x exec --no-startup-id xset s activate
+bindsym --release $mod+Shift+x exec --no-startup-id systemctl suspend
 
 # change volume or toggle mute
 bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 5%+ && pkill -RTMIN+1 i3blocks 
