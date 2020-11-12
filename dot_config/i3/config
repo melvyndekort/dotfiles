@@ -182,6 +182,9 @@ bindsym $mod+Shift+e exec "i3-nagbar -f 'pango:Hack Nerd Font 10' -t warning -m 
 # configure the display setup
 bindsym $mod+F8 exec "rofi -modi display:rofi-display -show display && rofi -modi autolock:rofi-autolock -show autolock"
 
+# pass picker
+bindsym $mod+F9 exec "pass clip -r"
+
 # manual power management
 bindsym $mod+F12 exec "rofi -modi power:rofi-power -show power"
 
