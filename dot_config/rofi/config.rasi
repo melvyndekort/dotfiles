@@ -1,0 +1,14 @@
+configuration {
+	modi: "drun,run,window";
+	columns: 2;
+	font: "Hack Nerd Font 11";
+	show-icons: true;
+	terminal: "alacritty";
+	sidebar-mode: true;
+	parse-hosts: false;
+	parse-known-hosts: false;
+	theme: "dracula";
+	display-window: "Window";
+	display-ssh: "SSH";
+	display-drun: "Application";
+}
