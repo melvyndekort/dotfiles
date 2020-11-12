@@ -188,6 +188,9 @@ bindsym $mod+F12 exec "rofi -modi power:rofi-power -show power"
 # lastpass picker
 bindsym $mod+F10 exec "rofi -modi lpass:rofi-lpass -show lpass"
 
+# bluetooth control
+bindsym $mod+b exec "rofi-bluetooth"
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
