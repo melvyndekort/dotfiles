@@ -179,17 +179,17 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -f 'pango:Hack Nerd Font 10' -t warning -m 'Want to exit i3?' -B 'Yes, exit i3' 'i3-msg exit'"
 
-# configure the display setup
+# display menu
 bindsym $mod+F8 exec "rofi -modi display:rofi-display -show display && rofi -modi autolock:rofi-autolock -show autolock"
 
-# pass picker
+# pass menu
 bindsym $mod+F9 exec "pass clip -r"
 
-# manual power management
-bindsym $mod+F12 exec "rofi -modi power:rofi-power -show power"
-
-# lastpass picker
+# lpass menu
 bindsym $mod+F10 exec "rofi -modi lpass:rofi-lpass -show lpass"
+
+# power menu
+bindsym $mod+F12 exec "rofi -modi power:rofi-power -show power"
 
 # bluetooth control
 bindsym $mod+b exec "rofi-bluetooth"
