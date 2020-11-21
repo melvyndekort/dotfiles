@@ -12,13 +12,31 @@ fi
 
 case "$1" in
   *morning*)
-    v4l2-ctl -d /dev/video0 -c "brightness=-10,saturation=45,backlight_compensation=0,exposure_auto=1,exposure_absolute=110"
+    v4l2-ctl -d /dev/video0 -c "brightness=-10"
+    v4l2-ctl -d /dev/video0 -c "saturation=45"
+    v4l2-ctl -d /dev/video0 -c "hue=0"
+    v4l2-ctl -d /dev/video0 -c "white_balance_temperature_auto=1"
+    v4l2-ctl -d /dev/video0 -c "backlight_compensation=0"
+    v4l2-ctl -d /dev/video0 -c "exposure_auto=1"
+    v4l2-ctl -d /dev/video0 -c "exposure_absolute=110"
     ;;
   *afternoon*)
-    v4l2-ctl -d /dev/video0 -c "brightness=-10,saturation=45,backlight_compensation=0,exposure_auto=1,exposure_absolute=110"
+    v4l2-ctl -d /dev/video0 -c "brightness=-10"
+    v4l2-ctl -d /dev/video0 -c "saturation=45"
+    v4l2-ctl -d /dev/video0 -c "hue=0"
+    v4l2-ctl -d /dev/video0 -c "white_balance_temperature_auto=1"
+    v4l2-ctl -d /dev/video0 -c "backlight_compensation=0"
+    v4l2-ctl -d /dev/video0 -c "exposure_auto=1"
+    v4l2-ctl -d /dev/video0 -c "exposure_absolute=110"
     ;;
   *evening*)
-    v4l2-ctl -d /dev/video0 -c "saturation=80,hue=-30,backlight_compensation=0,exposure_auto=1,exposure_absolute=400"
+    v4l2-ctl -d /dev/video0 -c "brightness=0"
+    v4l2-ctl -d /dev/video0 -c "saturation=75"
+    v4l2-ctl -d /dev/video0 -c "hue=0"
+    v4l2-ctl -d /dev/video0 -c "white_balance_temperature_auto=0"
+    v4l2-ctl -d /dev/video0 -c "white_balance_temperature=3200"
+    v4l2-ctl -d /dev/video0 -c "backlight_compensation=0"
+    v4l2-ctl -d /dev/video0 -c "exposure_auto=1"
+    v4l2-ctl -d /dev/video0 -c "exposure_absolute=250"
     ;;
 esac
-
