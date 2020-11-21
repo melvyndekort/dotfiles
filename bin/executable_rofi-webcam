@@ -1,0 +1,24 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]; then
+  cat <<-END
+ morning
+ afternoon
+ evening
+END
+
+  exit 0
+fi
+
+case "$1" in
+  *morning*)
+    v4l2-ctl -d /dev/video0 -c "brightness=-10,saturation=45,backlight_compensation=0,exposure_auto=1,exposure_absolute=110"
+    ;;
+  *afternoon*)
+    v4l2-ctl -d /dev/video0 -c "brightness=-10,saturation=45,backlight_compensation=0,exposure_auto=1,exposure_absolute=110"
+    ;;
+  *evening*)
+    v4l2-ctl -d /dev/video0 -c "saturation=80,hue=-30,backlight_compensation=0,exposure_auto=1,exposure_absolute=400"
+    ;;
+esac
+
