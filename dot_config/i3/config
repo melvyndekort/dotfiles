@@ -188,6 +188,9 @@ bindsym $mod+F9 exec "pass clip -r"
 # lpass menu
 bindsym $mod+F10 exec "rofi -modi lpass:rofi-lpass -show lpass"
 
+# webcam menu
+bindsym $mod+F11 exec "rofi -modi webcam:rofi-webcam -show webcam"
+
 # power menu
 bindsym $mod+F12 exec "rofi -modi power:rofi-power -show power"
 
