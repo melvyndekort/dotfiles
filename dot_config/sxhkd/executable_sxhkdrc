@@ -1,0 +1,101 @@
+#
+#           _     _       _
+#  _____  _| |__ | | ____| |_ __ ___
+# / __\ \/ / '_ \| |/ / _` | '__/ __|
+# \__ \>  <| | | |   < (_| | | | (__
+# |___/_/\_\_| |_|_|\_\__,_|_|  \___|
+#
+#
+#
+
+# terminal emulator
+super + {_,shift +}Return
+	alacritty {_,-e ranger}
+
+# program launcher
+super + d
+	rofi -show drun
+
+# make sxhkd reload its configuration files:
+super + Escape
+	pkill -USR1 -x sxhkd
+
+# restart polybar
+super + shift + p
+  $HOME/.config/polybar/launch.sh
+
+# calculator
+super + c
+  galculator
+
+# wallpaper selector
+super + Home
+  sxiv -tf ~/Sync/pictures/wallpapers
+
+# control android device through ADB
+super + p
+  scrcpy --shortcut-mod lctrl -w
+
+# display menu
+super + F8
+  rofi -modi display:rofi-display -show display && rofi -modi autolock:rofi-autolock -show autolock
+
+# pass menu
+super + F9
+  pass clip -r
+
+# lpass menu
+super + F10
+  rofi -modi lpass:rofi-lpass -show lpass
+
+# webcam menu
+super + F11
+  rofi -modi webcam:rofi-webcam -show webcam
+
+# power menu
+super + F12
+  rofi -modi power:rofi-power -show power
+
+# bluetooth control
+super + b
+  rofi-bluetooth
+
+# screenshot
+Print
+  shotgun - | xclip -t 'image/png' -selection clipboard
+
+# screenshot single window
+super + Print
+  shotgun -i $(xdotool getmouselocation --shell | grep WINDOW | cut -d'=' -f2) - | xclip -t 'image/png' -selection clipboard
+
+# screenshot selected area
+super + shift + Print
+  shotgun $(hacksaw -f '-i %i -g %g') - | xclip -t 'image/png' -selection clipboard
+
+# put generated password in clipboard
+super + control + p
+  pwgen -B -c -n -y -s 20 | tr -d '\n' | xclip -selection clipboard
+
+# dunst
+control + {space,shift + space,grave}
+  dunstctl {close,close-all,history-pop}
+
+# lock the window manager
+super + x
+  xset s activate
+
+# suspend
+super + shift + x
+  systemctl suspend
+
+# control volume
+XF86Audio{Raise,Lower}Volume
+  amixer -q -D pulse sset Master 5%{+,-}
+
+# mute volume
+XF86Audio{_,Mic}Mute
+	amixer -q -D pulse sset {Master,Capture} toggle
+
+# control screen brightness
+XF86MonBrightness{Up,Down}
+  brightnessctl s {+10%,10%-}
