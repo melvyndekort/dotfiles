@@ -14,8 +14,6 @@ export TERMINAL='alacritty'
 export PAGER='less'
 export LESS="-XR"
 
-export PATH="$PATH:$HOME/.config/statusbar"
-
 # Set XDG variables
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME=$HOME/.local/share
