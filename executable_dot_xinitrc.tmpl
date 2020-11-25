@@ -20,17 +20,25 @@ if [ -f "$userresources" ]; then
 fi
 
 # start default X11 stuff
-if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
   for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
     [ -x "$f" ] && . "$f"
   done
   unset f
 fi
 
+# setup custom screen setup
+if [ -f $HOME/.config/default-screen-setup ]; then
+  $HOME/.config/default-screen-setup
+fi
+
 # setup graphics part of window manager
 picom -b --config .config/picom/picom.conf
 set-wallpaper $(realpath $(ls -1 ~/Sync/pictures/wallpapers/* | sort -R | head -n 1)) &
 xwallpaper --zoom ~/.config/wallpaper.png &
+
+# start simple X hotkey daemon
+sxhkd &
 
 # start lockscreen
 xss-lock -- betterlockscreen -l dimblur &

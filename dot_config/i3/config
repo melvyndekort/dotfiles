@@ -18,18 +18,9 @@ client.background       #282A36
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
-bindsym $mod+Return exec --no-startup-id alacritty
-
-# start a file manager
-bindsym $mod+Shift+Return exec --no-startup-id alacritty -e ranger
-
 # kill focused window
 bindsym $mod+Shift+q kill
 bindsym $mod+q kill
-
-# start application chooser
-bindsym $mod+d exec rofi -show drun
 
 # change focus
 bindsym $mod+h focus left
@@ -79,29 +70,6 @@ bindsym $mod+a focus parent
 # focus the child container
 bindsym $mod+Shift+a focus child
 
-# lock the window manager
-bindsym --release $mod+x exec --no-startup-id xset s activate
-bindsym --release $mod+Shift+x exec --no-startup-id systemctl suspend
-
-# change volume or toggle mute
-bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 5%+ && pkill -RTMIN+1 i3blocks 
-bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 5%- && pkill -RTMIN+1 i3blocks
-bindsym XF86AudioMute exec amixer -q -D pulse sset Master toggle && pkill -RTMIN+1 i3blocks
-bindsym XF86AudioMicMute exec amixer -q -D pulse sset Capture toggle && pkill -RTMIN+1 i3blocks
-
-# screen brightness controls
-bindsym XF86MonBrightnessUp exec brightnessctl s +10% # increase screen brightness
-bindsym XF86MonBrightnessDown exec brightnessctl s 10%- # decrease screen brightness
-
-# show wallpapers
-bindsym $mod+Home exec --no-startup-id sxiv -tf ~/Sync/pictures/wallpapers
-
-# key indicator
-bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
-
-# use Android device through USB
-bindsym --release $mod+p exec --no-startup-id scrcpy --shortcut-mod lctrl -w
-
 # scratchpad binds
 bindsym $mod+minus scratchpad show
 bindsym $mod+Shift+minus move scratchpad
@@ -109,55 +77,30 @@ bindsym $mod+Shift+minus move scratchpad
 # make window sticky
 bindsym $mod+comma sticky toggle
 
-# screenshot
-bindsym Print exec "shotgun - | xclip -t 'image/png' -selection clipboard"
-bindsym $mod+Print exec "shotgun -i $(xdotool getmouselocation --shell | grep WINDOW | cut -d'=' -f2) - | xclip -t 'image/png' -selection clipboard"
-bindsym --release Shift+$mod+Print exec "shotgun $(hacksaw -f '-i %i -g %g') - | xclip -t 'image/png' -selection clipboard"
-
-# dunst
-bindsym --release Control+space exec --no-startup-id dunstctl close
-bindsym --release Control+shift+space exec --no-startup-id dunstctl close-all
-bindsym --release Control+grave exec --no-startup-id dunstctl history-pop
-
-# Define names for default workspaces for which we configure key bindings later on.
-# We use variables to avoid repeating the names in multiple places.
-set $ws1 "1 "
-set $ws2 "2 "
-set $ws3 "3 "
-set $ws4 "4 "
-set $ws5 "5 "
-set $ws6 "6 "
-set $ws7 "7 "
-set $ws8 "8 "
-set $ws9 "9 "
-set $ws10 "10 "
-
 # switch to workspace
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace $ws6
-bindsym $mod+7 workspace $ws7
-bindsym $mod+8 workspace $ws8
-bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws10
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
 
 # in multi-monitor setup assign workspace to monitor
-workspace $ws1 output primary
+workspace 1 output primary
 
 bindsym $mod+m move workspace to output left
 
@@ -165,37 +108,13 @@ bindsym $mod+m move workspace to output left
 for_window [title="mypulsemixer"] floating enable
 for_window [title="myforecast"] floating enable, resize set 1010 725, move position center
 for_window [instance="buienradar"] floating enable, resize set 550 550, move position center
-
-# calculator
 for_window [title="galculator"] floating enable, move position center
-bindsym $mod+c exec --no-startup-id galculator
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -f 'pango:Hack Nerd Font 10' -t warning -m 'Want to exit i3?' -B 'Yes, exit i3' 'i3-msg exit'"
-
-# display menu
-bindsym $mod+F8 exec "rofi -modi display:rofi-display -show display && rofi -modi autolock:rofi-autolock -show autolock"
-
-# pass menu
-bindsym $mod+F9 exec "pass clip -r"
-
-# lpass menu
-bindsym $mod+F10 exec "rofi -modi lpass:rofi-lpass -show lpass"
-
-# webcam menu
-bindsym $mod+F11 exec "rofi -modi webcam:rofi-webcam -show webcam"
-
-# power menu
-bindsym $mod+F12 exec "rofi -modi power:rofi-power -show power"
-
-# bluetooth control
-bindsym $mod+b exec "rofi-bluetooth"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -250,9 +169,6 @@ gaps inner 10
 gaps outer 10
 smart_gaps on
 smart_borders no_gaps
-
-# Configure screen
-exec_always --no-startup-id sh ~/.config/default-screen-setup
 
 # Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
 bar {
