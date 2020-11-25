@@ -3,48 +3,52 @@
 # Global properties
 # The top properties below are applied to every block, but can be overridden.
 # Each block command defaults to the script name to avoid boilerplate.
-command=~/.config/statusbar/$BLOCK_NAME
 separator_block_width=25
 markup=pango
 color=#50FA7B
 align=center
 
 [weather]
+command=./weather.sh
 interval=450
 
 [memory]
+command=./memory.sh
 label= 
 interval=10
 
 [load_average]
+command=./load_average.sh
 label=龍 
 interval=10
 
 [storage]
+command=./storage.sh
 label= 
 interval=60
 
 [network]
+command=./network.sh
 label= 
 interval=10
 
 [battery]
+command=./battery.sh
 instance=0
 interval=20
 color=#BD93F9
 
 [volume]
+command=./volume.sh
 interval=once
 signal=1
 
 [microphone]
+command=./microphone.sh
 interval=once
 signal=1
 
-[keyindicator]
-interval=once
-signal=11
-
 [datetime]
+command=./datetime.sh
 interval=1
 color=#F8F8F2
