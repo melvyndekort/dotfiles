@@ -15,11 +15,16 @@ STATE=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $4 }'
 
 
 if [ "$STATE" = "off" -o "$VOL" -eq "0" ]; then
-  printf " %s\n" "$VOL%" "$VOL%"
+  echo "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔇</span> $VOL%"
+  echo "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔇</span> $VOL%"
   echo "#6272A4"
-elif [ "$VOL" -gt "70" ]; then
-  printf " %s\n" "$VOL%" "$VOL%"
+elif [ "$VOL" -gt "75" ]; then
+  echo "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔊</span> $VOL%"
   exit 33
+elif [ "$VOL" -gt "50" ]; then
+  echo "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔊</span> $VOL%"
+elif [ "$VOL" -lt "25" ]; then
+  echo "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔈</span> $VOL%"
 else
-  printf " %s\n" "$VOL%" "$VOL%"
+  echo "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔉</span> $VOL%"
 fi
