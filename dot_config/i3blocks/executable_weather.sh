@@ -14,4 +14,4 @@ case $BLOCK_BUTTON in
 esac
 
 FEED=$(curl -sL "https://data.buienradar.nl/2.0/feed/json" | jq -cr '.actual.stationmeasurements[] | select(.stationid==6340)')
-echo $FEED | jq -cr '[.temperature, .weatherdescription] | @csv' | tr -d '"' | awk -F',' '{ printf(" %sC / %s\n", $1, $2); }'
+echo $FEED | jq -cr '[.temperature, .weatherdescription] | @csv' | tr -d '"' | awk -F',' '{ printf("%sC / %s\n", $1, $2); }'

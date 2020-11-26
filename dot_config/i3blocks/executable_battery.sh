@@ -9,7 +9,11 @@ esac
 INSTANCE="${BLOCK_INSTANCE:-0}"
 
 # exit when the system doesn't have a battery
-[ ! -d "/sys/class/power_supply/BAT${INSTANCE}" ] && exit 0
+if [ ! -d "/sys/class/power_supply/BAT${INSTANCE}" ]; then
+  echo "<span font_family=\"Noto Color Emoji\" size=\"medium\">⚡</span>"
+  #echo "ﮣ"
+  exit 0
+fi
 
 ACPI="$(acpi -b | grep "Battery $INSTANCE")"
 
@@ -24,16 +28,25 @@ FULLTEXT="$(echo "$ACPI" | tr -d , | awk '
 echo "$FULLTEXT" | awk -v stat="$(cat /sys/class/power_supply/BAT${INSTANCE}/status)" -F '%' '
 {
   if (stat == "Charging" || stat == "Full") {
-    print " "$0; print $0; print "#50FA7B"; exit 0
+    print "<span font_family=\"Noto Color Emoji\" size=\"medium\">⚡</span>" $0
   } else if ($1 <= 7) {
-    print " "$0; print $0; exit 33
+    print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
+    exit 33
   } else if ($1 <= 20) {
-    print " "$0; print $0; print "#FF5555"; exit 0
+    print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
+    print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
+    print "#FF5555"
   } else if ($1 <= 55) {
-    print " "$0; print $0; print "#FFB86C"; exit 0
+    print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
+    print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
+    print "#FFB86C"
   } else if ($1 <= 70) {
-    print " "$0; print $0; print "#F1Fa8C"; exit 0
+    print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
+    print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
+    print "#F1FA8C"
   } else {
-    print " "$0; print $0; print "#50FA7B"; exit 0
+    print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
+    print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
+    print "#50FA7B"
   }
 }'

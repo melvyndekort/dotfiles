@@ -1,54 +1,91 @@
 # i3blocks config file
 
 # Global properties
-# The top properties below are applied to every block, but can be overridden.
-# Each block command defaults to the script name to avoid boilerplate.
-separator_block_width=25
 markup=pango
 color=#50FA7B
 align=center
+separator=false
 
 [weather]
+#label= 
+label=<span font_family="Noto Color Emoji" size="medium">⛅</span> 
 command=./weather.sh
-interval=450
+interval=1800
+
+[separator]
+color=#bd93f9
+full_text=|
 
 [memory]
+#label= 
+label=<span font_family="Noto Color Emoji" size="medium">🧠</span> 
 command=./memory.sh
-label= 
 interval=10
+
+[separator]
+color=#bd93f9
+full_text=|
 
 [load_average]
+#label=龍 
+label=<span font_family="Noto Color Emoji" size="medium">💻</span> 
 command=./load_average.sh
-label=龍 
 interval=10
+
+[separator]
+color=#bd93f9
+full_text=|
 
 [storage]
+label=<span font_family="Noto Color Emoji" size="medium">🏠</span> 
 command=./storage.sh
-label= 
 interval=60
 
+[separator]
+color=#bd93f9
+full_text=|
+
 [network]
+label=<span font_family="Noto Color Emoji" size="medium">🖧</span> 
 command=./network.sh
-label= 
 interval=10
+
+[separator]
+color=#bd93f9
+full_text=|
 
 [battery]
 command=./battery.sh
 instance=0
 interval=20
-color=#BD93F9
+
+[separator]
+color=#bd93f9
+full_text=|
 
 [volume]
 command=./volume.sh
 interval=once
 signal=1
 
+[separator]
+color=#bd93f9
+full_text=|
+
 [microphone]
 command=./microphone.sh
 interval=once
 signal=1
 
+[separator]
+color=#bd93f9
+full_text=|
+
 [datetime]
+label=<span font_family="Noto Color Emoji" size="medium">🕗</span> 
 command=./datetime.sh
 interval=1
-color=#F8F8F2
+
+[separator]
+color=#bd93f9
+full_text=|

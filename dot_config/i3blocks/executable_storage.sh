@@ -9,7 +9,8 @@ case $BLOCK_BUTTON in
 esac
 
 df -BG /home | sed -n 2p | tr -d 'G%' | awk '{
-  print $3"G/"$2"G\n";
+  print $3"G/"$2"G";
+  print $3"G/"$2"G";
   if ($5 >= "95") {
     exit 33;
   }

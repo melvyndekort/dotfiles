@@ -10,8 +10,8 @@ esac
 IPADDR=$(ip route get 1.1.1.1 | awk '{ for (nn=1;nn<=NF;nn++) if ($nn~"src") print $(nn+1) }')
 
 if [ -z "$IPADDR" ]; then
-  printf "%s\n" "DISCONNECTED" "DISCONNECTED"
+  echo "DISCONNECTED"
   exit 33
 else
-  printf "%s\n" "$IPADDR" "$IPADDR"
+  echo "$IPADDR"
 fi
