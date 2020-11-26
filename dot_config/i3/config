@@ -4,16 +4,16 @@
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font is used in the bar {} block below.
-font pango:DejaVu Sans Mono, Font Awesome 5 Brands, Font Awesome 5 Free Solid, Font Awesome 5 Free Regular 10
+font pango:DejaVu Sans Mono 10
 
 # class                 border  bground text    indicator child_border
-client.focused          #BD93F9 #BD93F9 #F8F8F2 #ff5555   #BD93F9
-client.focused_inactive #282A36 #282A36 #F8F8F2 #282A36   #282A36
-client.unfocused        #282A36 #282A36 #F8F8F2 #282A36   #282A36
-client.urgent           #282A36 #282A36 #F8F8F2 #282A36   #282A36
-client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
+client.focused          #bd93f9 #bd93f9 #f8f8f2 #ff5555   #bd93f9
+client.focused_inactive #282a36 #282a36 #f8f8f2 #282a36   #282a36
+client.unfocused        #282a36 #282a36 #f8f8f2 #282a36   #282a36
+client.urgent           #282a36 #282a36 #f8f8f2 #282a36   #282a36
+client.placeholder      #282a36 #282a36 #f8f8f2 #282a36   #282a36
 
-client.background       #282A36
+client.background       #282a36
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -105,10 +105,10 @@ workspace 1 output primary
 bindsym $mod+m move workspace to output left
 
 # float special windows
+for_window [title="galculator"] floating enable, move position center
 for_window [title="mypulsemixer"] floating enable
 for_window [title="myforecast"] floating enable, resize set 1010 725, move position center
 for_window [instance="buienradar"] floating enable, resize set 550 550, move position center
-for_window [title="galculator"] floating enable, move position center
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -179,17 +179,16 @@ bar {
   tray_output primary
 
   height 25
+  workspace_min_width 35
 
   colors {
-    background #282A36
-    statusline #8be9fd
-    separator  #bd93f9
+    background #282a36
 
-    #colorclass  #border  #background  #text
-    focused_workspace  #282A36 #282A36 #ff79c6
-    active_workspace   #282A36 #282A36 #bd93f9
-    inactive_workspace #282A36 #282A36 #bd93f9
-    urgent_workspace   #282A36 #ff5555 #f8f8f2
-    binding_mode       #282A36 #ff5555 #f8f8f2
+    #colorclass         #border  #background  #text
+    focused_workspace   #bd93f9  #bd93f9      #44475a
+    active_workspace    #bd93f9  #44475a      #bd93f9
+    inactive_workspace  #44475a  #44475a      #bd93f9
+    urgent_workspace    #ff5555  #ff5555      #f8f8f2
+    binding_mode        #ff5555  #ff5555      #f8f8f2
   }
 }

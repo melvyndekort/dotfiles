@@ -14,8 +14,8 @@ VOL=$(amixer -D pulse sget Capture | grep 'Left:' | awk -F'[][]' '{ print $2 }' 
 STATE=$(amixer -D pulse sget Capture | grep 'Left:' | awk -F'[][]' '{ print $4 }')
 
 if [ "$STATE" = "off" -o "$VOL" -eq "0" ]; then
-  echo " $VOL%"
-  echo " $VOL%"
+  echo "<span font_family=\"Font Awesome 5 Free Solid\" size=\"medium\"></span> $VOL%"
+  echo "<span font_family=\"Font Awesome 5 Free Solid\" size=\"medium\"></span> $VOL%"
   echo "#6272A4"
 else
   echo "<span font_family=\"Noto Color Emoji\" size=\"medium\">🎙️</span> $VOL%"
