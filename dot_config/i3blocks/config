@@ -50,7 +50,7 @@ color=#bd93f9
 full_text=|
 
 [network]
-label=<span font_family="Awesome 5 Free Regular" foreground="#8be9fd" size="x-large"></span>
+label=<span font_family="Awesome 5 Free Regular" foreground="#8be9fd" size="x-large"></span> 
 command=./network.sh
 interval=10
 
