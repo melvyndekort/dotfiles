@@ -11,7 +11,7 @@ esac
 load="$(awk '{print $1}' /proc/loadavg)"
 cpus="$(nproc)"
 
-printf "%s\n" "$load" "$load"
+echo $load
 
 awk -v cpus=$cpus -v cpuload=$load '
 BEGIN {
