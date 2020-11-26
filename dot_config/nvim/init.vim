@@ -1,3 +1,12 @@
+"
+"             _
+"  _ ____   _(_)_ __ ___
+" | '_ \ \ / / | '_ ` _ \
+" | | | \ V /| | | | | | |
+" |_| |_|\_/ |_|_| |_| |_|
+" 
+"
+
 " Plugin configuration
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
