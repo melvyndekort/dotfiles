@@ -112,6 +112,7 @@ bindsym $mod+m move workspace to output left
 
 # float special windows
 for_window [title="galculator"] floating enable, move position center
+for_window [title="helpdoc"] floating enable, move position center
 for_window [title="mypulsemixer"] floating enable
 for_window [title="myforecast"] floating enable, resize set 1010 725, move position center
 for_window [instance="buienradar"] floating enable, resize set 550 550, move position center
