@@ -1,0 +1,56 @@
+#!/bin/sh
+
+choice=$(rofi -dmenu -p "Config file")<<-END
+alacritty
+aws-config
+aws-creds
+compton
+dunst
+git
+i3
+i3blocks
+nvim
+picom
+rofi-config
+sxhkd
+sxiv
+tmux
+zsh
+END
+
+case "$choice" in
+  alacritty)
+    file="$HOME/.config/alacritty/alacritty.yml" ;;
+  aws-config)
+    file="$HOME/.config/aws/config" ;;
+  aws-creds)
+    file="$HOME/.config/aws/credentials" ;;
+  compton)
+    file="$HOME/.config/compton.conf" ;;
+  dunst)
+    file="$HOME/.config/dunst/dunstrc" ;;
+  git)
+    file="$HOME/.config/git/config" ;;
+  i3)
+    file="$HOME/.config/i3/config" ;;
+  i3blocks)
+    file="$HOME/.config/i3blocks/config" ;;
+  nvim)
+    file="$HOME/.config/nvim/init.nvim" ;;
+  picom)
+    file="$HOME/.config/picom/picom.conf" ;;
+  rofi-config)
+    file="$HOME/bin/rofi-config" ;;
+  sxhkd)
+    file="$HOME/.config/sxhkd/sxhkdrc" ;;
+  sxiv)
+    file="$HOME/.config/sxiv/exec/key-handler" ;;
+  tmux)
+    file="$HOME/.config/tmux/tmux.conf" ;;
+  zsh)
+    file="$HOME/.config/zsh/.zshrc" ;;
+  *)
+    exit 1 ;;
+esac
+
+alacritty -e zsh -c "chezmoi edit --apply $file"

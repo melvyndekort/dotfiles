@@ -35,6 +35,10 @@ super + p
 super + shift + p
   pwgen -B -c -n -y -s 20 | tr -d '\n' | xclip -selection clipboard
 
+# edit configs
+super + F6
+  rofi-config
+
 # bluetooth control
 super + F7
   rofi-bluetooth
