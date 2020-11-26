@@ -60,7 +60,7 @@ super + F11
   rofi -modi webcam:rofi-webcam -show webcam
 
 # power menu
-ctrl + alt + Delete
+super + F12
   rofi -modi power:rofi-power -show power
 
 # screenshot
