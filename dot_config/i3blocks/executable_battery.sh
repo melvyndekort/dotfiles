@@ -36,17 +36,21 @@ echo "$FULLTEXT" | awk -v stat="$(cat /sys/class/power_supply/BAT${INSTANCE}/sta
     print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
     print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
     print "#FF5555"
+    exit 0
   } else if ($1 <= 55) {
     print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
     print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
     print "#FFB86C"
+    exit 0
   } else if ($1 <= 70) {
     print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
     print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
     print "#F1FA8C"
+    exit 0
   } else {
     print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
     print "<span font_family=\"Noto Color Emoji\" size=\"medium\">🔋</span>" $0
     print "#50FA7B"
+    exit 0
   }
 }'
