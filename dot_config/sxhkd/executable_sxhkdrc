@@ -35,6 +35,10 @@ super + p
 super + shift + p
   pwgen -B -c -n -y -s 20 | tr -d '\n' | xclip -selection clipboard
 
+# show help
+super + F1
+  alacritty -t helpdoc -e less $HOME/docs/help.txt
+
 # edit configs
 super + F6
   rofi-config
@@ -93,7 +97,7 @@ XF86Audio{Raise,Lower}Volume
 
 # mute volume
 XF86Audio{_,Mic}Mute
-	amixer -q -D pulse sset {Master,Capture} toggle
+	amixer -q -D pulse sset {Master,Capture} toggle && pkill -RTMIN+1 i3blocks
 
 # control screen brightness
 XF86MonBrightness{Up,Down}
