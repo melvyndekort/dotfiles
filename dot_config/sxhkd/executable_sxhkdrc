@@ -6,7 +6,6 @@
 # |___/_/\_\_| |_|_|\_\__,_|_|  \___|
 #
 #
-#
 
 # terminal emulator
 super + {_,shift +}Return
@@ -20,10 +19,6 @@ super + d
 super + Escape
 	pkill -USR1 -x sxhkd
 
-# restart polybar
-super + shift + p
-  $HOME/.config/polybar/launch.sh
-
 # calculator
 super + c
   galculator
@@ -35,6 +30,14 @@ super + Home
 # control android device through ADB
 super + p
   scrcpy --shortcut-mod lctrl -w
+
+# put generated password in clipboard
+super + shift + p
+  pwgen -B -c -n -y -s 20 | tr -d '\n' | xclip -selection clipboard
+
+# bluetooth control
+super + F7
+  rofi-bluetooth
 
 # display menu
 super + F8
@@ -53,31 +56,23 @@ super + F11
   rofi -modi webcam:rofi-webcam -show webcam
 
 # power menu
-super + F12
+ctrl + alt + Delete
   rofi -modi power:rofi-power -show power
-
-# bluetooth control
-super + b
-  rofi-bluetooth
 
 # screenshot
 Print
-  shotgun - | xclip -t 'image/png' -selection clipboard
+  shotgun - | xclip -t 'image/png' -selection clipboard && notify-send "Screenshot taken"
 
 # screenshot single window
 super + Print
-  shotgun -i $(xdotool getmouselocation --shell | grep WINDOW | cut -d'=' -f2) - | xclip -t 'image/png' -selection clipboard
+  shotgun -i $(xdotool getmouselocation --shell | grep WINDOW | cut -d'=' -f2) - | xclip -t 'image/png' -selection clipboard && notify-send "Screenshot taken"
 
 # screenshot selected area
 super + shift + Print
-  shotgun $(hacksaw -f '-i %i -g %g') - | xclip -t 'image/png' -selection clipboard
-
-# put generated password in clipboard
-super + control + p
-  pwgen -B -c -n -y -s 20 | tr -d '\n' | xclip -selection clipboard
+  shotgun $(hacksaw -f '-i %i -g %g') - | xclip -t 'image/png' -selection clipboard && notify-send "Screenshot taken"
 
 # dunst
-control + {space,shift + space,grave}
+ctrl + {space,shift + space,grave}
   dunstctl {close,close-all,history-pop}
 
 # lock the window manager
@@ -90,7 +85,7 @@ super + shift + x
 
 # control volume
 XF86Audio{Raise,Lower}Volume
-  amixer -q -D pulse sset Master 5%{+,-}
+  amixer -q -D pulse sset Master 5%{+,-} && pkill -RTMIN+1 i3blocks
 
 # mute volume
 XF86Audio{_,Mic}Mute
