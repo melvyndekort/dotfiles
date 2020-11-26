@@ -9,15 +9,20 @@ dunst
 git
 i3
 i3blocks
+netrc
 nvim
 picom
 ranger
 rofi-config
 screen
+ssh
+ssh-home
+ssh-portbase
 sxhkd
 sxiv
 terraform
 tmux
+xinitrc
 zsh
 END
 
@@ -38,16 +43,26 @@ case "$choice" in
     file="$HOME/.config/i3/config" ;;
   i3blocks)
     file="$HOME/.config/i3blocks/config" ;;
+  netrc)
+    file="$HOME/.netrc" ;;
   nvim)
     file="$HOME/.config/nvim/init.nvim" ;;
   picom)
     file="$HOME/.config/picom/picom.conf" ;;
+  profile)
+    file="$HOME/.profile" ;;
   ranger)
     file="$HOME/.config/ranger/rc.conf" ;;
   rofi-config)
     file="$HOME/bin/rofi-config" ;;
   screen)
     file="$HOME/.config/screen/screenrc" ;;
+  ssh)
+    file="$HOME/.ssh/config" ;;
+  ssh-home)
+    file="$HOME/.ssh/config.d/home.conf" ;;
+  ssh-portbase)
+    file="$HOME/.ssh/config.d/portbase.conf" ;;
   sxhkd)
     file="$HOME/.config/sxhkd/sxhkdrc" ;;
   sxiv)
@@ -56,6 +71,8 @@ case "$choice" in
     file="$HOME/.config/terraform/terraformrc" ;;
   tmux)
     file="$HOME/.config/tmux/tmux.conf" ;;
+  xinitrc)
+    file="$HOME/.xinitrc" ;;
   zsh)
     file="$HOME/.config/zsh/.zshrc" ;;
   *)
