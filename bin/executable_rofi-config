@@ -11,9 +11,12 @@ i3
 i3blocks
 nvim
 picom
+ranger
 rofi-config
+screen
 sxhkd
 sxiv
+terraform
 tmux
 zsh
 END
@@ -39,12 +42,18 @@ case "$choice" in
     file="$HOME/.config/nvim/init.nvim" ;;
   picom)
     file="$HOME/.config/picom/picom.conf" ;;
+  ranger)
+    file="$HOME/.config/ranger/rc.conf" ;;
   rofi-config)
     file="$HOME/bin/rofi-config" ;;
+  screen)
+    file="$HOME/.config/screen/screenrc" ;;
   sxhkd)
     file="$HOME/.config/sxhkd/sxhkdrc" ;;
   sxiv)
     file="$HOME/.config/sxiv/exec/key-handler" ;;
+  terraform)
+    file="$HOME/.config/terraform/terraformrc" ;;
   tmux)
     file="$HOME/.config/tmux/tmux.conf" ;;
   zsh)
