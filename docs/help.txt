@@ -19,6 +19,9 @@
  Super + Shift + X     = supend
  Super + Escape        = reload sxhkdrc
  Super + Home          = sxiv wallpapers
+ Super + Enter         = alacritty
+ Super + Shift + Enter = ranger
+ Super + Ctrl + Enter  = tmux
  Print                 = screenshot
  Super + Print         = screenshot window
  Super + Shift + Print = screenshot area
