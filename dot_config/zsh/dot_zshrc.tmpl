@@ -52,6 +52,7 @@ plugins=(archlinux aws catimg common-aliases copyfile docker docker-compose emoj
 
 # Autostart tmux on zsh startup
 ZSH_TMUX_AUTOSTART="false"
+ZSH_TMUX_CONFIG="$XDG_CONFIG_HOME/tmux/tmux.conf"
 
 KEYS=""
 for KEY in melvyn_ed25519 melvyn portbase portbase_ed25519; do
@@ -175,8 +176,8 @@ mfa() {
 }
 
 # TMUX configuration
-if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-  git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+if [ ! -d "$XDG_CONFIG_HOME/tmux/plugins/tpm" ]; then
+  git clone https://github.com/tmux-plugins/tpm $XDG_CONFIG_HOME/tmux/plugins/tpm
 fi
 
 {{if eq .email "m.de.kort@portbase.com" }}
