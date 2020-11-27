@@ -8,8 +8,8 @@
 #
 
 # terminal emulator
-super + {_,shift +}Return
-	alacritty {_,-e ranger}
+super + {_,shift +,ctrl +}Return
+	alacritty {_,-e ranger,-e tmux}
 
 # program launcher
 super + d
