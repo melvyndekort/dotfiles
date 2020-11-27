@@ -5,38 +5,24 @@
  |_| |_|\___|_| .__/
               |_|
  
- Super + F6            =  edit configs
- 
- Super + F7            =  bluetooth
- 
- Super + F8            =  display
- 
- Super + F9            =  pass
- 
- Super + F10           =  lastpass
- 
- Super + F11           =  webcam
- 
- Super + F12           =  power
-
- Super + C             =  calculator
-
- Super + P             =  scrcpy
-
- Super + Shift + P     =  generate password
- 
- Super + X             =  lock screen
- Super + Shift + X     =  supend
-
- Super + Escape        =  reload sxhkdrc
- 
- Super + Home          =  sxiv wallpapers
-
- Print                 =  screenshot
- Super + Print         =  screenshot window
- Super + Shift + Print =  screenshot area
- 
- Ctrl + Space          =  close notification
- Ctrl + Shift + Space  =  close all notifications
- Ctrl + Grave          =  re-open notification
+ Super + F6            = edit configs
+ Super + F7            = bluetooth
+ Super + F8            = display
+ Super + F9            = pass
+ Super + F10           = lastpass
+ Super + F11           = webcam
+ Super + F12           = power
+ Super + C             = calculator
+ Super + P             = scrcpy
+ Super + Shift + P     = generate password
+ Super + X             = lock screen
+ Super + Shift + X     = supend
+ Super + Escape        = reload sxhkdrc
+ Super + Home          = sxiv wallpapers
+ Print                 = screenshot
+ Super + Print         = screenshot window
+ Super + Shift + Print = screenshot area
+ Ctrl + Space          = close notification
+ Ctrl + Shift + Space  = close all notifications
+ Ctrl + Grave          = re-open notification
 
