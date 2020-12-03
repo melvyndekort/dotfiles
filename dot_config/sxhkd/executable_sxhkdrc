@@ -9,7 +9,7 @@
 
 # terminal emulator
 super + {_,shift +,ctrl +}Return
-	alacritty {_,-e ranger,-e tmux}
+	alacritty {_,-e ranger,-e tmux new-session -A -s main}
 
 # program launcher
 super + d
@@ -29,7 +29,7 @@ super + Home
 
 # control android device through ADB
 super + p
-  scrcpy --shortcut-mod lctrl -w
+  scrcpy --disable-screensaver --lock-video-orientation 0 --prefer-text --turn-screen-off --stay-awake --shortcut-mod lctrl
 
 # put generated password in clipboard
 super + shift + p
