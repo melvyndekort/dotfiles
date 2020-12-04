@@ -81,7 +81,7 @@ bindsym $mod+minus scratchpad show
 bindsym $mod+Shift+minus move scratchpad
 
 # make window sticky
-bindsym $mod+comma sticky toggle
+bindsym $mod+slash sticky toggle
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -108,7 +108,9 @@ bindsym $mod+Shift+9 move container to workspace 9
 # in multi-monitor setup assign workspace to monitor
 workspace 1 output primary
 
-bindsym $mod+m move workspace to output left
+# in multi-monitor setup move workspace to other monitor
+bindsym $mod+comma move workspace to output left
+bindsym $mod+period move workspace to output right
 
 # float special windows
 for_window [title="galculator"] floating enable, move position center
