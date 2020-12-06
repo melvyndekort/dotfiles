@@ -1,5 +1,10 @@
 #!/bin/sh
 
+printline() {
+  echo "<span font_family=\"Font Awesome 5 Free Regular\" size=\"large\">$1</span> $2%"
+  echo "<span font_family=\"Font Awesome 5 Free Regular\" size=\"large\">$1</span> $2%"
+}
+
 case $BLOCK_BUTTON in
   1) amixer -q -D pulse sset Capture toggle ;;
 	2) notify-send " Microphone module" "\- Click to mute/unmute
@@ -14,11 +19,9 @@ VOL=$(amixer -D pulse sget Capture | grep 'Left:' | awk -F'[][]' '{ print $2 }' 
 STATE=$(amixer -D pulse sget Capture | grep 'Left:' | awk -F'[][]' '{ print $4 }')
 
 if [ "$STATE" = "off" -o "$VOL" -eq "0" ]; then
-  echo "<span font_family=\"Font Awesome 5 Free Solid\" size=\"medium\"></span> $VOL%"
-  echo "<span font_family=\"Font Awesome 5 Free Solid\" size=\"medium\"></span> $VOL%"
+  printline "" "$VOL"
   echo "#6272A4"
 else
-  echo "<span font_family=\"Noto Color Emoji\" size=\"medium\">🎙️</span> $VOL%"
-  echo "<span font_family=\"Noto Color Emoji\" size=\"medium\">🎙️</span> $VOL%"
+  printline "" "$VOL"
   echo "#FFB86C"
 fi
