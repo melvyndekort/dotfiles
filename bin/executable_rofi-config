@@ -15,6 +15,7 @@ picom
 profile
 ranger
 rofi-config
+rofi-webcam
 screen
 ssh
 ssh-home
@@ -56,6 +57,8 @@ case "$choice" in
     file="$HOME/.config/ranger/rc.conf" ;;
   rofi-config)
     file="$HOME/bin/rofi-config" ;;
+  rofi-webcam)
+    file="$HOME/bin/rofi-webcam" ;;
   screen)
     file="$HOME/.config/screen/screenrc" ;;
   ssh)
