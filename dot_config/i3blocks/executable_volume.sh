@@ -15,8 +15,8 @@ case $BLOCK_BUTTON in
   5) amixer -q -D pulse sset Master 5%- ;;
 esac
 
-VOL=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%')
-STATE=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $4 }')
+VOL="$(amixer sget Master | grep '%' | awk -F '[][]' 'NR==1{ print $2; exit }' | tr -d '%')"
+STATE="$(amixer sget Master | grep '%' | awk -F '[][]' 'NR==1{ print $4; exit }')"
 
 if [ "$STATE" = "off" -o "$VOL" -eq "0" ]; then
   printline "婢" "$VOL"
