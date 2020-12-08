@@ -15,23 +15,27 @@ super + {_,shift +,ctrl +}Return
 super + d
   rofi -show drun
 
-# make sxhkd reload its configuration files:
+# reload sxhkd
 super + Escape
-  pkill -USR1 -x sxhkd
-
-# calculator
-super + c
-  galculator
+  pkill -USR1 -x sxhkd; notify-send 'sxhkd' 'Reloaded config'
 
 # wallpaper selector
 super + Home
   sxiv -tf ~/Sync/pictures/wallpapers
 
-# control android device through ADB
+# random wallpaper
+super + shift + Home
+  set-wallpaper $(realpath $(ls -1 ~/Sync/pictures/wallpapers/* | sort -R | head -n 1))
+
+# app launcher
+super + o; {g,f,c,v,s,t,e,p}
+  {google-chrome-stable, firefox, galculator, remote-viewer, slack, teams, subl3, postman}
+
+# use android device
 super + p
   scrcpy --disable-screensaver --lock-video-orientation 0 --prefer-text --turn-screen-off --stay-awake --shortcut-mod lctrl
 
-# put generated password in clipboard
+# generate password
 super + shift + p
   pwgen -B -c -n -y -s 20 | tr -d '\n' | xclip -selection clipboard
 
@@ -79,6 +83,10 @@ super + Print
 super + shift + Print
   shotgun $(hacksaw -f '-i %i -g %g') - | xclip -t 'image/png' -selection clipboard && notify-send "Screenshot taken"
 
+# picom
+super + {_, shift +} i
+  {_, pkill} picom
+
 # dunst
 ctrl + {space,shift + space,grave}
   dunstctl {close,close-all,history-pop}
@@ -103,6 +111,6 @@ XF86Audio{Raise,Lower}Volume
 XF86Audio{_,Mic}Mute
   amixer -q -D pulse sset {Master,Capture} toggle && pkill -RTMIN+1 i3blocks
 
-# control screen brightness
+# control brightness
 XF86MonBrightness{Up,Down}
   brightnessctl s {+10%,10%-}
