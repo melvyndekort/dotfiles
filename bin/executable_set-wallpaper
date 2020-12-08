@@ -8,8 +8,7 @@ if [ ! -f "$FILE" ]; then
 fi
 
 TARGET="${HOME}/.config/wallpaper.png"
-CURRES="$(xrandr | awk '/*/ {print $1}' | head -n 1)"
+
 convert "$FILE" "$TARGET"
-betterlockscreen -u "$TARGET" -r $CURRES -b 0.8
 xwallpaper --zoom "$TARGET"
-notify-send "Wallpaper" "Wallpaper changed"
+notify-send "wallpaper" "Wallpaper changed"
