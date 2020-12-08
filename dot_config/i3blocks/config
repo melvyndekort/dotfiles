@@ -12,6 +12,7 @@ markup=pango
 color=#50FA7B
 align=center
 separator=false
+separator_block_width=5
 
 [weather]
 label=<span font_family="Font Awesome 5 Free Solid" size="medium"></span> 

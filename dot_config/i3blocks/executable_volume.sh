@@ -10,7 +10,7 @@ case $BLOCK_BUTTON in
 	2) notify-send " Volume module" "\- Click to mute/unmute
 - Right click to launch mixer
 - Scroll to change" ;;
-  3) $TERMINAL -t mypulsemixer -e pulsemixer >/dev/null 2>&1 & ;;
+  3) i3-msg -q exec "$TERMINAL -t mypulsemixer -e pulsemixer" ;;
   4) amixer -q -D pulse sset Master 5%+ ;;
   5) amixer -q -D pulse sset Master 5%- ;;
 esac

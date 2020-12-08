@@ -5,7 +5,7 @@ case $BLOCK_BUTTON in
 	2) notify-send "Memory module" "\- Shows memory Used/Total
 - Left click to show memory hogs
 - Right click to run htop" ;;
-	3) $TERMINAL -e htop >/dev/null 2>&1 & ;;
+	3) i3-msg -q exec "$TERMINAL -e htop" ;;
 esac
 
 free -h | awk '/^Mem:/ {print $3 "/" $2}'
