@@ -45,27 +45,27 @@ if [ "$STATUS" = "Charging" ]; then
     printline "" " ${CAPACITY}%"
   fi
 else
-  if [ "" ${CAPACITY}%"" -le "10" ]; then
+  if [ "${CAPACITY}" -le "10" ]; then
     printline "" " ${CAPACITY}%"
     exit 33
-  elif [ "" ${CAPACITY}%"" -le "20" ]; then
+  elif [ "${CAPACITY}" -le "20" ]; then
     printline "" " ${CAPACITY}%"
     echo "#ff5555"
-  elif [ "" ${CAPACITY}%"" -le "30" ]; then
+  elif [ "${CAPACITY}" -le "30" ]; then
     printline "" " ${CAPACITY}%"
     echo "#ffb86c"
-  elif [ "" ${CAPACITY}%"" -le "40" ]; then
+  elif [ "${CAPACITY}" -le "40" ]; then
     printline "" " ${CAPACITY}%"
     echo "#f1fa8c"
-  elif [ "" ${CAPACITY}%"" -le "50" ]; then
+  elif [ "${CAPACITY}" -le "50" ]; then
     printline "" " ${CAPACITY}%"
-  elif [ "" ${CAPACITY}%"" -le "60" ]; then
+  elif [ "${CAPACITY}" -le "60" ]; then
     printline "" " ${CAPACITY}%"
-  elif [ "" ${CAPACITY}%"" -le "70" ]; then
+  elif [ "${CAPACITY}" -le "70" ]; then
     printline "" " ${CAPACITY}%"
-  elif [ "" ${CAPACITY}%"" -le "80" ]; then
+  elif [ "${CAPACITY}" -le "80" ]; then
     printline "" " ${CAPACITY}%"
-  elif [ "" ${CAPACITY}%"" -le "90" ]; then
+  elif [ "${CAPACITY}" -le "90" ]; then
     printline "" " ${CAPACITY}%"
   else
     printline "" " ${CAPACITY}%"
