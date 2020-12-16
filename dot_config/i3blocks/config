@@ -41,8 +41,19 @@ interval=10
 color=#bd93f9
 full_text=|
 
-[storage]
+[disk-root]
+label=<span font_family="Font Awesome 5 Brands" size="medium"></span> 
+instance=/
+command=./storage.sh
+interval=60
+
+[separator]
+color=#bd93f9
+full_text=|
+
+[disk-home]
 label=<span font_family="Font Awesome 5 Free Solid" size="medium"></span> 
+instance=/home
 command=./storage.sh
 interval=60
 
