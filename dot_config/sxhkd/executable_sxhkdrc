@@ -101,7 +101,7 @@ super + shift + x
 
 # toggle mic
 super + m
-  amixer -q -D pulse sset Capture toggle && pkill -RTMIN+1 i3blocks
+  amixer -q -D pulse sset Capture toggle && pkill -RTMIN+2 i3blocks
 
 # control volume
 XF86Audio{Raise,Lower}Volume
@@ -109,7 +109,7 @@ XF86Audio{Raise,Lower}Volume
 
 # mute volume
 XF86Audio{_,Mic}Mute
-  amixer -q -D pulse sset {Master,Capture} toggle && pkill -RTMIN+1 i3blocks
+  amixer -q -D pulse sset {Master,Capture} toggle && pkill -RTMIN+{1,2} i3blocks
 
 # control brightness
 XF86MonBrightness{Up,Down}

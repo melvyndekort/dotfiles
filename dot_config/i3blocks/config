@@ -79,7 +79,9 @@ interval=20
 color=#bd93f9
 full_text=|
 
-[volume]
+[sound]
+label=<span font_family="Font Awesome 5 Free Regular" size="large">奔</span> 
+instance=Master
 command=./volume.sh
 interval=once
 signal=1
@@ -88,10 +90,12 @@ signal=1
 color=#bd93f9
 full_text=|
 
-[microphone]
-command=./microphone.sh
+[mic]
+label=<span font_family="Font Awesome 5 Free Regular" size="large"></span> 
+instance=Capture
+command=./volume.sh
 interval=once
-signal=1
+signal=2
 
 [separator]
 color=#bd93f9
