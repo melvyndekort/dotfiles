@@ -1,5 +1,13 @@
 #!/bin/bash
 
+case $BLOCK_BUTTON in
+  1) notify-send "Storage usage" "$(df -hTlP -x tmpfs -x devtmpfs --total)" ;;
+  2) notify-send "Filesystem module " "\- Shows used space in /home filesystem.
+-- Click to see the filesystem listings of all filesystems.
+-- Right click to see all block devices" ;;
+  3) notify-send "Block devices" "$(lsblk -o NAME,TYPE,FSTYPE,LABEL,FSSIZE,FSUSED,FSAVAIL,FSUSE%,MOUNTPOINT)" ;;
+esac
+
 INSTANCE="${BLOCK_INSTANCE}"
 URGENT_VALUE=90
 
