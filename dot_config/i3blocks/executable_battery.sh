@@ -15,7 +15,8 @@ INSTANCE="BAT${BLOCK_INSTANCE:-0}"
 
 # exit when the system doesn't have a battery
 if [ ! -d "/sys/class/power_supply/${INSTANCE}" ]; then
-  printline ""
+  echo "<span font_family=\"Hack Nerd Font Mono\" size=\"medium\"></span>"
+  echo "<span font_family=\"Hack Nerd Font Mono\" size=\"medium\"></span>"
   exit 0
 fi
 
