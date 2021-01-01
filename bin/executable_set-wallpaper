@@ -6,7 +6,7 @@ mkdir $TEMPDIR
 
 # Prepare source image
 WALLPAPER=$(realpath -s $1)
-RESOLUTION=$(xrandr --current | grep '*' | awk '{print $1}')
+RESOLUTION=$(xrandr --current | grep '*' | awk '{print $1}' | head -n 1)
 magick convert $WALLPAPER -resize ${RESOLUTION}! -quality 100 $TEMPDIR/source.png
 
 # Prepare overlay image
@@ -17,7 +17,7 @@ magick composite -gravity NorthEast -geometry +20+45 $TEMPDIR/overlay.png $TEMPD
 
 # Set the wallpaper
 cp $TEMPDIR/wallpaper.png $HOME/.config/wallpaper.png
-xwallpaper --zoom $HOME/.config/wallpaper.png
+xwallpaper --output all --center $HOME/.config/wallpaper.png
 notify-send "wallpaper" "Wallpaper changed"
 
 # Cleanup
