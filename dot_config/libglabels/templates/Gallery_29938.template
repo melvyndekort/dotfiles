@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<Glabels-templates xmlns="http://glabels.org/xmlns/3.0/">
+  <Template brand="Gallery" part="29938" size="A4" description="Mailing labels">
+    <Label-rectangle id="0" width="99.1mm" height="38.1mm" round="1.5mm" x_waste="0mm" y_waste="0mm">
+      <Markup-margin size="0mm"/>
+      <Layout nx="2" ny="7" x0="4.5mm" y0="14.986mm" dx="102mm" dy="38.1mm"/>
+    </Label-rectangle>
+  </Template>
+</Glabels-templates>
