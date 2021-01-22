@@ -101,6 +101,16 @@ signal=2
 color=#bd93f9
 full_text=|
 
+[notifications]
+label=<span font_family="Font Awesome 5 Free Regular" size="x-large"></span>
+command=./notifications.sh
+interval=once
+signal=3
+
+[separator]
+color=#bd93f9
+full_text=|
+
 [datetime]
 label=<span font_family="Font Awesome 5 Free Solid" size="medium"></span> 
 command=./datetime.sh
