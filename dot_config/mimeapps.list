@@ -6,3 +6,5 @@ x-scheme-handler/https=google-chrome.desktop
 x-scheme-handler/about=google-chrome.desktop
 x-scheme-handler/unknown=google-chrome.desktop
 x-scheme-handler/msteams=teams.desktop
+x-scheme-handler/mailto=google-chrome.desktop
+x-scheme-handler/postman=Postman.desktop
