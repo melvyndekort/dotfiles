@@ -91,9 +91,13 @@ super + shift + Print
 super + {_, shift +} i
   {_, pkill} picom
 
-# dunst
+# dunst controls
 ctrl + {space,shift + space,grave}
   dunstctl {close,close-all,history-pop}
+
+# pause notifications
+super + n
+  notify-send "DUNST_COMMAND_TOGGLE"
 
 # lock the window manager
 super + x
