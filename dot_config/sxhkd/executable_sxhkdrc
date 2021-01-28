@@ -108,7 +108,7 @@ super + shift + x
   systemctl suspend
 
 # toggle mic
-super + m
+super + {z,m}
   amixer -q -D pulse sset Capture toggle && pkill -RTMIN+2 i3blocks
 
 # control volume
