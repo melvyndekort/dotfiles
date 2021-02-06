@@ -1,0 +1,27 @@
+#!/bin/sh
+
+operation=$1
+curval=$(v4l2-ctl -C "exposure_absolute" | cut -d: -f2 | tr -d ' ')
+
+case $operation in
+  up)
+    newval=$(($curval+10))
+    v4l2-ctl -c "exposure_auto=1"
+    v4l2-ctl -c "exposure_absolute=$newval"
+    ;;
+  down)
+    newval=$(($curval-10))
+    v4l2-ctl -c "exposure_auto=1"
+    v4l2-ctl -c "exposure_absolute=$newval"
+    ;;
+  auto)
+    v4l2-ctl -c "exposure_auto=3"
+    ;;
+  ''|*[!0-9]*)
+    echo "Incorrect operation attribute"
+    exit 1
+    ;;
+  *)
+    newval=$operation
+    ;;
+esac
