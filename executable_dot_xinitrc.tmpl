@@ -34,9 +34,8 @@ fi
 
 # setup graphics part of window manager
 picom -b --config .config/picom/picom.conf
-xwallpaper --zoom ~/.config/wallpaper.png &
-betterlockscreen -u ~/Sync/pictures/wallpapers/ &
-set-wallpaper $(realpath $(ls -1 ~/Sync/pictures/wallpapers/* | sort -R | head -n 1)) &
+betterlockscreen -u $(realpath $(ls -1 ~/Sync/pictures/wallpapers/* | sort -R | head -n 1)) &
+set-wallpaper &
 
 # start simple X hotkey daemon
 sxhkd &
