@@ -1,24 +1,11 @@
 #!/bin/sh
 
-# Create temporary directory
-TEMPDIR=/tmp/temp-$$
-mkdir $TEMPDIR
+if [ "$#" -eq 0 ]; then
+  feh --no-fehbg --bg-fill --random $HOME/Sync/pictures/wallpapers
+elif [ "$#" -eq 1 -a -d "$1" ]; then
+  feh --no-fehbg --bg-fill --random $1
+else
+  feh --no-fehbg --bg-fill $*
+fi
 
-# Prepare source image
-WALLPAPER=$(realpath -s $1)
-RESOLUTION=$(xrandr --current | grep '*' | awk '{print $1}' | head -n 1)
-magick convert $WALLPAPER -resize ${RESOLUTION}! -quality 100 $TEMPDIR/source.png
-
-# Prepare overlay image
-convert -size 2000x2000 xc:black -font "FreeMono" -pointsize 14 -fill white -annotate +15+15 "@$HOME/docs/help.txt" -trim -bordercolor "#000" -border 10 +repage $TEMPDIR/overlay.png
-
-# Merge the images
-magick composite -gravity NorthEast -geometry +20+45 $TEMPDIR/overlay.png $TEMPDIR/source.png $TEMPDIR/wallpaper.png
-
-# Set the wallpaper
-cp $TEMPDIR/wallpaper.png $HOME/.config/wallpaper.png
-xwallpaper --output all --center $HOME/.config/wallpaper.png
 notify-send "wallpaper" "Wallpaper changed"
-
-# Cleanup
-rm -rf $TEMPDIR
