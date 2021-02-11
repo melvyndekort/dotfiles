@@ -115,7 +115,6 @@ alias hex='hexyl'
 alias rm='rm -Iv'
 alias cp='cp -v'
 alias mv='mv -v'
-alias ssh='TERM=xterm-256color ssh'
 alias netstat='echo NETSTAT is unavailable on Arch, please use \"ss -natl\"'
 alias lspath='for i in $(echo $PATH | sed "s/:/\ /g"); do find $i -maxdepth 1 -xtype f -executable; done | sort -u'
 alias setclip='xclip -selection clipboard'
@@ -154,6 +153,17 @@ alias vagrant='docker run --rm -it \
   -w "$(pwd)" \
   vagrantlibvirt/vagrant-libvirt:latest \
   vagrant'
+
+# Use correct TERM variable in SSH connections
+ssh() {
+  if [ "$TERM" = "alacritty" ]; then
+    TERM=xterm-256color /usr/bin/ssh $*
+  elif [ "$TERM" = "tmux-256color" ]; then
+    /usr/bin/ssh $*
+  else
+    /usr/bin/ssh $*
+  fi
+}
 
 # Generate the public key fingerpirnt
 ssh-fingerprint() {
