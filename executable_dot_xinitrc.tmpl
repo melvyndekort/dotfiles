@@ -27,6 +27,11 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
+# set bitwarden session key
+if [ -f "$HOME/.config/bw-unlock.sh" ]; then
+  source "$HOME/.config/bw-unlock.sh"
+fi
+
 # setup custom screen setup
 if [ -f $HOME/.config/default-screen-setup ]; then
   $HOME/.config/default-screen-setup
