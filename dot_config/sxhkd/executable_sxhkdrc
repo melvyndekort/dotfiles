@@ -73,7 +73,7 @@ super + F10
 
 # webcam menu
 super + F11
-  rofi -modi webcam:rofi-webcam -show webcam
+  rofi -modi bw:rofi-bw -show bw
 
 # power menu
 super + F12
