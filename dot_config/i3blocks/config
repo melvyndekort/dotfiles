@@ -14,15 +14,6 @@ align=center
 separator=false
 separator_block_width=5
 
-[weather]
-label=<span font_family="Font Awesome 5 Free Solid" size="medium"></span> 
-command=./weather.sh
-interval=1800
-
-[separator]
-color=#bd93f9
-full_text=|
-
 [memory]
 label=<span font_family="Font Awesome 5 Free Solid" size="medium"></span> 
 command=./memory.sh
