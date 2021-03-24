@@ -1,14 +1,22 @@
+[init]
+  defaultBranch = master
+
 [user]
 	name = Melvyn de Kort
 	email = {{ .email }}
+
 [core]
 	autocrlf = input
 	filemode = false
+
 [push]
 	default = simple
+
 [alias]
   cleanup = !git remote prune origin && git gc && git clean -dfx && git checkout . && git stash clear
+
 [diff]
 	tool = meld
+
 [pull]
 	rebase = true
