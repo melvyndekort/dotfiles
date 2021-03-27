@@ -43,7 +43,7 @@ set pastetoggle=<F9>
 set number relativenumber
 set nu rnu
 
-let mapleader = '\'
+let mapleader = ','
 
 nnoremap <C-N> :next<CR>
 nnoremap <C-P> :prev<CR>
@@ -63,6 +63,12 @@ nnoremap <leader>w    :set wrap!<CR>
 
 " Yank until eol
 nnoremap Y y$
+
+" Cut to clipboard
+vnoremap <leader>d  "+d
+nnoremap <leader>D  "+dg_
+nnoremap <leader>d  "+d
+nnoremap <leader>dd  "+dd
 
 " Copy to clipboard
 vnoremap <leader>y  "+y
