@@ -1,0 +1,29 @@
+*,div,pre,textarea,body,input,td,tr,p {
+  background-color: #282a36 !important;
+  background-image: none !important;
+  color: #f8f8f2 !important;
+}
+
+h1,h2,h3,h4 {
+  background-color: #282a36 !important;
+  color: #8be9fd !important;
+}
+
+a {
+  background-color: #282a36 !important;
+  color: #ff79c6 !important;
+}
+
+table { 
+  border-spacing: 10px 2px !important;
+  border-collapse: separate !important;
+}
+
+th {
+  text-align: left;
+  color: #ff79c6 !important;
+}
+
+code {
+  background-color: #44475a !important;
+}
