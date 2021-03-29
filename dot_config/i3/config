@@ -118,7 +118,7 @@ bindsym $mod+Shift+period move workspace to output right
 
 # float special windows
 for_window [title="galculator"] floating enable, move position center
-for_window [title="helpdoc"] floating enable, move position center
+for_window [class="Surf"] floating enable, move position center
 for_window [title="mypulsemixer"] floating enable
 for_window [class="scrcpy"] floating enable
 for_window [title="myforecast"] floating enable, resize set 1010 725, move position center
