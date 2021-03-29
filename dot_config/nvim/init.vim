@@ -94,6 +94,9 @@ nnoremap <S-Tab> <<
 vnoremap <Tab>   >><Esc>gv
 vnoremap <S-Tab> <<<Esc>gv
 
+" Play macro from register q
+nnoremap <Space> @q
+
 " lightline config
 let g:lightline = {
       \ 'colorscheme': 'wombat',
