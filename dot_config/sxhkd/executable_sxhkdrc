@@ -49,7 +49,7 @@ super + shift + p
 
 # show help
 super + F1
-  surf ~/docs/target/index.md.html
+  surf ~/docs/index.html
 
 # edit configs
 super + F6
