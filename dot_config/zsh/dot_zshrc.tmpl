@@ -48,7 +48,7 @@ ZSH_CUSTOM=/usr/share/zsh
 # Change foreground color of the autosuggest plugin
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=7'
 
-plugins=(archlinux aws catimg common-aliases copyfile docker docker-compose emoji extract fzf git git-extras gpg-agent history mvn nmap pip rsync ssh-agent sudo systemd terraform tmux vscode z zsh-interactive-cd zsh-autosuggestions history-substring-search zsh-syntax-highlighting)
+plugins=(adb archlinux aws catimg common-aliases copyfile docker docker-compose emoji extract fzf git git-extras gpg-agent history mvn nmap pip rsync ssh-agent sudo systemd terraform tmux vscode z zsh-interactive-cd zsh-autosuggestions history-substring-search zsh-syntax-highlighting)
 
 # Autostart tmux on zsh startup
 ZSH_TMUX_AUTOSTART="false"
@@ -126,17 +126,10 @@ alias r="ranger"
 alias v='vim'
 alias yt="youtube-dl --add-metadata -ic"
 alias yta="youtube-dl --add-metadata -xic"
-alias tf='terraform'
 alias rg="rg -S --no-ignore --hidden --glob '!{.git,node_modules,**/.terraform}/**'"
 alias pdf="mupdf"
 alias img='sxiv'
 alias t='tmux new-session -A -s main'
-
-# Set I3WM aliases
-alias ci3="vim $HOME/.config/i3/config"
-alias cib="vim $HOME/.config/i3/i3blocks.conf"
-alias wi3="cd $HOME/.config/i3"
-alias wib="cd $HOME/.config/statusbar"
 
 # Run specific docker containers
 alias alpine='docker container run --rm -it alpine:3.12 /bin/sh'
