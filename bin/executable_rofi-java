@@ -1,0 +1,7 @@
+#!/bin/sh
+
+choice="$(archlinux-java status | grep '^ ' | rofi -dmenu -p 'Java version:' | awk '{print $1}')"
+
+if [ -n "$choice" ]; then
+  pkexec archlinux-java set "$choice" && notify-send "Java set to $choice"
+fi

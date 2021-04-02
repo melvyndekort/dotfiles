@@ -25,7 +25,7 @@ super + {bracketleft,bracketright,backslash}
 
 # swith to TTY
 super + ctrl + {F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11,F12}
-  sudo chvt {1,2,3,4,5,6,7,8,9,10,11,12}
+  chvt-polkit {1,2,3,4,5,6,7,8,9,10,11,12}
 
 # wallpaper selector
 super + Home
@@ -36,8 +36,8 @@ super + shift + Home
   set-wallpaper
 
 # app launcher
-super + o; {g,f,c,v,s,t,e,p}
-  {google-chrome-stable, firefox, galculator, remote-viewer, slack, teams, subl3, postman}
+super + o; {g,f,c,v,s,t,e,p,j}
+  {google-chrome-stable, firefox, galculator, remote-viewer, slack, teams, subl3, postman, rofi-java}
 
 # use android device
 super + p
@@ -61,7 +61,7 @@ super + F7
 
 # display menu
 super + F8
-  rofi -modi display:rofi-display -show display && rofi -modi autolock:rofi-autolock -show autolock
+  rofi-display && rofi-autolock
 
 # pass menu
 super + F9
