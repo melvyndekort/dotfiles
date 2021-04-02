@@ -1,7 +1,6 @@
 #!/bin/sh
 
-if [ $# -eq 0 ]; then
-  cat <<-END
+choice="$(rofi -dmenu -p 'Display setup:' << EOF | cut -d' ' -f1
 laptop 
 desktop-1 度度
 desktop-2 度
@@ -13,13 +12,11 @@ dock-expand-4  度度
 hdmi-clone 
 hdmi-expand-1  度
 hdmi-expand-2  度度
-END
-  
-  exit 0
-fi
+EOF
+)"
 
-case $(echo "$1" | cut -d' ' -f1) in
-  *laptop*)
+case "$choice" in
+  laptop)
     xrandr \
       --output eDP-1 --primary --dpi 96 --mode 1920x1080 --pos 0x0 \
       --output DP-1 --off \
@@ -29,21 +26,21 @@ case $(echo "$1" | cut -d' ' -f1) in
       --output DVI-I-1-1 --off \
       --output DVI-I-2-2 --off ;;
 
-  *desktop-1*)
+  desktop-1)
     xrandr \
       --output DP-1 --primary --dpi 96 --mode 1680x1050 --pos 0x0 \
       --output DVI-I-1 --dpi 96 --mode 1680x1050 --pos 1680x0 \
       --output DP-0 --off \
       --output DVI-I-0 --off ;;
 
-  *desktop-2*)
+  desktop-2)
     xrandr \
       --output DP-1 --primary --dpi 96 --mode 1680x1050 --pos 0x0 \
       --output DVI-I-1 --off \
       --output DP-0 --off \
       --output DVI-I-0 --off ;;
 
-  *dock-clone*)
+  dock-clone)
     xrandr \
       --output eDP-1 --primary --dpi 96 --mode 1920x1080 --pos 0x0 \
       --output DVI-I-1-1 --same-as eDP-1 \
@@ -53,7 +50,7 @@ case $(echo "$1" | cut -d' ' -f1) in
       --output HDMI-1 --off \
       --output HDMI-2 --off ;;
 
-  *dock-expand-1*)
+  dock-expand-1)
     xrandr \
       --output DVI-I-1-1 --primary --dpi 96 --mode 1920x1080 --pos 0x0 \
       --output DVI-I-2-2 --dpi 96 --mode 1920x1080 --pos 1920x0 \
@@ -63,7 +60,7 @@ case $(echo "$1" | cut -d' ' -f1) in
       --output HDMI-1 --off \
       --output HDMI-2 --off ;;
 
-  *dock-expand-2*)
+  dock-expand-2)
     xrandr \
       --output DVI-I-2-2 --primary --dpi 96 --mode 1920x1080 --pos 0x0 \
       --output DVI-I-1-1 --dpi 96 --mode 1920x1080 --pos 1920x0 \
@@ -73,7 +70,7 @@ case $(echo "$1" | cut -d' ' -f1) in
       --output HDMI-1 --off \
       --output HDMI-2 --off ;;
 
-  *dock-expand-3*)
+  dock-expand-3)
     xrandr \
       --output eDP-1 --primary --dpi 96 --mode 1920x1080 --pos 0x504 \
       --output DVI-I-1-1 --dpi 96 --mode 1920x1080 --pos 1920x0 \
@@ -83,7 +80,7 @@ case $(echo "$1" | cut -d' ' -f1) in
       --output HDMI-1 --off \
       --output HDMI-2 --off ;;
 
-  *dock-expand-4*)
+  dock-expand-4)
     xrandr \
       --output eDP-1 --primary --dpi 96 --mode 1920x1080 --pos 0x504 \
       --output DVI-I-2-2 --dpi 96 --mode 1920x1080 --pos 1920x0 \
@@ -93,7 +90,7 @@ case $(echo "$1" | cut -d' ' -f1) in
       --output HDMI-1 --off \
       --output HDMI-2 --off ;;
 
-  *hdmi-clone*)
+  hdmi-clone)
     xrandr \
       --output eDP-1 --primary --dpi 96 --mode 1920x1080 --pos 0x0 \
       --output DP-1 --off \
@@ -103,7 +100,7 @@ case $(echo "$1" | cut -d' ' -f1) in
       --output DVI-I-1-1 --off \
       --output DVI-I-2-2 --off ;;
 
-  *hdmi-expand-1*)
+  hdmi-expand-1)
     xrandr \
       --output eDP-1 --primary --dpi 96 --mode 1920x1080 --pos 0x0 \
       --output HDMI-1 --dpi 96 --mode 1920x1080 --pos 1920x0 \
@@ -113,7 +110,7 @@ case $(echo "$1" | cut -d' ' -f1) in
       --output DVI-I-1-1 --off \
       --output DVI-I-2-2 --off ;;
 
-  *hdmi-expand-2*)
+  hdmi-expand-2)
     xrandr \
       --output eDP-1 --primary --dpi 96 --mode 1920x1080 --pos 0x0 \
       --output HDMI-1 --dpi 96 --mode 1920x1080 --pos 1920x0 \
@@ -122,7 +119,9 @@ case $(echo "$1" | cut -d' ' -f1) in
       --output DP-2 --off \
       --output DVI-I-1-1 --off \
       --output DVI-I-2-2 --off ;;
+
+  *)
+    exit 1 ;;
 esac
 
-notify-send "Configured display setup: $(echo $1 | cut -d' ' -f1)"
-
+notify-send "Configured display setup: $choice"

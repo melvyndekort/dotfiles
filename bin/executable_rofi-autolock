@@ -1,24 +1,20 @@
 #!/bin/sh
 
-if [ $# -eq 0 ]; then
-  cat <<-END
- autolock
- unlocked
-END
-  
-  exit 0
-fi
+choice="$(rofi -dmenu -p 'Autolock:' << EOF | cut -d' ' -f2
+ enabled
+ disabled
+EOF
+)"
 
-case "$1" in
-  *autolock*)
+case "$choice" in
+  enabled)
     xset dpms 0 0 0
     xset s 120 30
     notify-send "Enabled autolock"
     ;;
-  *unlocked*)
+  disabled)
     xset dpms 0 0 0
     xset s 0 0
     notify-send "Disabled autolock"
     ;;
 esac
-

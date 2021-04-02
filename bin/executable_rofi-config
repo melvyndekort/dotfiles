@@ -1,6 +1,6 @@
 #!/bin/sh
 
-choice=$(rofi -dmenu -p "Config file")<<-END
+choice="$(rofi -dmenu -p 'Config file:')" << END
 alacritty
 aws-config
 aws-creds
@@ -14,6 +14,7 @@ nvim
 picom
 profile
 ranger
+rofi
 rofi-config
 rofi-webcam
 screen
@@ -55,6 +56,8 @@ case "$choice" in
     file="$HOME/.profile" ;;
   ranger)
     file="$HOME/.config/ranger/rc.conf" ;;
+  rofi)
+    file="$HOME/.config/rofi/config.rasi" ;;
   rofi-config)
     file="$HOME/bin/rofi-config" ;;
   rofi-webcam)
