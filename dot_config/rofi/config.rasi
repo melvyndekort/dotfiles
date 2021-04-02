@@ -11,4 +11,5 @@ configuration {
 	display-window: "Window";
 	display-ssh: "SSH";
 	display-drun: "Application";
+  matching: "fuzzy";
 }

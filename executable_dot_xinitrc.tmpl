@@ -37,6 +37,9 @@ if [ -f $HOME/.config/default-screen-setup ]; then
   $HOME/.config/default-screen-setup
 fi
 
+# polkit authentication agent
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
 # setup graphics part of window manager
 picom -b --config .config/picom/picom.conf
 betterlockscreen -u $(realpath $(ls -1 ~/Sync/pictures/wallpapers/* | sort -R | head -n 1)) &
