@@ -130,6 +130,7 @@ alias rg="rg -S --no-ignore --hidden --glob '!{.git,node_modules,**/.terraform}/
 alias pdf="mupdf"
 alias img='sxiv'
 alias t='tmux new-session -A -s main'
+alias lsmounts='mount | egrep "^/" | awk '"'"'{print $1" "$3}'"'"' | column -t | sort'
 
 # Run specific docker containers
 alias alpine='docker container run --rm -it alpine:3.12 /bin/sh'
