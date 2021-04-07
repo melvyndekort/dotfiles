@@ -81,15 +81,15 @@ super + F12
 
 # screenshot
 Print
-  shotgun - | xclip -t 'image/png' -selection clipboard && notify-send "Screenshot taken"
+  screenshot all
 
 # screenshot single window
 super + Print
-  shotgun -i $(xdotool getmouselocation --shell | grep WINDOW | cut -d'=' -f2) - | xclip -t 'image/png' -selection clipboard && notify-send "Screenshot taken"
+  screenshot window
 
 # screenshot selected area
 super + shift + Print
-  shotgun $(hacksaw -f '-i %i -g %g') - | xclip -t 'image/png' -selection clipboard && notify-send "Screenshot taken"
+  screenshot area
 
 # picom
 super + {_, shift +} i
