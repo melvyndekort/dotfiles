@@ -1,0 +1,30 @@
+#!/bin/sh
+
+RANDOM_NAME="$HOME/screenshot-$(date +%s%3N).png"
+
+if [ -z "$1" ]; then
+  echo "Please supply 'all', 'window' or 'area'"
+  exit 1
+fi
+
+case "$1" in
+  all)
+    shotgun $RANDOM_NAME
+    xclip -t 'image/png' -selection clipboard $RANDOM_NAME
+    notify-send "Screenshot" "Saved as $RANDOM_NAME"
+    ;;
+  window)
+    shotgun -i $(xdotool getmouselocation --shell | grep WINDOW | cut -d'=' -f2) $RANDOM_NAME
+    xclip -t 'image/png' -selection clipboard $RANDOM_NAME
+    notify-send "Screenshot" "Saved as $RANDOM_NAME"
+    ;;
+  area)
+    shotgun $(hacksaw -f '-i %i -g %g') $RANDOM_NAME
+    xclip -t 'image/png' -selection clipboard $RANDOM_NAME
+    notify-send "Screenshot" "Saved as $RANDOM_NAME"
+    ;;
+  *)
+    echo "$1 is not a supported action"
+    exit 1
+    ;;
+esac
