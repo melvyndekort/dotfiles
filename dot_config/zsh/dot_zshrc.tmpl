@@ -133,10 +133,9 @@ alias t='tmux new-session -A -s main'
 alias lsmounts='mount | egrep "^/" | awk '"'"'{print $1" "$3}'"'"' | column -t | sort'
 
 # Run specific docker containers
-alias alpine='docker container run --rm -it alpine:3.12 /bin/sh'
-alias tor='docker container run --rm -it -p 3128:3128 -p 9050:9050 melvyndekort/toroxy'
-alias nginx='docker container run --rm -it -v `pwd`:/usr/share/nginx/html:ro -p 80:80 nginx:1.19.0'
-alias wol='docker container run --rm -it --net host melvyndekort/wol'
+alias alpine='docker container run --rm -it alpine:latest /bin/sh'
+alias tor='docker container run --rm -it -p 3128:3128 -p 9050:9050 melvyndekort/toroxy:latest'
+alias nginx='docker container run --rm -it -v `pwd`:/usr/share/nginx/html:ro -p 80:80 nginx:latest'
 
 # Set bitwarden session key
 if [ -f "$HOME/.config/bw-unlock.sh" ]; then
