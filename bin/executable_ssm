@@ -1,7 +1,15 @@
 #!/bin/sh
 
+set -e
+
+usage() {
+  echo "Usage: $0 [-L <localport:hostport>] [instance-id]" 1>&2;
+  exit 1
+}
+
 PORTFORWARD=0
 
+## Parse input arguments
 while getopts ":L:" opt; do
   case $opt in
     L) PORTFORWARD=1
@@ -9,16 +17,15 @@ while getopts ":L:" opt; do
        HOSTPORT=$(echo $OPTARG | cut -d: -f2)
        ;;
     *)
-      echo "Usage: $0 [-L <localport:hostport>] [instance-id]" 1>&2;
-      exit 1;
+      usage
+      ;;
   esac
 done
 
 shift $((OPTIND-1))
 
-if [ "$#" -eq 1 ]; then
-  ID=$1
-else
+## Main logic
+if [ "$#" -eq 0 ]; then
   ## Check requirements
   command -v aws >/dev/null 2>&1 || { echo 'You need to install "aws-cli" to use this functionality'; exit 1; }
   command -v dialog >/dev/null 2>&1 || { echo 'You need to install "dialog" to use this functionality'; exit 1; }
@@ -28,27 +35,34 @@ else
     --output json \
     --filters Name=tag-key,Values=Name \
     --filters Name=instance-state-name,Values=running \
-    --query 'Reservations[*].Instances[*].{NAME:Tags[?Key==`Name`]|[0].Value,ID:InstanceId}')
+    --query 'Reservations[*].Instances[*].{NAME:Tags[?Key==`Name`]|[0].Value,ID:InstanceId}' | \
+    jq -r 'sort_by(.[].NAME) | .[] | .[] | .ID, .NAME')
+
+  ## Exit when aws command fails or there are no running instances
+  [ $(echo -n "$LIST" | wc -l) -eq 0 ] && exit 1
 
   ## Let the user select an instance
-  tempfile=/tmp/dialog-$$
-  dialog \
+  INSTANCEID=$(dialog \
     --backtitle "EC2 Instances" \
     --title "Menu" \
     --clear \
     --cancel-label "Exit" \
     --menu "Please select:" 50 80 4 \
-    $(echo $LIST | jq -r 'sort_by(.[].NAME) | .[] | .[] | .ID, .NAME') 2> $tempfile
-  if [ $? -gt 0 ]; then exit 1; fi
-  
-  ID=$(cat $tempfile)
-  rm -f $tempfile
+    $LIST 3>&1 1>&2 2>&3 3>&-)
+
+  [ "$?" -gt 0 ] && clear && exit 1
+
   clear
+elif [ "$#" -eq 1 ]; then
+  INSTANCEID=$1
+else
+  usage
 fi
 
-## Connect
+## Connect to an instancd
+echo "Connecting to $INSTANCEID"
 if [ "$PORTFORWARD" -eq 1 ]; then
-  aws ssm start-session --target $ID --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["'"${HOSTPORT}"'"], "localPortNumber":["'"${LOCALPORT}"'"]}'
+  aws ssm start-session --target $INSTANCEID --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["'"${HOSTPORT}"'"], "localPortNumber":["'"${LOCALPORT}"'"]}'
 else
-  aws ssm start-session --target $ID
+  aws ssm start-session --target $INSTANCEID
 fi
