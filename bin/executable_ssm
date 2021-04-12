@@ -7,6 +7,9 @@ usage() {
   exit 1
 }
 
+## Validate requirements
+command -v aws >/dev/null 2>&1 || { echo 'You need to install "aws-cli" to use this functionality'; exit 1; }
+
 PORTFORWARD=0
 
 ## Parse input arguments
@@ -26,8 +29,8 @@ shift $((OPTIND-1))
 
 ## Main logic
 if [ "$#" -eq 0 ]; then
-  ## Check requirements
-  command -v aws >/dev/null 2>&1 || { echo 'You need to install "aws-cli" to use this functionality'; exit 1; }
+  ## Validate requirements
+  command -v jq >/dev/null 2>&1 || { echo 'You need to install "jq" to use this functionality'; exit 1; }
   command -v dialog >/dev/null 2>&1 || { echo 'You need to install "dialog" to use this functionality'; exit 1; }
 
   ## Retrieve all EC2 instances
