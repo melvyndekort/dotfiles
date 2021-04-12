@@ -27,8 +27,9 @@ else
   LIST=$(aws ec2 describe-instances \
     --output json \
     --filters Name=tag-key,Values=Name \
+    --filters Name=instance-state-name,Values=running \
     --query 'Reservations[*].Instances[*].{NAME:Tags[?Key==`Name`]|[0].Value,ID:InstanceId}')
-  
+
   ## Let the user select an instance
   tempfile=/tmp/dialog-$$
   dialog \
@@ -37,7 +38,7 @@ else
     --clear \
     --cancel-label "Exit" \
     --menu "Please select:" 50 80 4 \
-    $(echo $LIST | jq -r '.[] | .[] | .ID, .NAME') 2> $tempfile
+    $(echo $LIST | jq -r 'sort_by(.[].NAME) | .[] | .[] | .ID, .NAME') 2> $tempfile
   if [ $? -gt 0 ]; then exit 1; fi
   
   ID=$(cat $tempfile)
