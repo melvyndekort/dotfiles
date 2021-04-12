@@ -5,11 +5,11 @@ PORTFORWARD=0
 while getopts ":L:" opt; do
   case $opt in
     L) PORTFORWARD=1
-       PORT=$(echo $OPTARG | cut -d: -f1)
+       LOCALPORT=$(echo $OPTARG | cut -d: -f1)
        HOSTPORT=$(echo $OPTARG | cut -d: -f2)
        ;;
     *)
-      echo "Usage: $0 [-L <port:hostport>] [instance-id]" 1>&2;
+      echo "Usage: $0 [-L <localport:hostport>] [instance-id]" 1>&2;
       exit 1;
   esac
 done
@@ -19,6 +19,10 @@ shift $((OPTIND-1))
 if [ "$#" -eq 1 ]; then
   ID=$1
 else
+  ## Check requirements
+  command -v aws >/dev/null 2>&1 || { echo 'You need to install "aws-cli" to use this functionality'; exit 1; }
+  command -v dialog >/dev/null 2>&1 || { echo 'You need to install "dialog" to use this functionality'; exit 1; }
+
   ## Retrieve all EC2 instances
   LIST=$(aws ec2 describe-instances \
     --output json \
@@ -43,7 +47,7 @@ fi
 
 ## Connect
 if [ "$PORTFORWARD" -eq 1 ]; then
-  aws ssm start-session --target $ID --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["'"${HOSTPORT}"'"], "localPortNumber":["'"${PORT}"'"]}'
+  aws ssm start-session --target $ID --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["'"${HOSTPORT}"'"], "localPortNumber":["'"${LOCALPORT}"'"]}'
 else
   aws ssm start-session --target $ID
 fi
