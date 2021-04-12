@@ -1,0 +1,49 @@
+#!/bin/sh
+
+PORTFORWARD=0
+
+while getopts ":L:" opt; do
+  case $opt in
+    L) PORTFORWARD=1
+       PORT=$(echo $OPTARG | cut -d: -f1)
+       HOSTPORT=$(echo $OPTARG | cut -d: -f2)
+       ;;
+    *)
+      echo "Usage: $0 [-L <port:hostport>] [instance-id]" 1>&2;
+      exit 1;
+  esac
+done
+
+shift $((OPTIND-1))
+
+if [ "$#" -eq 1 ]; then
+  ID=$1
+else
+  ## Retrieve all EC2 instances
+  LIST=$(aws ec2 describe-instances \
+    --output json \
+    --filters Name=tag-key,Values=Name \
+    --query 'Reservations[*].Instances[*].{NAME:Tags[?Key==`Name`]|[0].Value,ID:InstanceId}')
+  
+  ## Let the user select an instance
+  tempfile=/tmp/dialog-$$
+  dialog \
+    --backtitle "EC2 Instances" \
+    --title "Menu" \
+    --clear \
+    --cancel-label "Exit" \
+    --menu "Please select:" 50 80 4 \
+    $(echo $LIST | jq -r '.[] | .[] | .ID, .NAME') 2> $tempfile
+  if [ $? -gt 0 ]; then exit 1; fi
+  
+  ID=$(cat $tempfile)
+  rm -f $tempfile
+  clear
+fi
+
+## Connect
+if [ "$PORTFORWARD" -eq 1 ]; then
+  aws ssm start-session --target $ID --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["'"${HOSTPORT}"'"], "localPortNumber":["'"${PORT}"'"]}'
+else
+  aws ssm start-session --target $ID
+fi
