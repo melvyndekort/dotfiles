@@ -62,7 +62,7 @@ else
   usage
 fi
 
-## Connect to an instancd
+## Connect to an instance-id
 echo "Connecting to $INSTANCEID"
 if [ "$PORTFORWARD" -eq 1 ]; then
   aws ssm start-session --target $INSTANCEID --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["'"${HOSTPORT}"'"], "localPortNumber":["'"${LOCALPORT}"'"]}'
