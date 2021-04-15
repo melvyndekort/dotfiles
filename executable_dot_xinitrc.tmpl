@@ -54,7 +54,7 @@ xss-lock -- betterlockscreen -l dimblur &
 # set default cursor to arrow
 xsetroot -cursor_name left_ptr
 
-{{- if eq .chezmoi.hostname "ka01pwiltp071" }}
+{{- if .laptop }}
 # disable pointing stick on laptop
 xinput disable "DualPoint Stick"
 

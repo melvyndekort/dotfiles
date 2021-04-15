@@ -1,4 +1,6 @@
-{{- $email := promptString "email" -}}
+{{- $email := promptString "What is your e-mail address" -}}
+{{- $laptop := promptBool "Is this a laptop (y/n)" -}}
+{{- $work := promptBool "Do you use this device for work (y/n)" -}}
 
 encryption = "gpg"
 
@@ -6,4 +8,6 @@ encryption = "gpg"
   recipient = "melvyn@mdekort.nl"
 
 [data]
+  laptop = {{ $laptop }}
+  work = {{ $work }}
   email = "{{ $email }}"

@@ -189,7 +189,7 @@ if [ ! -d "$XDG_CONFIG_HOME/tmux/plugins/tpm" ]; then
   git clone https://github.com/tmux-plugins/tpm $XDG_CONFIG_HOME/tmux/plugins/tpm
 fi
 
-{{if eq .email "m.de.kort@portbase.com" }}
+{{if .work }}
 # Work related stuff
 export ARTIFACTORY_URL="https://{{ (index (lastpass "Artifactory - readonly") 0).username -}}:{{ urlquery ((index (lastpass "Artifactory - readonly") 0).password) -}}@artifactory.portbase.io/artifactory"
 alias wpcs-build="mvn -T C1 clean package -DskipTests -Dnaomi.skip -Dmaven.antrun.skip -pl \!naomi/naomi-maven-plugin-test"
