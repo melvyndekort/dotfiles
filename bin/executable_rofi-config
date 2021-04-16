@@ -1,9 +1,15 @@
 #!/bin/sh
 
+editfile() {
+  alacritty -e zsh -c "chezmoi edit --apply $1"
+}
+
 choice="$(rofi -dmenu -p 'Config file:')" << END
 alacritty
 aws-config
 aws-creds
+bin/rofi-config
+bin/rofi-webcam
 compton
 dunst
 git
@@ -15,75 +21,71 @@ picom
 profile
 ranger
 rofi
-rofi-config
-rofi-webcam
 screen
 ssh
-ssh-home
-ssh-portbase
 sxhkd
 sxiv
 terraform
 tmux
 xinitrc
+Xresources
 zsh
 END
 
-case "$choice" in
-  alacritty)
-    file="$HOME/.config/alacritty/alacritty.yml" ;;
+option="$(echo $choice | cut -d'|' -f1)"
+file="$(echo $choice | cut -d'|' -f2)"
+
+case "$option" in
+  alacritty )
+    editfile "$HOME/.config/alacritty/alacritty.yml" ;;
   aws-config)
-    file="$HOME/.config/aws/config" ;;
+    editfile "$HOME/.config/aws/config" ;;
   aws-creds)
-    file="$HOME/.config/aws/credentials" ;;
+    editfile "$HOME/.config/aws/credentials" ;;
+  bin/rofi-config)
+    editfile "$HOME/bin/rofi-config" ;;
+  bin/rofi-webcam)
+    editfile "$HOME/bin/rofi-webcam" ;;
   compton)
-    file="$HOME/.config/compton.conf" ;;
+    editfile "$HOME/.config/compton.conf" ;;
   dunst)
-    file="$HOME/.config/dunst/dunstrc" ;;
+    editfile "$HOME/.config/dunst/dunstrc" ;;
   git)
-    file="$HOME/.config/git/config" ;;
+    editfile "$HOME/.config/git/config" ;;
   i3)
-    file="$HOME/.config/i3/config" ;;
+    editfile "$HOME/.config/i3/config" ;;
   i3blocks)
-    file="$HOME/.config/i3blocks/config" ;;
+    editfile "$HOME/.config/i3blocks/config" ;;
   netrc)
-    file="$HOME/.netrc" ;;
+    editfile "$HOME/.netrc" ;;
   nvim)
-    file="$HOME/.config/nvim/init.nvim" ;;
+    editfile "$HOME/.config/nvim/init.nvim" ;;
   picom)
-    file="$HOME/.config/picom/picom.conf" ;;
+    editfile "$HOME/.config/picom/picom.conf" ;;
   profile)
-    file="$HOME/.profile" ;;
+    editfile "$HOME/.profile" ;;
   ranger)
-    file="$HOME/.config/ranger/rc.conf" ;;
+    editfile "$HOME/.config/ranger/rc.conf" ;;
   rofi)
-    file="$HOME/.config/rofi/config.rasi" ;;
-  rofi-config)
-    file="$HOME/bin/rofi-config" ;;
-  rofi-webcam)
-    file="$HOME/bin/rofi-webcam" ;;
+    editfile "$HOME/.config/rofi/config.rasi" ;;
   screen)
-    file="$HOME/.config/screen/screenrc" ;;
+    editfile "$HOME/.config/screen/screenrc" ;;
   ssh)
-    file="$HOME/.ssh/config" ;;
-  ssh-home)
-    file="$HOME/.ssh/config.d/home.conf" ;;
-  ssh-portbase)
-    file="$HOME/.ssh/config.d/portbase.conf" ;;
+    editfile "$HOME/.ssh/config" ;;
   sxhkd)
-    file="$HOME/.config/sxhkd/sxhkdrc" ;;
+    editfile "$HOME/.config/sxhkd/sxhkdrc" ;;
   sxiv)
-    file="$HOME/.config/sxiv/exec/key-handler" ;;
+    editfile "$HOME/.config/sxiv/exec/key-handler" ;;
   terraform)
-    file="$HOME/.config/terraform/terraformrc" ;;
+    editfile "$HOME/.config/terraform/terraformrc" ;;
   tmux)
-    file="$HOME/.config/tmux/tmux.conf" ;;
+    editfile "$HOME/.config/tmux/tmux.conf" ;;
   xinitrc)
-    file="$HOME/.xinitrc" ;;
+    editfile "$HOME/.xinitrc" ;;
+  Xresources)
+    editfile "$HOME/.config/X11/Xresources" ;;
   zsh)
-    file="$HOME/.config/zsh/.zshrc" ;;
+    editfile "$HOME/.config/zsh/.zshrc" ;;
   *)
     exit 1 ;;
 esac
-
-alacritty -e zsh -c "chezmoi edit --apply $file"
