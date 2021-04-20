@@ -204,4 +204,9 @@ acct() {
 #AWSume alias to source the AWSume script
 alias awsume=". awsume"
 
+if command -v awsume-autocomplete &> /dev/null; then
+  autoload -Uz bashcompinit && bashcompinit
+  complete -C awsume-autocomplete awsume
+fi
+
 neofetch
