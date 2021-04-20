@@ -36,8 +36,8 @@ super + shift + Home
   set-wallpaper
 
 # app launcher
-super + o; {g,f,c,v,s,t,e,p,j}
-  {google-chrome-stable, firefox, galculator, remote-viewer, slack, teams, subl3, postman, rofi-java}
+super + o; {a,g,f,c,v,s,t,e,p,j}
+  {restart-adb, google-chrome-stable, firefox, galculator, remote-viewer, slack, teams, subl3, postman, rofi-java}
 
 # use android device
 super + p
