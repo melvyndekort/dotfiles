@@ -1,7 +1,6 @@
 #!/bin/sh
 
 aws ec2 describe-instances \
-  --output json \
   --filters Name=tag-key,Values=Name \
   --filters Name=instance-state-name,Values=running \
   --query 'Reservations[*].Instances[*].{InstanceID:InstanceId, Name:Tags[?Key==`Name`]|[0].Value}[] | sort_by(@, &Name)' \
