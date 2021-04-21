@@ -3,5 +3,5 @@
 aws ec2 describe-instances \
   --filters Name=tag-key,Values=Name \
   --filters Name=instance-state-name,Values=running \
-  --query 'Reservations[*].Instances[*].{InstanceID:InstanceId, Name:Tags[?Key==`Name`]|[0].Value}[] | sort_by(@, &Name)' \
+  --query 'Reservations[*].Instances[*].{instance_id: InstanceId, name: Tags[?Key==`Name`] | [0].Value, ip:PrivateIpAddress, type: InstanceType}[] | sort_by(@, &name)' \
   --output table
