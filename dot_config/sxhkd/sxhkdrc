@@ -101,7 +101,7 @@ ctrl + {space,shift + space,grave}
 
 # pause notifications
 super + n
-  notify-send "DUNST_COMMAND_TOGGLE" && pkill -RTMIN+3 i3blocks
+  dunstctl set-paused toggle && pkill -RTMIN+3 i3blocks
 
 # lock the window manager
 super + x
