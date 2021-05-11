@@ -1,7 +1,7 @@
 #!/bin/sh
 
 case $BLOCK_BUTTON in
-  1) notify-send "DUNST_COMMAND_TOGGLE" ;;
+  1) dunstctl set-paused toggle;;
 	2) notify-send " Notification module" "\- Click to pause/unpause" ;;
 esac
 
