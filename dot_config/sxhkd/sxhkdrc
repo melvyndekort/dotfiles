@@ -37,7 +37,7 @@ super + shift + Home
 
 # app launcher
 super + o; {a,g,f,c,v,s,t,e,p,j}
-  {restart-adb, google-chrome-stable, firefox, galculator, remote-viewer, slack, teams, subl3, postman, rofi-java}
+  {restart-adb, google-chrome-stable, firefox, galculator, remote-viewer, slack, teams, subl, postman, rofi-java}
 
 # use android device
 super + p
