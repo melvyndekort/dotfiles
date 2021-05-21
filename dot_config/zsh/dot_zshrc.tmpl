@@ -157,6 +157,13 @@ alias vagrant='docker run --rm -it \
 # Fun command to wait a long time
 alias coffee='for i in `seq 0 100`;do timeout 6 dialog --gauge "Install..." 6 40 "$i";done'
 
+# Upgrade to latest Terraform version
+tfupdate() {
+  VERSION=$(tfenv list-remote | head -n 1)
+  tfenv install $VERSION
+  tfenv use $VERSION
+}
+
 # Use correct TERM variable in SSH connections
 ssh() {
   if [ "$TERM" = "alacritty" ]; then
