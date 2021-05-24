@@ -24,6 +24,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'junegunn/fzf.vim'
 Plug 'voldikss/vim-floaterm'
+Plug 'Yggdroot/indentLine'
 
 call plug#end()
 
@@ -38,10 +39,10 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 set cindent
-set nolist
 set pastetoggle=<F9>
 set number relativenumber
 set nu rnu
+set listchars=eol:⏎,tab:␉·,trail:·
 
 let mapleader = ','
 
@@ -61,6 +62,8 @@ nnoremap <leader>r    :FloatermNew ranger<CR>
 
 nnoremap <leader>w    :set wrap!<CR>
 
+nnoremap <leader>i    :set invlist<CR>
+
 " Yank until eol
 nnoremap Y y$
 
@@ -68,13 +71,13 @@ nnoremap Y y$
 vnoremap <leader>d  "+d
 nnoremap <leader>D  "+dg_
 nnoremap <leader>d  "+d
-nnoremap <leader>dd  "+dd
+nnoremap <leader>dd "+dd
 
 " Copy to clipboard
 vnoremap <leader>y  "+y
 nnoremap <leader>Y  "+yg_
 nnoremap <leader>y  "+y
-nnoremap <leader>yy  "+yy
+nnoremap <leader>yy "+yy
 
 " Paste from clipboard
 nnoremap <leader>p "+p
