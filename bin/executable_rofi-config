@@ -59,7 +59,7 @@ case "$option" in
   netrc)
     editfile "$HOME/.netrc" ;;
   nvim)
-    editfile "$HOME/.config/nvim/init.nvim" ;;
+    editfile "$HOME/.config/nvim/init.vim" ;;
   picom)
     editfile "$HOME/.config/picom/picom.conf" ;;
   profile)
