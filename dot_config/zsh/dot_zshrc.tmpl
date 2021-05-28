@@ -210,7 +210,7 @@ mvn-or-mvnw() {
 
 {{if .work }}
 # Work related stuff
-export ARTIFACTORY_URL="https://{{ (index (lastpass "Artifactory - readonly") 0).username -}}:{{ urlquery ((index (lastpass "Artifactory - readonly") 0).password) -}}@artifactory.portbase.io/artifactory"
+export ARTIFACTORY_URL="https://{{ (index (lastpass "Artifactory API token") 0).username | replace "@" "%40" -}}:{{ urlquery ((index (lastpass "Artifactory API token") 0).password) -}}@artifactory.portbase.io/artifactory"
 alias wpcs-build="mvn -T C1 clean package -DskipTests -Dnaomi.skip -Dmaven.antrun.skip -pl \!naomi/naomi-maven-plugin-test"
 alias sqlplus='docker container run --rm -it --network host melvyndekort/sqlplus'
 
