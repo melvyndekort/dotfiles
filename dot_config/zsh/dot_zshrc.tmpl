@@ -198,6 +198,16 @@ if [ ! -d "$XDG_CONFIG_HOME/tmux/plugins/tpm" ]; then
   git clone https://github.com/tmux-plugins/tpm $XDG_CONFIG_HOME/tmux/plugins/tpm
 fi
 
+# Configure maven
+mvn-or-mvnw() {
+	if [ -x ./mvnw ]; then
+		echo "executing mvnw instead of mvn"
+		./mvnw --global-settings $XDG_CONFIG_HOME/maven/settings.xml "$@"
+	else
+		command mvn --global-settings $XDG_CONFIG_HOME/maven/settings.xml "$@"
+	fi
+}
+
 {{if .work }}
 # Work related stuff
 export ARTIFACTORY_URL="https://{{ (index (lastpass "Artifactory - readonly") 0).username -}}:{{ urlquery ((index (lastpass "Artifactory - readonly") 0).password) -}}@artifactory.portbase.io/artifactory"
