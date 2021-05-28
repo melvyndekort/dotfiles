@@ -15,6 +15,7 @@ dunst
 git
 i3
 i3blocks
+maven
 netrc
 nvim
 picom
@@ -56,6 +57,8 @@ case "$option" in
     editfile "$HOME/.config/i3/config" ;;
   i3blocks)
     editfile "$HOME/.config/i3blocks/config" ;;
+  maven)
+    editfile "$HOME/.config/maven/settings.xml" ;;
   netrc)
     editfile "$HOME/.netrc" ;;
   nvim)
