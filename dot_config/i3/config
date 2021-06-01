@@ -158,17 +158,17 @@ bindsym $mod+r mode "resize"
 
 # resize the gaps between windows
 mode "gaps" {
-        bindsym j       gaps inner current plus  5
+        bindsym h       gaps outer current minus 5
+        bindsym j       gaps outer current plus  5
         bindsym k       gaps inner current minus 5
-        bindsym h       gaps outer current plus  5
-        bindsym l       gaps outer current minus 5
+        bindsym l       gaps inner current plus  5
         bindsym 0       gaps inner current set   0; gaps outer current set  0
         bindsym r       gaps inner current set  10; gaps outer current set 10
 
-        bindsym Shift+j gaps inner all plus  5
+        bindsym Shift+h gaps outer all minus 5
+        bindsym Shift+j gaps outer all plus  5
         bindsym Shift+k gaps inner all minus 5
-        bindsym Shift+h gaps outer all plus  5
-        bindsym Shift+l gaps outer all minus 5
+        bindsym Shift+l gaps inner all plus  5
         bindsym Shift+0 gaps inner all set   0; gaps outer all set  0
         bindsym Shift+r gaps inner all set  10; gaps outer all set 10
 
