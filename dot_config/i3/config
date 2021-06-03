@@ -25,7 +25,6 @@ client.background       #282a36
 floating_modifier $mod
 
 # kill focused window
-bindsym $mod+Shift+q kill
 bindsym $mod+q kill
 
 # change focus
@@ -124,11 +123,10 @@ for_window [class="scrcpy"] floating enable
 for_window [title="myforecast"] floating enable, resize set 1010 725, move position center
 for_window [instance="buienradar"] floating enable, resize set 550 550, move position center
 
-# reload the configuration file
+# Session management
 bindsym $mod+Shift+c reload
-
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+bindsym $mod+Shift+q quit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -206,3 +204,11 @@ bar {
     binding_mode        #ff5555  #ff5555      #f8f8f2
   }
 }
+
+# Exec at startup
+exec --no-startup-id i3-msg 'workspace 1; append_layout /home/melvyn/.config/i3/layouts/1.json; workspace 2; append_layout /home/melvyn/.config/i3/layouts/2.json; workspace 3; append_layout /home/melvyn/.config/i3/layouts/3.json; workspace 4; append_layout /home/melvyn/.config/i3/layouts/4.json'
+exec /usr/bin/alacritty -e tmux new-session -A -s main
+exec /usr/bin/google-chrome-stable --profile-directory="Default"
+exec /usr/bin/slack
+exec /usr/bin/teams
+exec --no-startup-id i3-msg 'workspace 1'
