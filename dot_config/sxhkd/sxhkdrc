@@ -61,7 +61,11 @@ super + F7
 
 # display menu
 super + F8
-  rofi-display; rofi-autolock
+  rofi-display
+
+# autolock menu
+super + shift + F8
+  rofi-autolock
 
 # pass menu
 super + F9
