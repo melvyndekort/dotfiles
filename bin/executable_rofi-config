@@ -8,6 +8,7 @@ choice="$(rofi -dmenu -p 'Config file:')" << END
 alacritty
 aws-config
 aws-creds
+bin/rofi-adb
 bin/rofi-config
 bin/rofi-webcam
 compton
@@ -43,6 +44,8 @@ case "$option" in
     editfile "$HOME/.config/aws/config" ;;
   aws-creds)
     editfile "$HOME/.config/aws/credentials" ;;
+  bin/rofi-adb)
+    editfile "$HOME/bin/rofi-adb" ;;
   bin/rofi-config)
     editfile "$HOME/bin/rofi-config" ;;
   bin/rofi-webcam)
