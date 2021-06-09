@@ -1,0 +1,24 @@
+#!/bin/sh
+
+adb disconnect
+adb tcpip
+notify-send "Disconnected all ADB devices"
+
+choice="$( ( cat << EOF && arp -n | tail -n +2 | awk '{print $1}' ) | rofi -dmenu -p 'ADB:'
+lmphone
+hotspot
+EOF
+)"
+
+case "$choice" in
+  lmphone)
+    adb connect lmphone ;;
+
+  hotspot)
+    adb connect $(ip route show | grep default | awk '{print $3}') ;;
+
+  *)
+    adb connect $choice ;;
+esac
+
+notify-send "Connected to ADB device $choice"
