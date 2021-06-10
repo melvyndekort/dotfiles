@@ -13,10 +13,13 @@
 	default = simple
 
 [alias]
-  cleanup = !git remote prune origin && git gc && git clean -dfx && git checkout . && git stash clear
+	cleanup = !git clean -dfx && git reset --hard origin/master && git checkout master && git stash clear && git pull && git gc
 
 [diff]
 	tool = meld
 
 [pull]
 	rebase = true
+
+[fetch]
+	prune = true
