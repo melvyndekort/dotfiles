@@ -72,8 +72,8 @@ case "$choice" in
 
   dock-expand-3)
     xrandr \
-      --output eDP-1 --primary --dpi 96 --mode 1920x1080 --pos 0x504 \
-      --output DVI-I-1-1 --dpi 96 --mode 1920x1080 --pos 1920x0 \
+      --output eDP-1 --dpi 96 --mode 1920x1080 --pos 0x504 \
+      --output DVI-I-1-1 --primary --dpi 96 --mode 1920x1080 --pos 1920x0 \
       --output DVI-I-2-2 --dpi 96 --mode 1920x1080 --pos 3840x0 \
       --output DP-1 --off \
       --output DP-2 --off \
@@ -82,8 +82,8 @@ case "$choice" in
 
   dock-expand-4)
     xrandr \
-      --output eDP-1 --primary --dpi 96 --mode 1920x1080 --pos 0x504 \
-      --output DVI-I-2-2 --dpi 96 --mode 1920x1080 --pos 1920x0 \
+      --output eDP-1 --dpi 96 --mode 1920x1080 --pos 0x504 \
+      --output DVI-I-2-2 --primary --dpi 96 --mode 1920x1080 --pos 1920x0 \
       --output DVI-I-1-1 --dpi 96 --mode 1920x1080 --pos 3840x0 \
       --output DP-1 --off \
       --output DP-2 --off \
