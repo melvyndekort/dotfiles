@@ -41,7 +41,7 @@ super + o; {g,f,c,v,s,t,e,p,j}
 
 # ADB & Android
 super + {_, shift +, control +} y
-  {scrcpy --disable-screensaver --lock-video-orientation 0 --prefer-text --turn-screen-off --stay-awake --shortcut-mod lctrl,rofi-adb, restart-adb}
+  {scrcpy --disable-screensaver --prefer-text --turn-screen-off --stay-awake --shortcut-mod lctrl,rofi-adb, restart-adb}
 
 # generate password
 super + p
