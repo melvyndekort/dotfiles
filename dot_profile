@@ -43,6 +43,7 @@ export LPASS_PINENTRY="pinentry-curses"
 
 # Set some defaults
 alias abcde="abcde -c $XDG_CONFIG_HOME/abcde/abcde.conf"
+alias irssi="irssi --config=$XDG_CONFIG_HOME/irssi/config --home=$XDG_DATA_HOME/irssi "
 
 # Start the windows manager
 if [ "$(tty)" = "/dev/tty1" ]; then
