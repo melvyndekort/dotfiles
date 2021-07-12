@@ -37,7 +37,7 @@ super + shift + Home
 
 # app launcher
 super + o; {g,f,c,v,s,t,e,p,j,i}
-  {google-chrome-stable, firefox, galculator, remote-viewer, slack, teams, subl, postman, rofi-java, intellij-idea-ultimate-edition}
+  {google-chrome-stable, firefox, galculator, remote-viewer, slack, teams, $TERMINAL -e vim, postman, rofi-java, intellij-idea-ultimate-edition}
 
 # ADB & Android
 super + {_, shift +, control +} y
