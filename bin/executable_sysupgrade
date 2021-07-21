@@ -3,6 +3,10 @@
 set -e
 
 yay -Syu --sudoloop --answerclean A --nodiffmenu --noupgrademenu
-pip freeze --user | xargs pip uninstall -y
-pip install --upgrade --user -r $HOME/src/arch-setup/pkglist-pip.txt
 
+if [ "$#" -eq "0" ]; then
+  pip-upgrade $HOME/src/arch-setup/pkglist-pip.txt --skip-virtualenv-check
+else
+  pip freeze --user | xargs -r pip uninstall -y
+  pip install --upgrade --user -r $HOME/src/arch-setup/pkglist-pip.txt
+fi
