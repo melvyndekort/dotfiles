@@ -42,14 +42,13 @@ fi
 
 # setup graphics part of window manager
 picom -b --config .config/picom/picom.conf
-betterlockscreen -u $(realpath $(ls -1 ~/Sync/pictures/wallpapers/* | sort -R | head -n 1)) &
 set-wallpaper &
 
 # start simple X hotkey daemon
 sxhkd &
 
 # start lockscreen
-xss-lock -- betterlockscreen -l dimblur &
+xss-lock -- slock &
 
 # set default cursor to arrow
 xsetroot -cursor_name left_ptr
