@@ -51,9 +51,6 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# split container orientation
-bindsym $mod+v split toggle
-
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
@@ -116,12 +113,15 @@ bindsym $mod+Shift+comma move workspace to output left
 bindsym $mod+Shift+period move workspace to output right
 
 # float special windows
-for_window [title="galculator"] floating enable, move position center
-for_window [class="Surf"] floating enable, move position center
+for_window [title="galculator"] floating enable
+for_window [class="Surf"] floating enable
 for_window [title="mypulsemixer"] floating enable
 for_window [class="scrcpy"] floating enable
-for_window [title="myforecast"] floating enable, resize set 1010 725, move position center
-for_window [instance="buienradar"] floating enable, resize set 550 550, move position center
+for_window [title="myforecast"] floating enable, resize set 1010 725
+for_window [instance="buienradar"] floating enable, resize set 550 550
+
+# All floating windows start centered
+for_window [floating] move position center
 
 # Session management
 bindsym $mod+Shift+c reload

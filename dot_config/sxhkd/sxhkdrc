@@ -107,6 +107,10 @@ ctrl + {space,shift + space,grave}
 super + n
   dunstctl set-paused toggle && pkill -RTMIN+3 i3blocks
 
+# control wireguard VPN
+super + {v,shift + v}
+  nmcli con {up,down} id LMVPN
+
 # lock the window manager
 super + x
   xset s activate
