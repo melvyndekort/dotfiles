@@ -1,0 +1,5 @@
+#!/bin/sh
+
+dunstctl set-paused true
+slock
+dunstctl set-paused false
