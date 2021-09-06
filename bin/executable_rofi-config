@@ -13,6 +13,7 @@ bin/rofi-config
 bin/rofi-webcam
 compton
 dunst
+fwknoprc
 git
 i3
 i3blocks
@@ -52,6 +53,8 @@ case "$option" in
     editfile "$HOME/bin/rofi-webcam" ;;
   compton)
     editfile "$HOME/.config/compton.conf" ;;
+  fwknoprc)
+    editfile "$HOME/.config/fwknoprc" ;;
   dunst)
     editfile "$HOME/.config/dunst/dunstrc" ;;
   git)
