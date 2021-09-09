@@ -13,7 +13,7 @@ super + {_,shift +,ctrl +}Return
 
 # program launcher
 super + d
-  rofi -show drun
+  rofi -show combi
 
 # reload sxhkd
 super + Escape
