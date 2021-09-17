@@ -56,8 +56,8 @@ super + F6
   rofi-config
 
 # bluetooth control
-super + F7
-  rofi-bluetooth
+super + {_, shift +} F7
+  {rofi-bluetooth, connect-bt-headphone.sh}
 
 # display menu
 super + F8
