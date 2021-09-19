@@ -1,5 +1,7 @@
 #!/bin/sh
 
+notify-send 'Headphone' 'Reconnecting bluetooth headphone'
+
 bluetoothctl power off
 sleep 1
 bluetoothctl power on
