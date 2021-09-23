@@ -1,0 +1,7 @@
+#!/bin/sh
+
+choice="$(tfenv list | sed 's/^[ \t\*]*//; s/(.*)/ (default)/' | rofi -dmenu -p 'Terraform version' | awk '{print $1}')"
+
+if [ -n "$choice" ]; then
+  tfenv use "$choice" && notify-send "Terraform set to $choice"
+fi
