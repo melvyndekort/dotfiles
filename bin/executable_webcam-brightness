@@ -4,6 +4,22 @@ operation=$1
 curval=$(v4l2-ctl -C "exposure_absolute" | cut -d: -f2 | tr -d ' ')
 
 case $operation in
+  reset)
+    v4l2-ctl -c "brightness=0"
+    v4l2-ctl -c "contrast=20"
+    v4l2-ctl -c "saturation=64"
+    v4l2-ctl -c "hue=0"
+    v4l2-ctl -c "white_balance_temperature_auto=1"
+    v4l2-ctl -c "gamma=100"
+    v4l2-ctl -c "gain=0"
+    v4l2-ctl -c "power_line_frequency=1"
+    v4l2-ctl -c "white_balance_temperature=4600"
+    v4l2-ctl -c "sharpness=3"
+    v4l2-ctl -c "backlight_compensation=0"
+    v4l2-ctl -c "exposure_auto=3"
+    v4l2-ctl -c "exposure_absolute=160"
+    v4l2-ctl -c "exposure_auto_priority=0"
+    ;;
   up)
     newval=$(($curval+10))
     v4l2-ctl -c "exposure_auto=1"
@@ -16,6 +32,7 @@ case $operation in
     ;;
   auto)
     v4l2-ctl -c "exposure_auto=3"
+    v4l2-ctl -c "exposure_absolute=0"
     ;;
   ''|*[!0-9]*)
     echo "Incorrect operation attribute"

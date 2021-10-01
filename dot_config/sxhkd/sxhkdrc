@@ -19,9 +19,13 @@ super + d
 super + Escape
   pkill -USR1 -x sxhkd; notify-send 'sxhkd' 'Reloaded config'
 
-# modify webcam brightness
+# modify webcam settings
 super + {bracketleft,bracketright,backslash}
   webcam-brightness {down,up,auto}
+
+# reset webcam settings
+super + shift + backslash
+  webcam-brightness reset
 
 # swith to TTY
 super + ctrl + {F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11,F12}
