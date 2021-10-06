@@ -1,6 +1,0 @@
-#!/bin/sh
-
-pkexec adb kill-server
-pkexec adb start-server
-
-notify-send "ADB server restarted"
