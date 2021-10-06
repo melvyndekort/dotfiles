@@ -45,7 +45,7 @@ super + o; {g,f,c,v,s,t,e,p,j,i,m}
 
 # ADB & Android
 super + {_, shift +, control +} y
-  {scrcpy --disable-screensaver --prefer-text --turn-screen-off --stay-awake --shortcut-mod lctrl,rofi-adb, restart-adb}
+  {i3-msg '[con_mark="android"] scratchpad show', scrcpy --disable-screensaver --prefer-text --turn-screen-off --stay-awake --shortcut-mod lctrl, rofi-adb}
 
 # generate password
 super + p

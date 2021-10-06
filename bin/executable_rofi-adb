@@ -1,24 +1,38 @@
 #!/bin/sh
 
-adb disconnect
-adb tcpip
-notify-send "Disconnected all ADB devices"
+connect() {
+  adb disconnect
+  sleep 1
+  adb tcpip 5555
+  sleep 1
+  notify-send "$(adb connect $1)"
+}
 
-choice="$( ( cat << EOF && arp -n | tail -n +2 | awk '{print $1}' ) | rofi -dmenu -p 'ADB:'
-lmphone
-hotspot
+choice="$( ( cat << EOF && arp -n | sed '1d' | awk '{print "connect to " $1}' | sort -V -u ) | rofi -dmenu -p 'ADB task'
+restart adb
+disconnect
+switch to tcpip
+connect to lmphone
+connect to hotspot
 EOF
 )"
 
 case "$choice" in
-  lmphone)
-    adb connect lmphone ;;
-
-  hotspot)
-    adb connect $(ip route show | grep default | awk '{print $3}') ;;
-
-  *)
-    adb connect $choice ;;
+  "connect to hotspot")
+    connect "$(ip route show | grep default | awk '{print $3}')"
+    ;;
+  connect*)
+    connect "$(echo $choice | cut -d' ' -f3)"
+    ;;
+  disconnect)
+    notify-send "$(adb disconnect)"
+    ;;
+  'switch to tcpip')
+    notify-send "$(adb tcpip 5555)"
+    ;;
+  'restart adb')
+    pkexec adb kill-server
+    pkexec adb start-server
+    notify-send "ADB server restarted"
+    ;;
 esac
-
-notify-send "Connected to ADB device $choice"
