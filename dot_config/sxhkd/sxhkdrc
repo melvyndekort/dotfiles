@@ -44,8 +44,8 @@ super + o; {g,f,c,v,s,t,e,p,j,i,m}
   {google-chrome-stable, firefox, galculator, remote-viewer, slack, rofi-terraform, subl, postman, rofi-java, intellij-idea-ultimate-edition, teams}
 
 # ADB & Android
-super + {_, shift +, control +} y
-  {i3-msg '[con_mark="android"] scratchpad show', scrcpy --disable-screensaver --prefer-text --turn-screen-off --stay-awake --shortcut-mod lctrl, rofi-adb}
+super + {_, shift +} y
+  {focus-or-start-scrcpy, rofi-adb}
 
 # generate password
 super + p
