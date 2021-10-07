@@ -10,7 +10,6 @@ aws-config
 aws-creds
 bin/rofi-adb
 bin/rofi-config
-bin/rofi-webcam
 compton
 dunst
 fwknoprc
@@ -49,8 +48,6 @@ case "$option" in
     editfile "$HOME/bin/rofi-adb" ;;
   bin/rofi-config)
     editfile "$HOME/bin/rofi-config" ;;
-  bin/rofi-webcam)
-    editfile "$HOME/bin/rofi-webcam" ;;
   compton)
     editfile "$HOME/.config/compton.conf" ;;
   fwknoprc)
