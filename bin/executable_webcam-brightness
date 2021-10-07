@@ -16,8 +16,9 @@ case $operation in
     v4l2-ctl -c "white_balance_temperature=4600"
     v4l2-ctl -c "sharpness=2"
     v4l2-ctl -c "backlight_compensation=3"
-    v4l2-ctl -c "exposure_auto=3"
+    v4l2-ctl -c "exposure_auto=1"
     v4l2-ctl -c "exposure_absolute=156"
+    v4l2-ctl -c "exposure_auto=3"
     v4l2-ctl -c "exposure_auto_priority=0"
     ;;
   up)
