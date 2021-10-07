@@ -208,7 +208,7 @@ bar {
 # Exec at startup
 exec --no-startup-id i3-msg 'workspace 1; append_layout /home/melvyn/.config/i3/layouts/1.json; workspace 2; append_layout /home/melvyn/.config/i3/layouts/2.json; workspace 3; append_layout /home/melvyn/.config/i3/layouts/3.json; workspace 4; append_layout /home/melvyn/.config/i3/layouts/4.json'
 exec /usr/bin/alacritty -e tmux new-session -A -s main
-exec /usr/bin/google-chrome-stable --profile-directory="Default"
+exec /usr/bin/firefox -P melvyn
 exec /usr/bin/slack
 exec /usr/bin/teams
 exec --no-startup-id i3-msg 'workspace 1'
