@@ -2,14 +2,16 @@
 
 connect() {
   adb disconnect
-  sleep 1
+  sleep 0.2
   adb tcpip 5555
-  sleep 1
+  sleep 0.2
   notify-send "$(adb connect $1)"
 }
 
 choice="$( ( cat << EOF && arp -n | sed '1d' | awk '{print "connect to " $1}' | sort -V -u ) | rofi -dmenu -p 'ADB task'
-restart adb
+list devices
+restart adb user
+restart adb root
 disconnect
 switch to tcpip
 connect to lmphone
@@ -18,7 +20,7 @@ EOF
 )"
 
 case "$choice" in
-  "connect to hotspot")
+  'connect to hotspot')
     connect "$(ip route show | grep default | awk '{print $3}')"
     ;;
   connect*)
@@ -30,9 +32,15 @@ case "$choice" in
   'switch to tcpip')
     notify-send "$(adb tcpip 5555)"
     ;;
-  'restart adb')
-    pkexec adb kill-server
-    pkexec adb start-server
-    notify-send "ADB server restarted"
+  'list devices')
+    notify-send "$(adb devices)"
+    ;;
+  'restart adb user')
+    adb kill-server
+    notify-send "$(adb start-server 2>&1)"
+    ;;
+  'restart adb root')
+    adb kill-server
+    notify-send "$(pkexec adb start-server 2>&1)"
     ;;
 esac
