@@ -37,7 +37,7 @@ super + shift + Home
 
 # app launcher
 super + o; {f,g,c,v,s,t,e,p,j,i,m}
-  {firefox -P melvyn, firefox -P anonymous, galculator, remote-viewer, slack, rofi-terraform, subl, postman, rofi-java, intellij-idea-ultimate-edition, teams}
+  {firefox -P melvyn, firefox -P anonymous, galculator, remote-viewer, slack, rofi-terraform, subl, postman, rofi-java, intellij-idea-ultimate-edition, rofi-samba}
 
 # ADB & Android
 super + {_, shift +} y
