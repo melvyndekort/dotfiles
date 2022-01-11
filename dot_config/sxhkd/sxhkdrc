@@ -36,8 +36,8 @@ super + shift + Home
   set-wallpaper
 
 # app launcher
-super + o; {f,g,c,v,s,t,e,p,j,i,m}
-  {firefox -P melvyn, firefox -P anonymous, galculator, remote-viewer, slack, rofi-terraform, subl, postman, rofi-java, intellij-idea-ultimate-edition, rofi-samba}
+super + o; {f,g,c,v,s,t,e,p,j,i,m,r}
+  {firefox -P melvyn, firefox -P anonymous, chromium, remote-viewer, slack, rofi-terraform, subl, postman, rofi-java, intellij-idea-ultimate-edition, rofi-samba, galculator}
 
 # ADB & Android
 super + {_, shift +} y
