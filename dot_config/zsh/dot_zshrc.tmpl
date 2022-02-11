@@ -139,6 +139,7 @@ alias nginx='docker container run --rm -it -v `pwd`:/usr/share/nginx/html:ro -p 
 alias localstack='docker container run --rm -it -e SERVICES=serverless -e DEFAULT_REGION=eu-west-1 -p 4566:4566 -p 4571:4571 localstack/localstack:latest'
 alias awslocal='aws --endpoint-url=http://localhost:4566'
 alias ssudo='pass linux/melvyn | sudo -SH'
+alias mtn='mtn -f /usr/share/fonts/TTF/DejaVuSans.ttf'
 
 # Set bitwarden session key
 if [ -f "$HOME/.config/bw-unlock.sh" ]; then
