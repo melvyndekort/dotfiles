@@ -210,5 +210,5 @@ exec --no-startup-id i3-msg 'workspace 1; append_layout /home/melvyn/.config/i3/
 exec /usr/bin/alacritty -e tmux new-session -A -s main
 exec /usr/bin/firefox -P melvyn
 exec /usr/bin/slack
-exec /usr/bin/teams
+exec /usr/bin/teams --no-sandbox
 exec --no-startup-id i3-msg 'workspace 1'
