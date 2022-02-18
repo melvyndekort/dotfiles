@@ -1,7 +1,8 @@
 #!/bin/sh
 
 operation=$1
-curval=$(v4l2-ctl -C "exposure_absolute" | cut -d: -f2 | tr -d ' ')
+curexposure=$(v4l2-ctl -C "exposure_absolute" | cut -d: -f2 | tr -d ' ')
+curgamma=$(v4l2-ctl -C "gamma" | cut -d: -f2 | tr -d ' ')
 
 case $operation in
   reset)
@@ -9,13 +10,21 @@ case $operation in
     v4l2-ctl -c "white_balance_temperature_auto=0"
     v4l2-ctl -l | sed 's/^[ \t]*//; s/\ .*default//; s/\ .*//' | sort | xargs -I {} v4l2-ctl -c "{}"
     ;;
-  up)
-    newval=$(($curval+10))
+  gamma-up)
+    newval=$(($curgamma+5))
+    v4l2-ctl -c "gamma=$newval"
+    ;;
+  gamma-down)
+    newval=$(($curgamma-5))
+    v4l2-ctl -c "gamma=$newval"
+    ;;
+  exposure-up)
+    newval=$(($curexposure+10))
     v4l2-ctl -c "exposure_auto=1"
     v4l2-ctl -c "exposure_absolute=$newval"
     ;;
-  down)
-    newval=$(($curval-10))
+  exposure-down)
+    newval=$(($curexposure-10))
     v4l2-ctl -c "exposure_auto=1"
     v4l2-ctl -c "exposure_absolute=$newval"
     ;;
