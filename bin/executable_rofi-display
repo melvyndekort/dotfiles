@@ -1,6 +1,6 @@
 #!/bin/sh
 
-choice="$(rofi -dmenu -p 'Display setup:' << EOF | cut -d' ' -f1
+choice="$(rofi -dmenu -p 'Display setup' << EOF | cut -d' ' -f1
 laptop 
 home-office 度度
 pb-office  度
