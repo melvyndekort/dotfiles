@@ -1,0 +1,16 @@
+[global]
+username = "{{- (bitwarden "item" "spotify").login.username -}}"
+password_cmd = "bw get password spotify"
+use_keyring = false
+use_mpris = true
+backend = "pulseaudio"
+device_name = "{{- .chezmoi.hostname -}}"
+bitrate = 160
+cache_path = "{{- .chezmoi.homeDir -}}/.cache/spotifyd"
+no_audio_cache = false
+initial_volume = "90"
+volume_normalisation = true
+normalisation_pregain = -10
+autoplay = true
+zeroconf_port = 1234
+device_type = "computer"
