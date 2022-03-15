@@ -4,7 +4,7 @@ editfile() {
   alacritty -e zsh -c "chezmoi edit --apply $1"
 }
 
-choice="$(rofi -dmenu -p 'Config file:')" << END
+choice="$(rofi -dmenu -p 'Config file')" << END
 alacritty
 aws-config
 aws-creds

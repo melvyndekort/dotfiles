@@ -1,6 +1,6 @@
 #!/bin/sh
 
-choice="$(rofi -dmenu -p 'Autolock:' << EOF | cut -d' ' -f2
+choice="$(rofi -dmenu -p 'Autolock' << EOF | cut -d' ' -f2
  enabled
  disabled
 EOF
