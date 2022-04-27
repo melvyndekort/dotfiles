@@ -4,10 +4,14 @@
 [user]
 	name = Melvyn de Kort
 	email = {{ .email }}
+  signingkey = 9178B037E6219610
 
 [core]
 	autocrlf = input
 	filemode = false
+
+[commit]
+  gpgsign = true
 
 [push]
 	default = simple
