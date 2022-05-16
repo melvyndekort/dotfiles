@@ -4,4 +4,4 @@ set -e
 
 yay -Syu --sudoloop --answerclean A --nodiffmenu --noupgrademenu
 pip freeze --user | xargs -rn1 pip uninstall -y
-pip install --user -r $HOME/src/arch-setup/pkglist-pip.txt
+pip install --user -r $HOME/src/melvyndekort/arch-setup/pkglist-pip.txt
