@@ -8,7 +8,7 @@ for REPO in ${PWD}/*/; do
   git config user.email 'melvyn@mdekort.nl'
 
   ## Update repo
-  git branch --no-color --show-current | grep -q main
+  git branch --no-color --show-current | egrep -q "main|gh-pages"
   if [ $? -eq 0 ]; then
     git pull -q
   fi
