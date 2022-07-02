@@ -49,7 +49,7 @@ super + p
 
 # show help
 super + F1
-  surf ~/docs/index.html
+  surf https://cheatsheets.mdekort.nl/
 
 # edit configs
 super + F6
