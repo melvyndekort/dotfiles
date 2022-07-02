@@ -55,7 +55,7 @@ ZSH_TMUX_AUTOSTART="false"
 ZSH_TMUX_CONFIG="$XDG_CONFIG_HOME/tmux/tmux.conf"
 
 KEYS=""
-for KEY in melvyn_ed25519 melvyn portbase portbase_ed25519; do
+for KEY in melvyn_ed25519_sk melvyn_ed25519 melvyn; do
   if [ -f "$HOME/.ssh/$KEY" ]; then
     if [ ! -f "$HOME/.ssh/$KEY.pub" ]; then
       ssh-keygen -y -f "$HOME/.ssh/$KEY" > "$HOME/.ssh/$KEY.pub"
