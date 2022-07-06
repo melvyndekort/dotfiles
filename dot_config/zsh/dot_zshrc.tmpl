@@ -48,25 +48,11 @@ ZSH_CUSTOM=/usr/share/zsh
 # Change foreground color of the autosuggest plugin
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=7'
 
-plugins=(adb archlinux aws catimg common-aliases copyfile docker docker-compose emoji extract fzf git git-extras gpg-agent history mvn nmap pip rsync ssh-agent sudo systemd terraform tmux vscode z zsh-interactive-cd zsh-autosuggestions history-substring-search zsh-syntax-highlighting)
+plugins=(adb archlinux aws catimg common-aliases copyfile docker docker-compose emoji extract fzf git git-extras gpg-agent history mvn nmap pip rsync sudo systemd terraform tmux vscode z zsh-interactive-cd zsh-autosuggestions history-substring-search zsh-syntax-highlighting)
 
 # Autostart tmux on zsh startup
 ZSH_TMUX_AUTOSTART="false"
 ZSH_TMUX_CONFIG="$XDG_CONFIG_HOME/tmux/tmux.conf"
-
-KEYS=""
-for KEY in melvyn_ed25519_sk portbase-bitbucket; do
-  if [ -f "$HOME/.ssh/$KEY" ]; then
-    if [ ! -f "$HOME/.ssh/$KEY.pub" ]; then
-      ssh-keygen -y -f "$HOME/.ssh/$KEY" > "$HOME/.ssh/$KEY.pub"
-    fi
-    KEYS="$KEYS $KEY"
-  fi
-done
-
-# SSH agent configuration
-zstyle :omz:plugins:ssh-agent agent-forwarding on
-zstyle :omz:plugins:ssh-agent identities $(echo $KEYS | cut -d ' ' -f1-)
 
 # Auto rehash
 zstyle ':completion:*' rehash true
