@@ -8,5 +8,6 @@
     "files.autoSave": "onFocusChange",
     "files.enableTrash": false,
     "workbench.colorTheme": "Dracula At Night",
-    "workbench.startupEditor": "newUntitledFile"
+    "workbench.startupEditor": "newUntitledFile",
+    "redhat.telemetry.enabled": false
 }
