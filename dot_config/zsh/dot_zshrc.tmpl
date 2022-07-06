@@ -230,6 +230,17 @@ nrc() {
   done
 }
 
+# Set Bitbucket credentials
+bb() {
+  export BITBUCKET_USERNAME="portbase-mdekort"
+  export BITBUCKET_PASSWORD="$(pass bitbucket/portbase-mdekort/terraform)"
+}
+
+# Clear Bitbucket credentials
+bbc() {
+  unset BITBUCKET_USERNAME BITBUCKET_PASSWORD
+}
+
 # Find the account id of an AWS account
 acct() {
   grep -C3 $1 $HOME/.config/aws/config
