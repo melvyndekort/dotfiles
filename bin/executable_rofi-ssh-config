@@ -1,0 +1,7 @@
+#!/bin/sh
+
+choice="$(echo 'home\nremote-open\nremote-strict' | rofi -dmenu -p 'SSH configuration' | awk '{print $1}')"
+
+if [ -n "$choice" ]; then
+  cp -f "$HOME/.ssh/config-${choice}" $HOME/.ssh/config && notify-send "SSH configuration set to $choice"
+fi
