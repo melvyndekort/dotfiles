@@ -23,7 +23,9 @@ profile
 ranger
 rofi
 screen
-ssh
+ssh-home
+ssh-remote-open
+ssh-remote-strict
 sxhkd
 sxiv
 terraform
@@ -73,8 +75,12 @@ case "$option" in
     editfile "$HOME/.config/rofi/config.rasi" ;;
   screen)
     editfile "$HOME/.config/screen/screenrc" ;;
-  ssh)
-    editfile "$HOME/.ssh/config" ;;
+  ssh-home)
+    editfile "$HOME/.ssh/config-home" ;;
+  ssh-remote-open)
+    editfile "$HOME/.ssh/config-remote-open" ;;
+  ssh-remote-strict)
+    editfile "$HOME/.ssh/config-remote-strict" ;;
   sxhkd)
     editfile "$HOME/.config/sxhkd/sxhkdrc" ;;
   sxiv)
