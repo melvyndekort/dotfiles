@@ -75,7 +75,8 @@ plugins=(adb archlinux aws catimg common-aliases copyfile docker docker-compose 
 ZSH_TMUX_AUTOSTART="false"
 ZSH_TMUX_CONFIG="$XDG_CONFIG_HOME/tmux/tmux.conf"
 
-# Auto rehash
+# Configure autocompletion
+zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/zcompcache
 zstyle ':completion:*' rehash true
 
 #Setup ZSH autocompletion
