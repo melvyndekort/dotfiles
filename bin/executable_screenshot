@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x
+
 RANDOM_NAME="$HOME/screenshot-$(date +%s%3N).png"
 
 if [ -z "$1" ]; then
@@ -9,17 +11,17 @@ fi
 
 case "$1" in
   all)
-    shotgun $RANDOM_NAME
+    scrot $RANDOM_NAME
     xclip -t 'image/png' -selection clipboard $RANDOM_NAME
     notify-send "Screenshot" "Saved as $RANDOM_NAME"
     ;;
   window)
-    shotgun -i $(xdotool getmouselocation --shell | grep WINDOW | cut -d'=' -f2) $RANDOM_NAME
+    scrot -u $RANDOM_NAME
     xclip -t 'image/png' -selection clipboard $RANDOM_NAME
     notify-send "Screenshot" "Saved as $RANDOM_NAME"
     ;;
   area)
-    shotgun $(hacksaw -f '-i %i -g %g') $RANDOM_NAME
+    scrot -s -f $RANDOM_NAME
     xclip -t 'image/png' -selection clipboard $RANDOM_NAME
     notify-send "Screenshot" "Saved as $RANDOM_NAME"
     ;;
