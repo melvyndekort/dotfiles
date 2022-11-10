@@ -93,7 +93,7 @@ super + Print
 
 # screenshot selected area
 super + shift + Print
-  screenshot area
+  flameshot gui
 
 # picom
 super + {_, shift +} i
