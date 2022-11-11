@@ -129,7 +129,7 @@ for_window [floating] move position center
 # Session management
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
-bindsym $mod+Shift+q quit
+bindsym $mod+Shift+q exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
