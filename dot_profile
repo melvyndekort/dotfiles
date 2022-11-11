@@ -33,7 +33,6 @@ export PYLINTHOME="$XDG_CACHE_HOME/pylint"
 export TF_CLI_CONFIG_FILE="$XDG_CONFIG_HOME/terraform/terraform.rc"
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 export TMUX_PLUGIN_MANAGER_PATH="$XDG_CONFIG_HOME/tmux/plugins/"
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export ANDROID_SDK_HOME="$XDG_CONFIG_HOME/android"
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
@@ -46,7 +45,8 @@ export LPASS_PINENTRY="pinentry-curses"
 alias abcde="abcde -c $XDG_CONFIG_HOME/abcde/abcde.conf"
 alias irssi="irssi --config=$XDG_CONFIG_HOME/irssi/config --home=$XDG_DATA_HOME/irssi "
 
-# Start the windows manager
-if [ "$(tty)" = "/dev/tty1" ]; then
-  startx && exit
-fi
+# ONLY ENABLE THIS FEATURE WHEN RUNNING WITHOUT DISPLAY MANAGER!
+#if [ "$(tty)" = "/dev/tty1" ]; then
+#  startx && exit
+#fi
+
