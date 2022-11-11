@@ -1,6 +1,6 @@
 {
     "border": "pixel",
-    "current_border_width": 2,
+    "current_border_width": 1,
     "floating": "user_off",
     "geometry": {
        "height": 600,
