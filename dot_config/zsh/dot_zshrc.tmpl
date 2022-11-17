@@ -221,14 +221,14 @@ mvn-or-mvnw() {
 
 {{if .work }}
 # Work related stuff
-export ARTIFACTORY_URL="https://{{ (index (lastpass "Artifactory API token") 0).username | replace "@" "%40" -}}:{{ urlquery ((index (lastpass "Artifactory API token") 0).password) -}}@artifactory.portbase.io/artifactory"
+export ARTIFACTORY_URL="https://{{- urlquery (pass "portbase/artifactory" | b64dec | splitn ":" 2)._0 -}}:{{- urlquery (pass "portbase/artifactory" | b64dec | splitn ":" 2)._1 -}}@artifactory.portbase.io/artifactory"
 alias wpcs-build="mvn -T C1 clean package -DskipTests -Dnaomi.skip -Dmaven.antrun.skip -pl \!naomi/naomi-maven-plugin-test"
 alias sqlplus='docker container run --rm -it --network host melvyndekort/sqlplus'
 
 # Set New Relic API key environment variables
 nr() {
   for ENV in prod accept kt sc stc; do
-    export NEW_RELIC_API_KEY_${ENV}=$(pass newrelic/apikey/${ENV})
+    export NEW_RELIC_API_KEY_${ENV}=$(pass portbase/newrelic/${ENV})
   done
 }
 
@@ -237,17 +237,6 @@ nrc() {
   for ENV in prod accept kt sc stc; do
     unset NEW_RELIC_API_KEY_${ENV}
   done
-}
-
-# Set Bitbucket credentials
-bb() {
-  export BITBUCKET_USERNAME="portbase-mdekort"
-  export BITBUCKET_PASSWORD="$(pass bitbucket/portbase-mdekort/terraform)"
-}
-
-# Clear Bitbucket credentials
-bbc() {
-  unset BITBUCKET_USERNAME BITBUCKET_PASSWORD
 }
 
 # Find the account id of an AWS account
