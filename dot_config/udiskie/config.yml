@@ -4,3 +4,7 @@ program_options:
   automount: true
   notify: true
   password_cache: false
+
+device_config:
+  - is_loop: true
+    ignore: true
