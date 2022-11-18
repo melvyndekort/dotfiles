@@ -21,8 +21,8 @@ output() {
   echo "<span ${1}><span size='17pt'>${GLYPH}</span> <span rise='3pt'>${2}%</span></span>"
 }
 
-VOL="$(amixer sget $BLOCK_INSTANCE | grep '%' | awk -F '[][]' 'NR==1{ print $2; exit }' | tr -d '%')"
-STATE="$(amixer sget $BLOCK_INSTANCE | grep '%' | awk -F '[][]' 'NR==1{ print $6; exit }')"
+VOL="$(amixer sget $BLOCK_INSTANCE | grep '%' | awk -F '[][]' 'NR==1{print $2}' | tr -d '%')"
+STATE="$(amixer sget $BLOCK_INSTANCE | grep '%' | awk -F '[' 'NR==1{print $NF}' | tr -d ']')"
 
 if [ "$STATE" = "off" -o "$VOL" -eq "0" ]; then
   output "color='#6272A4'" $VOL
