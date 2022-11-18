@@ -1,8 +1,8 @@
 #!/bin/sh
 
 printline() {
-  echo "<span font_family=\"Hack Nerd Font Mono\" size=\"medium\">$1</span> $2%"
-  echo "<span font_family=\"Hack Nerd Font Mono\" size=\"medium\">$1</span> $2%"
+  echo "<span size='14pt'>$1</span> <span rise='2pt'>$2%</span>"
+  echo "<span size='14pt'>$1</span> <span rise='2pt'>$2%</span>"
 }
 
 case $BLOCK_BUTTON in
@@ -15,8 +15,8 @@ INSTANCE="BAT${BLOCK_INSTANCE:-0}"
 
 # exit when the system doesn't have a battery
 if [ ! -d "/sys/class/power_supply/${INSTANCE}" ]; then
-  echo "<span font_family=\"Hack Nerd Font Mono\" size=\"medium\"></span>"
-  echo "<span font_family=\"Hack Nerd Font Mono\" size=\"medium\"></span>"
+  echo "<span size='14pt'></span>"
+  echo "<span size='14pt'></span>"
   exit 0
 fi
 

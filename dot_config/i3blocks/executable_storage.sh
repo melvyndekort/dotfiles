@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 case $BLOCK_BUTTON in
   1) notify-send "Storage usage" "$(df -hTlP -x tmpfs -x devtmpfs --total)" ;;
@@ -8,39 +8,27 @@ case $BLOCK_BUTTON in
   3) notify-send "Block devices" "$(lsblk -o NAME,TYPE,FSTYPE,LABEL,FSSIZE,FSUSED,FSAVAIL,FSUSE%,MOUNTPOINT)" ;;
 esac
 
-INSTANCE="${BLOCK_INSTANCE}"
-URGENT_VALUE=90
+output() {
+  case "$BLOCK_INSTANCE" in
+    "/")
+      GLYPH="";;
+    "/home")
+      GLYPH="";;
+  esac
+  echo "<span $1><span size='24pt'>$GLYPH</span> <span rise='6pt'>$2%</span></span>"
+}
 
-if [[ "${INSTANCE}" = "" ]]; then
-  INSTANCE="$HOME;free"
-fi
+SPACE="$(df -h "${BLOCK_INSTANCE}" | awk 'FNR==2{print $5}' | tr -d '%')"
 
-DISPLAY=$(echo "${INSTANCE}" | awk -F ';' '{print $2}')
-INSTANCE=$(echo "${INSTANCE}" | awk -F ';' '{print $1}')
-
-if [[ "${DISPLAY}" = "" ]]; then
-  DISPLAY="free"
-fi
-
-SPACE_VARS=$(df -h "${INSTANCE}" | tail -n 1 | awk '{$1="";$6="";print $0}')
-PERC_SPACE=$(echo "${SPACE_VARS}" | awk -F ' ' '{print $4}' | tr -d '%')
-
-if [[ "${DISPLAY}" = "max" ]]; then
-  VALUE=$(echo "${SPACE_VARS}" | awk -F ' ' '{print $1}')
-elif [[ "${DISPLAY}" = "used" ]]; then
-  VALUE=$(echo "${SPACE_VARS}" | awk -F ' ' '{print $2}')
-elif [[ "${DISPLAY}" = "free" ]]; then
-  VALUE=$(echo "${SPACE_VARS}" | awk -F ' ' '{print $3}')
-elif [[ "${DISPLAY}" = "perc" ]]; then
-  VALUE="${PERC_SPACE}%"
-fi
-
-if [[ "${VALUE}" ]]; then
-  echo "${VALUE}"
-  echo "${VALUE}"
-fi
-
-if [[ "${PERC_SPACE}" -gt "${URGENT_VALUE}" ]]; then
+if [ "$SPACE" -ge "95" ]; then
+  output "" $SPACE
   exit 33
+elif [ "$SPACE" -ge "90" ]; then
+  output "color='#FF5555'" $SPACE
+elif [ "$SPACE" -ge "80" ]; then
+  output "color='#FFB86C'" $SPACE
+elif [ "$SPACE" -ge "70" ]; then
+  output "color='#F1FA8C'" $SPACE
+else
+  output "" $SPACE
 fi
-

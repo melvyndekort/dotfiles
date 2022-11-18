@@ -14,108 +14,102 @@ align=center
 separator=false
 separator_block_width=5
 
+[separator]
+color=#bd93f9
+full_text=<span size='15pt' rise='10pt'>|</span>
+
 [weather]
-label=<span font_family="Font Awesome 5 Free Solid" size="medium"></span> 
-command=./weather.sh
+command=$SCRIPT_DIR/weather.sh
 interval=1800
 
 [separator]
 color=#bd93f9
-full_text=|
+full_text=<span size='15pt' rise='10pt'>|</span>
 
 [memory]
-label=<span font_family="Font Awesome 5 Free Solid" size="medium"></span> 
-command=./memory.sh
+command=$SCRIPT_DIR/memory.sh
 interval=10
 
 [separator]
 color=#bd93f9
-full_text=|
+full_text=<span size='15pt' rise='10pt'>|</span>
 
 [load_average]
-label=<span font_family="Font Awesome 5 Free Solid" size="medium"></span> 
-command=./load_average.sh
+command=$SCRIPT_DIR/load_average.sh
 interval=10
 
 [separator]
 color=#bd93f9
-full_text=|
+full_text=<span size='15pt' rise='10pt'>|</span>
 
 [disk-root]
-label=<span font_family="Font Awesome 5 Brands" size="medium"></span> 
 instance=/
-command=./storage.sh
+command=$SCRIPT_DIR/storage.sh
 interval=60
 
 [separator]
 color=#bd93f9
-full_text=|
+full_text=<span size='15pt' rise='10pt'>|</span>
 
 [disk-home]
-label=<span font_family="Font Awesome 5 Free Solid" size="medium"></span> 
 instance=/home
-command=./storage.sh
+command=$SCRIPT_DIR/storage.sh
 interval=60
 
 [separator]
 color=#bd93f9
-full_text=|
+full_text=<span size='15pt' rise='10pt'>|</span>
 
 [network]
-label=<span font_family="Font Awesome 5 Free Solid" size="medium"></span> 
-command=./network.sh
+command=$SCRIPT_DIR/network.sh
 interval=10
 
 [separator]
 color=#bd93f9
-full_text=|
+full_text=<span size='15pt' rise='10pt'>|</span>
 
 [battery]
-command=./battery.sh
+command=$SCRIPT_DIR/battery.sh
 instance=0
 interval=20
 
 [separator]
 color=#bd93f9
-full_text=|
+full_text=<span size='15pt' rise='10pt'>|</span>
 
 [sound]
-label=<span font_family="Font Awesome 5 Free Regular" size="large">奔</span> 
 instance=Master
-command=./volume.sh
+command=$SCRIPT_DIR/volume.sh
 interval=once
 signal=1
 
 [separator]
 color=#bd93f9
-full_text=|
+full_text=<span size='15pt' rise='10pt'>|</span>
 
 [mic]
-label=<span font_family="Font Awesome 5 Free Regular" size="large"></span> 
 instance=Capture
-command=./volume.sh
+command=$SCRIPT_DIR/volume.sh
 interval=once
 signal=2
 
 [separator]
 color=#bd93f9
-full_text=|
+full_text=<span size='15pt' rise='10pt'>|</span>
 
 [notifications]
-label=<span font_family="Font Awesome 5 Free Regular" size="x-large"></span>
-command=./notifications.sh
+command=$SCRIPT_DIR/notifications.sh
 interval=once
 signal=3
 
 [separator]
 color=#bd93f9
-full_text=|
+full_text=<span size='15pt' rise='10pt'>|</span>
 
 [datetime]
-label=<span font_family="Font Awesome 5 Free Solid" size="medium"></span> 
-command=./datetime.sh
+command=$SCRIPT_DIR/datetime.sh
 interval=1
 
 [separator]
 color=#bd93f9
-full_text=|
+full_text=<span size='15pt' rise='10pt'>|</span>
