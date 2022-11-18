@@ -1,7 +1,19 @@
 #!/bin/sh
 
-choice="$(archlinux-java status | grep '^ ' | sed -e 's/^[ \t]*//' | rofi -dmenu -p 'Java version' | awk '{print $1}')"
+lsb_release -i | if grep -iq ubuntu; then
+  choice="$(update-java-alternatives -l | awk '{print $1}' | rofi -dmenu -p 'Java version')"
+  if [ -n "$choice" ]; then
+    pkexec update-java-alternatives -s "$choice"
+    notify-send "Java set to $choice"
+    exit 0
+  fi
+fi
 
-if [ -n "$choice" ]; then
-  pkexec archlinux-java set "$choice" && notify-send "Java set to $choice"
+lsb_release -i | if grep -iq arch; then
+  choice="$(archlinux-java status | grep '^ ' | sed -e 's/^[ \t]*//' | rofi -dmenu -p 'Java version' | awk '{print $1}')"
+  if [ -n "$choice" ]; then
+    pkexec archlinux-java set "$choice"
+    notify-send "Java set to $choice"
+    exit 0
+  fi
 fi
