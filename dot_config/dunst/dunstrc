@@ -20,6 +20,7 @@
     follow = keyboard
 
     ### Geometry ###
+    geometry = "300x5-30+20"
 
     # dynamic width from 0 to 300
     # width = (0, 300)
@@ -196,7 +197,7 @@
     max_icon_size = 32
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+    icon_path = /usr/share/icons/Papirus-Dark/16x16/status/:/usr/share/icons/Papirus-Dark/16x16/devices/
 
     ### History ###
 
@@ -310,7 +311,7 @@
     foreground = "#f8f8f2"
     frame_color = "#ff5555"
     timeout = 0
-    new_icon = /usr/share/icons/Papirus/48x48/status/dialog-warning.svg
+    new_icon = /usr/share/icons/Papirus-Dark/48x48/status/dialog-warning.svg
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.
