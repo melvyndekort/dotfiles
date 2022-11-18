@@ -11,7 +11,7 @@ esac
 load="$(awk '{print $1}' /proc/loadavg)"
 cpus="$(nproc)"
 
-echo $load
+echo "<span size='24pt'></span> <span rise='6pt'>$load</span>"
 
 awk -v cpus=$cpus -v cpuload=$load '
 BEGIN {

@@ -8,4 +8,4 @@ case $BLOCK_BUTTON in
 esac
 
 TEMP=$(curl -sL "https://data.buienradar.nl/2.0/feed/json" | jq -cr '.actual.stationmeasurements[] | select(.stationid==6340) | .temperature')
-echo "$TEMP °C"
+echo "<span size='20pt'></span> <span rise='5pt'>$TEMP °C</span>"

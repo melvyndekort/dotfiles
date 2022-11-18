@@ -8,4 +8,5 @@ case $BLOCK_BUTTON in
 	3) i3-msg -q exec "$TERMINAL -e htop" ;;
 esac
 
-free -h | awk '/^Mem:/ {print $3 "/" $2}'
+MEMORY=$(free -h | awk '/^Mem:/ {print $3 " / " $2}')
+echo "<span size='20pt'></span> <span rise='4pt'>$MEMORY</span>"
