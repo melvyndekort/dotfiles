@@ -58,16 +58,7 @@ xsetroot -cursor_name left_ptr
 xinput disable "DualPoint Stick"
 
 # applets
-DISTRO="$(lsb_release -a | grep 'Distributor ID' | rev | cut -d '	' -f1 | rev)"
-case $DISTRO in
-  Ubuntu)
-    nm-tray &
-    ;;
-  Arch)
-    nm-applet &
-    ;;
-esac
-
+nm-applet &
 dunst &
 udiskie &
 
