@@ -48,8 +48,3 @@ alias irssi="irssi --config=$XDG_CONFIG_HOME/irssi/config --home=$XDG_DATA_HOME/
 # Set PATH variable
 export PATH="$HOME/bin:$HOME/.local/bin:$HOME/src/portbase-bin:$PATH"
 
-# ONLY ENABLE THIS FEATURE WHEN RUNNING WITHOUT DISPLAY MANAGER!
-#if [ "$(tty)" = "/dev/tty1" ]; then
-#  startx && exit
-#fi
-
