@@ -10,19 +10,17 @@ case $BLOCK_BUTTON in
   5) amixer -q -D pulse sset $BLOCK_INSTANCE 5%- ;;
 esac
 
-output() {
-  case "$BLOCK_INSTANCE" in
-    Master)
-      GLYPH="";;
-    Capture)
-      GLYPH="";;
-  esac
+case $BLOCK_INSTANCE in
+  Master) GLYPH="" ;;
+  Capture) GLYPH="" ;;
+esac
 
+output() {
   echo "<span ${1}><span size='17pt'>${GLYPH}</span> <span rise='3pt'>${2}%</span></span>"
 }
 
-VOL="$(amixer sget $BLOCK_INSTANCE | grep '%' | awk -F '[][]' 'NR==1{print $2}' | tr -d '%')"
-STATE="$(amixer sget $BLOCK_INSTANCE | grep '%' | awk -F '[' 'NR==1{print $NF}' | tr -d ']')"
+VOL="$(amixer -c 0 -M -D pulse get $BLOCK_INSTANCE | awk '/[0-9]+%/' | awk -F '[' 'NR==1{print $(NF - 1)}' | tr -d ']' | tr -d '%')"
+STATE="$(amixer -c 0 -M -D pulse get $BLOCK_INSTANCE | awk '/[0-9]+%/' | awk -F '[' 'NR==1{print $NF}' | tr -d ']')"
 
 if [ "$STATE" = "off" -o "$VOL" -eq "0" ]; then
   output "color='#6272A4'" $VOL
