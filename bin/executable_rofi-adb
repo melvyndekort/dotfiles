@@ -41,6 +41,6 @@ case "$choice" in
     ;;
   'restart adb root')
     adb kill-server
-    notify-send "$(pkexec adb start-server 2>&1)"
+    notify-send "$(sudo adb start-server 2>&1)"
     ;;
 esac
