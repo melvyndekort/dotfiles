@@ -1,5 +1,5 @@
 #!/bin/sh
 
 if [ -n "$1" ] && [ "$1" -gt 0 ] 2>/dev/null && [ "$1" -le 12 ] 2>/dev/null; then
-  pkexec chvt $1
+  sudo chvt $1
 fi
