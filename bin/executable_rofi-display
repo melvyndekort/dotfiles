@@ -2,7 +2,8 @@
 
 choice="$(rofi -dmenu -p 'Display setup' << EOF | cut -d' ' -f1
 laptop 
-home-office 度度
+home-pc 度度
+home-pblaptop 度度
 pb-office  度
 hdmi-clone 
 hdmi-expand  度
@@ -17,15 +18,22 @@ case "$choice" in
       --output DP-2 --off \
       --output HDMI-1 --off \
       --output HDMI-2 --off \
-      --output DVI-I-1-1 --off \
-      --output DVI-I-2-2 --off ;;
+      --output HDMI-3 --off ;;
 
-  home-office)
+  home-pc)
     xrandr \
-      --output DP-1 --primary --auto --pos 0x288 --rotate normal \
-      --output DVI-I-1 --auto --pos 1680x0 --rotate left \
       --output DP-0 --off \
-      --output DVI-I-0 --off ;;
+      --output DP-1 --primary --auto --pos 0x288 --rotate normal \
+      --output DVI-I-1 --auto --pos 1680x0 --rotate left ;;
+
+  home-pblaptop)
+    xrandr \
+      --output eDP-1 --off \
+      --output DP-1 --primary --mode 1680x1050 --pos 1920x290 --rotate normal \
+      --output DP-2 --off \
+      --output HDMI-1 --mode 1680x1050 --pos 3600x0 --rotate left \
+      --output HDMI-2 --off \
+      --output HDMI-3 --off ;;
 
   pb-office)
     xrandr \
@@ -34,8 +42,7 @@ case "$choice" in
       --output DP-2 --off \
       --output HDMI-1 --primary --auto --pos 1920x0 \
       --output HDMI-2 --off \
-      --output DVI-I-1-1 --off \
-      --output DVI-I-2-2 --off ;;
+      --output HDMI-3 --off ;;
 
   hdmi-clone)
     xrandr \
@@ -44,8 +51,7 @@ case "$choice" in
       --output DP-2 --off \
       --output HDMI-1 --auto --same-as eDP-1 \
       --output HDMI-2 --off \
-      --output DVI-I-1-1 --off \
-      --output DVI-I-2-2 --off ;;
+      --output HDMI-3 --off ;;
 
   hdmi-expand)
     xrandr \
@@ -54,8 +60,7 @@ case "$choice" in
       --output DP-2 --off \
       --output HDMI-1 --auto --pos 1920x0 \
       --output HDMI-2 --off \
-      --output DVI-I-1-1 --off \
-      --output DVI-I-2-2 --off ;;
+      --output HDMI-3 --off ;;
 
   *)
     exit 1 ;;
