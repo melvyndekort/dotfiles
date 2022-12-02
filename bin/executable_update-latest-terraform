@@ -1,0 +1,12 @@
+#!/bin/sh
+
+LATEST="$(tfenv list-remote | egrep -v 'alpha|beta' | head -n 1)"
+
+tfenv list | grep -q $LATEST
+if [ "$?" -ne 0 ]; then
+  notify-send "Installing Terraform $LATEST"
+  tfenv install $LATEST
+fi
+
+tfenv use $LATEST
+notify-send "Terraform set to $LATEST"
