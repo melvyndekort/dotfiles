@@ -7,12 +7,12 @@
 #
 
 # Export some default variables
-export EDITOR='vim'
 export BROWSER='firefox'
-export XIVIEWER='sxiv'
-export TERMINAL='alacritty'
-export PAGER='less'
+export EDITOR='vim'
 export LESS="-XR"
+export PAGER='less'
+export TERMINAL='alacritty'
+export XIVIEWER='sxiv'
 
 # Set XDG variables
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -21,25 +21,25 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 # Set MISC variables
+export _Z_DATA="$XDG_DATA_HOME/z"
+export ANDROID_SDK_HOME="$XDG_CONFIG_HOME/android"
 export AWS_DEFAULT_REGION="eu-west-1"
-export LIBVIRT_DEFAULT_URI="qemu:///system"
-export HISTFILE="$XDG_DATA_HOME/zsh/history"
-export SCREENRC="$XDG_CONFIG_HOME/screen/screenrc"
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
-export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
-export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
-export PYLINTHOME="$XDG_CACHE_HOME/pylint"
-export TF_CLI_CONFIG_FILE="$XDG_CONFIG_HOME/terraform/terraform.rc"
-export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
-export TMUX_PLUGIN_MANAGER_PATH="$XDG_CONFIG_HOME/tmux/plugins/"
-export ANDROID_SDK_HOME="$XDG_CONFIG_HOME/android"
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+export HISTFILE="$XDG_DATA_HOME/zsh/history"
 export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
-export _Z_DATA="$XDG_DATA_HOME/z"
+export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
+export LIBVIRT_DEFAULT_URI="qemu:///system"
 export LPASS_AGENT_TIMEOUT="86400"
 export LPASS_PINENTRY="pinentry-curses"
+export PYLINTHOME="$XDG_CACHE_HOME/pylint"
+export SCREENRC="$XDG_CONFIG_HOME/screen/screenrc"
+export TF_CLI_CONFIG_FILE="$XDG_CONFIG_HOME/terraform/terraform.rc"
+export TMUX_PLUGIN_MANAGER_PATH="$XDG_CONFIG_HOME/tmux/plugins/"
+export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 
 # Set some defaults
 alias abcde="abcde -c $XDG_CONFIG_HOME/abcde/abcde.conf"
