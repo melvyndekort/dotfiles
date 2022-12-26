@@ -1,10 +1,21 @@
 #!/bin/sh
 
+OPTION=${1:-clipboard}
+
 choice="$(ykman oath accounts list | rofi -dmenu -p 'TOTP account (tap Yubikey after selection)')"
 
 if [ -n "$choice" ]; then
   code=$(ykman oath accounts code -s $choice)
-  echo -n "$code" | xclip -selection clipboard
+
+  case $OPTION in
+    clipboard)
+      echo -n "$code" | xclip -selection clipboard
+      ;;
+    direct)
+      xdotool type $code
+      ;;
+  esac
+
   notify-send "Your code for $choice is: $code"
 fi
 
