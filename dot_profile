@@ -8,7 +8,7 @@
 
 # Export some default variables
 export BROWSER='firefox'
-export EDITOR='vim'
+export EDITOR='nvim'
 export LESS="-XR"
 export PAGER='less'
 export TERMINAL='alacritty'
