@@ -76,3 +76,4 @@ case "$choice" in
 esac
 
 notify-send "Configured display setup: $choice"
+set-wallpaper
