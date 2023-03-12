@@ -2,8 +2,7 @@
 
 choice="$(rofi -dmenu -p 'SSH configuration')" << END
 home
-remote-open
-remote-strict
+remote
 END
 
 if [ -n "$choice" ]; then
