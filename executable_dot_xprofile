@@ -60,5 +60,5 @@ dunst &
 udiskie &
 
 # auto-reload X11 resources
-( cd $HOME/.config/X11; watchexec -- xrdb Xresources & )
+( cd $HOME/.config/X11; ls Xresources | entr xrdb Xresources & )
 
