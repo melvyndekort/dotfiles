@@ -57,7 +57,7 @@ xinput disable "DualPoint Stick"
 # applets
 nm-applet &
 dunst &
-udiskie &
+udiskie -Atn &
 
 # auto-reload X11 resources
 ( cd $HOME/.config/X11; ls Xresources | entr -n xrdb Xresources & )
