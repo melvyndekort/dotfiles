@@ -46,5 +46,5 @@ alias abcde="abcde -c $XDG_CONFIG_HOME/abcde/abcde.conf"
 alias irssi="irssi --config=$XDG_CONFIG_HOME/irssi/config --home=$XDG_DATA_HOME/irssi "
 
 # Set PATH variable
-export PATH="$HOME/bin:$HOME/.local/bin:$HOME/src/portbase-bin:$PATH"
+export PATH="$HOME/bin:$HOME/Sync/bin:$HOME/.local/bin:$HOME/src/portbase-bin:$PATH"
 
