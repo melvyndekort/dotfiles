@@ -1,2 +1,6 @@
 plugin_cache_dir   = "$HOME/.cache/terraform-plugin-cache"
 disable_checkpoint = true
+
+credentials "app.terraform.io" {
+  token = "{{ pass "tfcloud/melvyndekort" }}"
+}
