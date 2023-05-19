@@ -5,7 +5,9 @@ laptop 
 office  度
 home-laptop-1  度度
 home-laptop-2 度度
-home-pc 度度
+home-pc-dual 度度
+home-pc-single-h 度
+home-pc-single-v 度
 hdmi-clone 
 hdmi-expand  度
 EOF
@@ -47,11 +49,23 @@ case "$choice" in
       --output HDMI-2 --off \
       --output HDMI-3 --off ;;
 
-  home-pc)
+  home-pc-dual)
     xrandr \
       --output DP-0 --off \
       --output DP-1 --primary --auto --pos 0x288 --rotate normal \
       --output DVI-I-1 --auto --pos 1680x0 --rotate left ;;
+
+  home-pc-single-h)
+    xrandr \
+      --output DP-0 --off \
+      --output DP-1 --primary --auto --pos 0x288 --rotate normal \
+      --output DVI-I-1 --off ;;
+
+  home-pc-single-v)
+    xrandr \
+      --output DP-0 --off \
+      --output DP-1 --off \
+      --output DVI-I-1 --primary --auto --pos 1680x0 --rotate left ;;
 
   hdmi-clone)
     xrandr \
