@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e
+
+MODE="${1:-eice}"
+
+## Validate requirements
+command -v aws >/dev/null 2>&1 || { echo 'You need to install "aws-cli" to use this functionality'; exit 1; }
+
+## Retrieve EC2 instance
+INSTANCEID="$(aws ec2 describe-instances \
+--filters Name=instance-state-name,Values=running Name=tag:Name,Values=lmgateway \
+--query 'Reservations[*].Instances[*].[InstanceId]' \
+--output text)"
+
+## Exit when aws command fails or there are more or less than one running instances
+[ $(echo -n "$INSTANCEID" | wc -w) -ne 1 ] && echo "Unsupported number of instances found" && exit 1
+
+## Connect to the found instance
+if [ "$MODE" == "eice" ]; then
+  aws ec2-instance-connect ssh --instance-id "$INSTANCEID" --os-user melvyn --connection-type eice
+elif [ "$MODE" == "ssh" ]; then
+  ssh "melvyn@${INSTANCEID}" -o ProxyCommand='aws ec2-instance-connect open-tunnel --instance-id %h'
+elif [ "$MODE" == "ssm" ]; then
+  aws ssm start-session --target "$INSTANCEID"
+else
+  echo "Non supported mode chosen"
+  exit 1
+fi
