@@ -24,8 +24,7 @@ ranger
 rofi
 screen
 ssh-home
-ssh-remote-open
-ssh-remote-strict
+ssh-remote
 sxhkd
 sxiv
 terraform
@@ -77,10 +76,8 @@ case "$option" in
     editfile "$HOME/.config/screen/screenrc" ;;
   ssh-home)
     editfile "$HOME/.ssh/config-home" ;;
-  ssh-remote-open)
-    editfile "$HOME/.ssh/config-remote-open" ;;
-  ssh-remote-strict)
-    editfile "$HOME/.ssh/config-remote-strict" ;;
+  ssh-remote)
+    editfile "$HOME/.ssh/config-remote" ;;
   sxhkd)
     editfile "$HOME/.config/sxhkd/sxhkdrc" ;;
   sxiv)
