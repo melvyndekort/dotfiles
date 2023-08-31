@@ -1,7 +1,37 @@
 #!/bin/sh
 
-choice="$(tfenv list | sed 's/^[ \t\*]*//; s/(.*)/ (default)/' | rofi -dmenu -p 'Terraform version' | awk '{print $1}')"
-
-if [ -n "$choice" ]; then
-  tfenv use "$choice" && notify-send "Terraform set to $choice"
+if [ "$1" = "upgrade" ]; then
+  LATEST="$(tfenv list-remote | grep -v alpha | head -n 1)"
+  tfenv install "$LATEST"
+  tfenv use "$LATEST"
+  notify-send "Terraform version $LATEST installed and activated"
+  exit 0
 fi
+
+ACTION=$(echo 'activate\ninstall-latest\ninstall-specific\nuninstall' | rofi -dmenu -p 'Pick tfenv action')
+
+case "$ACTION" in
+  activate)
+    CHOICE="$(tfenv list | sed 's/^[ \t\*]*//; s/(.*)/ (activated)/' | rofi -dmenu -p 'Pick Terraform version' | awk '{print $1}')"
+    if [ -n "$CHOICE" ]; then
+      tfenv use "$CHOICE"
+      notify-send "Terraform set to $CHOICE"
+    fi
+    ;;
+  install-latest)
+    LATEST="$(tfenv list-remote | grep -v alpha | head -n 1)"
+    tfenv install "$LATEST"
+    notify-send "Terraform version $LATEST installed"
+    ;;
+  install-specific)
+    CHOICE="$(tfenv list-remote | rofi -dmenu -p 'Pick Terraform version' | awk '{print $1}')"
+    tfenv install "$CHOICE"
+    notify-send "Terraform version $CHOICE installed"
+    ;;
+  uninstall)
+    CHOICE="$(tfenv list | sed 's/^[ \t\*]*//; s/(.*)/ (activated)/' | rofi -dmenu -p 'Pick Terraform version' | awk '{print $1}')"
+    tfenv uninstall "$CHOICE"
+    notify-send "Terraform version $CHOICE uninstalled"
+    ;;
+esac
+

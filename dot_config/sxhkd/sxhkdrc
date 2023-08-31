@@ -37,7 +37,7 @@ super + shift + Home
 
 # app launcher
 super + o; {f,g,c,v,s,t,T,e,p,j,i,m,r,z,y,Y,a}
-  {firefox -P melvyn, firefox -P anonymous, chromium, remote-viewer, rofi-ssh-config, rofi-terraform, update-latest-terraform, subl, postman, rofi-java, intellij-idea-ultimate-edition, rofi-samba, galculator, teams --no-sandbox, rofi-yubikey clipboard, rofi-yubikey direct, emulator -avd pixel6}
+  {firefox -P melvyn, firefox -P anonymous, chromium, remote-viewer, rofi-ssh-config, rofi-terraform, rofi-terraform upgrade, subl, postman, rofi-java, intellij-idea-ultimate-edition, rofi-samba, galculator, teams --no-sandbox, rofi-yubikey clipboard, rofi-yubikey direct, emulator -avd pixel6}
 
 # change brightness
 super + {Up,Down}
