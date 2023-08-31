@@ -1,31 +1,46 @@
 #!/bin/sh
 
-if [ "$1" = "upgrade" ]; then
-  LATEST="$(tfenv list-remote | grep -v alpha | head -n 1)"
-  tfenv install "$LATEST"
-  tfenv use "$LATEST"
-  notify-send "Terraform version $LATEST installed and activated"
-  exit 0
-fi
+get_latest() {
+  tfenv list-remote | egrep -v 'alpha|beta|rc[0-9]' | head -n 1
+}
 
-ACTION=$(echo 'activate\ninstall-latest\ninstall-specific\nuninstall' | rofi -dmenu -p 'Pick tfenv action')
+select_remote() {
+  tfenv list-remote | rofi -dmenu -p 'Pick Terraform version' | awk '{print $1}'
+}
+
+select_local() {
+  tfenv list | sed 's/^[ \t\*]*//; s/(.*)/ (activated)/' | rofi -dmenu -p 'Pick Terraform version' | awk '{print $1}'
+}
+
+install() {
+  tfenv install "$1" && notify-send "Terraform version $1 installed"
+}
+
+uninstall() {
+  tfenv uninstall "$1" && notify-send "Terraform version $1 uninstalled"
+}
+
+activate() {
+  tfenv use "$1" && notify-send "Terraform version $1 activated"
+}
+
+ACTION="$(rofi -dmenu -p 'Pick tfenv action' << EOF
+upgrade
+install
+activate
+uninstall
+EOF
+)"
 
 case "$ACTION" in
+  upgrade)
+    VERSION="$(get_latest)"
+    install $VERSION
+    activate $VERSION;;
+  install)
+    install $(select_remote);;
   activate)
-    CHOICE="$(tfenv list | sed 's/^[ \t\*]*//; s/(.*)/ (activated)/' | rofi -dmenu -p 'Pick Terraform version' | awk '{print $1}')"
-    tfenv use "$CHOICE" && notify-send "Terraform version $CHOICE activated"
-    ;;
-  install-latest)
-    LATEST="$(tfenv list-remote | grep -v alpha | head -n 1)"
-    tfenv install "$LATEST" && notify-send "Terraform version $LATEST installed"
-    ;;
-  install-specific)
-    CHOICE="$(tfenv list-remote | rofi -dmenu -p 'Pick Terraform version' | awk '{print $1}')"
-    tfenv install "$CHOICE" && notify-send "Terraform version $CHOICE installed"
-    ;;
+    activate $(select_local);;
   uninstall)
-    CHOICE="$(tfenv list | sed 's/^[ \t\*]*//; s/(.*)/ (activated)/' | rofi -dmenu -p 'Pick Terraform version' | awk '{print $1}')"
-    tfenv uninstall "$CHOICE" && notify-send "Terraform version $CHOICE uninstalled"
-    ;;
+    uninstall $(select_local);;
 esac
-
