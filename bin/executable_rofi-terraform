@@ -13,25 +13,19 @@ ACTION=$(echo 'activate\ninstall-latest\ninstall-specific\nuninstall' | rofi -dm
 case "$ACTION" in
   activate)
     CHOICE="$(tfenv list | sed 's/^[ \t\*]*//; s/(.*)/ (activated)/' | rofi -dmenu -p 'Pick Terraform version' | awk '{print $1}')"
-    if [ -n "$CHOICE" ]; then
-      tfenv use "$CHOICE"
-      notify-send "Terraform set to $CHOICE"
-    fi
+    tfenv use "$CHOICE" && notify-send "Terraform version $CHOICE activated"
     ;;
   install-latest)
     LATEST="$(tfenv list-remote | grep -v alpha | head -n 1)"
-    tfenv install "$LATEST"
-    notify-send "Terraform version $LATEST installed"
+    tfenv install "$LATEST" && notify-send "Terraform version $LATEST installed"
     ;;
   install-specific)
     CHOICE="$(tfenv list-remote | rofi -dmenu -p 'Pick Terraform version' | awk '{print $1}')"
-    tfenv install "$CHOICE"
-    notify-send "Terraform version $CHOICE installed"
+    tfenv install "$CHOICE" && notify-send "Terraform version $CHOICE installed"
     ;;
   uninstall)
     CHOICE="$(tfenv list | sed 's/^[ \t\*]*//; s/(.*)/ (activated)/' | rofi -dmenu -p 'Pick Terraform version' | awk '{print $1}')"
-    tfenv uninstall "$CHOICE"
-    notify-send "Terraform version $CHOICE uninstalled"
+    tfenv uninstall "$CHOICE" && notify-send "Terraform version $CHOICE uninstalled"
     ;;
 esac
 
