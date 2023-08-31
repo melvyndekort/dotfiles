@@ -1,11 +1,8 @@
 #!/bin/sh
 
-choice="$(rofi -dmenu -p 'SSH configuration')" << END
-home
-remote
-END
+cd $HOME/.ssh/
+CHOICE="$(ls -1 config-* | rofi -dmenu -p 'Pick SSH configuration')"
 
-if [ -n "$choice" ]; then
-  cd $HOME/.ssh/
-  ln -sf "config-${choice}" config && notify-send "SSH configuration set to $choice"
+if [ -n "$CHOICE" ]; then
+  ln -sf "$CHOICE" config && notify-send "SSH configuration set to $CHOICE"
 fi
