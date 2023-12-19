@@ -227,8 +227,8 @@ alias sqlplus='docker container run --rm -it --network host melvyndekort/sqlplus
 
 # Set New Relic API key environment variables
 nr() {
-  for ENV in prod accept kt sc stc; do
-    export NEW_RELIC_API_KEY_${ENV}=$(pass portbase/newrelic/${ENV})
+  for KEY in $(pass ls portbase/newrelic | tail -n +2 | awk '{print $2}'); do
+    export NEW_RELIC_API_KEY_$KEY=$(pass portbase/newrelic/$KEY)
   done
 }
 
