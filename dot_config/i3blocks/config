@@ -18,14 +18,6 @@ separator_block_width=5
 color=#bd93f9
 full_text=<span size='15pt' rise='10pt'>|</span>
 
-[weather]
-command=$SCRIPT_DIR/weather.sh
-interval=1800
-
-[separator]
-color=#bd93f9
-full_text=<span size='15pt' rise='10pt'>|</span>
-
 [memory]
 command=$SCRIPT_DIR/memory.sh
 interval=10
