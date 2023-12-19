@@ -7,7 +7,7 @@ command -v aws >/dev/null 2>&1 || { echo 'You need to install "aws-cli" to use t
 
 ## Retrieve EC2 instance
 INSTANCEID="$(aws ec2 describe-instances \
---filters Name=instance-state-name,Values=running Name=tag:Name,Values=ssh-gateway \
+--filters Name=instance-state-name,Values=running Name=tag:Name,Values=lmgateway \
 --query 'Reservations[*].Instances[*].[InstanceId]' \
 --output text)"
 
