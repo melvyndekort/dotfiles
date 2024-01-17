@@ -36,8 +36,8 @@ super + shift + Home
   set-wallpaper
 
 # app launcher
-super + o; {f,g,c,v,s,t,e,p,j,i,m,r,z,y,Y,a}
-  {firefox -P melvyn, firefox -P anonymous, chromium, codium, rofi-ssh-config, rofi-terraform, subl, postman, rofi-java, intellij-idea-ultimate-edition, rofi-samba, galculator, teams --no-sandbox, rofi-yubikey clipboard, rofi-yubikey direct, rofi-emulator}
+super + o; {w,v,s,t,e,p,j,i,m,r,z,y,Y,a}
+  {rofi-browser, codium, rofi-ssh-config, rofi-terraform, subl, postman, rofi-java, intellij-idea-ultimate-edition, rofi-samba, galculator, teams --no-sandbox, rofi-yubikey clipboard, rofi-yubikey direct, rofi-emulator}
 
 # change brightness
 super + {Up,Down}
