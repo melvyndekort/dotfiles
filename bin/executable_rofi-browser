@@ -1,0 +1,36 @@
+#!/bin/sh
+
+choice="$(rofi -dmenu -p 'Launch browser' << EOF
+Firefox default
+Firefox private
+Firefox ProfileManager
+Chromium default
+Chromium private
+EOF
+)"
+
+case "$choice" in
+  'Firefox default')
+    firefox -P default
+    ;;
+  'Firefox private')
+    firefox -P private
+    ;;
+  'Firefox ProfileManager')
+    firefox --ProfileManager
+    ;;
+  'Chromium default')
+    if [ "$(which chromium)" = "/snap/bin/chromium" ]; then
+      chromium --user-data-dir=$HOME/snap/chromium/common/profiles/default
+    else
+      chromium --user-data-dir=${XDG_DATA_HOME}/chromium/default
+    fi
+    ;;
+  'Chromium private')
+    if [ "$(which chromium)" = "/snap/bin/chromium" ]; then
+      chromium --user-data-dir=$HOME/snap/chromium/common/profiles/private
+    else
+      chromium --user-data-dir=${XDG_DATA_HOME}/chromium/private
+    fi
+    ;;
+esac
