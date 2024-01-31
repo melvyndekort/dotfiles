@@ -1,0 +1,16 @@
+#!/bin/sh
+
+choice="$(rofi -dmenu -p 'Launch Visual Studio Code' << EOF
+Profile default
+Profile portbase
+EOF
+)"
+
+case "$choice" in
+  'Profile default')
+    codium --profile Default
+    ;;
+  'Profile portbase')
+    codium --profile Portbase
+    ;;
+esac
