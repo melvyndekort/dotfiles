@@ -1,0 +1,97 @@
+##########
+## HOME ##
+##########
+Host gw
+  Hostname localhost
+  User melvyn
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  ProxyCommand sh -c "aws ec2-instance-connect open-tunnel --instance-id $(aws ec2 describe-instances --filters Name=instance-state-name,Values=running Name=tag:Name,Values=lmgateway --query 'Reservations[*].Instances[*].[InstanceId]' --output text)"
+
+Host proxy
+  Hostname ssh.mdekort.nl
+  User melvyn
+  ProxyCommand sh -c 'knock %h; nc -4 -q0 %h %p'
+
+Host lmrouter
+  Hostname lmrouter.mdekort.lan
+  User melvyn
+  ProxyJump proxy
+
+Host pihole
+  Hostname pihole.mdekort.lan
+  User melvyn
+  ProxyJump proxy
+
+Host lm-ap-1 lmap1 ap1
+  Hostname lm-ap-1.mdekort.lan
+  User root
+  ProxyJump proxy
+
+Host lm-ap-2 lmap2 ap2
+  Hostname lm-ap-2.mdekort.lan
+  User root
+  ProxyJump proxy
+
+Host lm-ap-3 lmap3 ap3
+  Hostname lm-ap-3.mdekort.lan
+  User root
+  ProxyJump proxy
+
+Host lm-ap-4 lmap4 ap4
+  Hostname lm-ap-4.mdekort.lan
+  User root
+  ProxyJump proxy
+
+Host lmserver
+  Hostname lmserver.mdekort.lan
+  User core
+  ProxyJump proxy
+
+Host melvynpc
+  Hostname melvynpc.mdekort.lan
+  User melvyn
+  ProxyJump proxy
+
+Host lmkodi01 kodi01 lmkodi kodi
+  Hostname lmkodi01.mdekort.lan
+  User root
+  ProxyJump proxy
+
+Host tuinhuis
+  Hostname tuinhuis.mdekort.lan
+  User melvyn
+  ProxyJump proxy
+
+Host lmmini mini
+  Hostname 10.104.0.1
+  User root
+  PubkeyAcceptedAlgorithms +ssh-rsa
+  HostkeyAlgorithms +ssh-rsa
+
+##############
+##  GITHUB  ##
+##############
+Host bitbucket.org
+  User git
+
+##############
+##  GITHUB  ##
+##############
+Host github.com
+  Hostname ssh.github.com
+  Port 443
+  User git
+
+#############
+## DEFAULT ##
+#############
+Host *
+  ForwardAgent yes
+  ForwardX11 no
+  ForwardX11Trusted no
+  Compression yes
+  KeepAlive yes
+  ServerAliveInterval 10
+  ServerAliveCountMax 3
+  NoHostAuthenticationForLocalhost yes
