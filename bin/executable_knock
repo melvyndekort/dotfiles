@@ -1,0 +1,5 @@
+#!/bin/sh
+
+for p in 37339 13741 32966; do
+  nc -4 -z -w 1 $1 $p
+done
