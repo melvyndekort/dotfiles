@@ -10,7 +10,13 @@
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font is used in the bar {} block below.
+{{ if eq .chezmoi.osRelease.id "arch" }}
+font pango:DejaVu Sans Mono, Font Awesome 6 Free 11
+{{ else if eq .chezmoi.osRelease.id "ubuntu" }}
+font pango:DejaVu Sans Mono, FontAwesome 11
+{{ else }}
 font pango:DejaVu Sans Mono 11
+{{ end }}
 
 # class                 border  bground text    indicator child_border
 client.focused          #bd93f9 #bd93f9 #f8f8f2 #ff5555   #bd93f9

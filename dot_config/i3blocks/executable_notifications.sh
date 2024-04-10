@@ -6,8 +6,8 @@ case $BLOCK_BUTTON in
 esac
 
 if dunstctl is-paused | grep -q true; then
-  echo "<span size='20pt' color='#FFB86C'></span>"
+  echo "<span color='#FFB86C'></span>"
 else
-  echo "<span size='20pt'></span>"
+  echo ""
 fi
 
