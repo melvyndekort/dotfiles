@@ -1,28 +1,36 @@
 #!/bin/sh
 
+case $BLOCK_INSTANCE in
+  Master)
+    GLYPH=""
+    TYPE=sink
+    NAME=@DEFAULT_SINK@
+    ;;
+  Capture)
+    GLYPH=""
+    TYPE=source
+    NAME=@DEFAULT_SOURCE@
+    ;;
+esac
+
 case $BLOCK_BUTTON in
-  1) amixer -q -D pulse sset $BLOCK_INSTANCE toggle ;;
+  1) pactl set-$TYPE-mute $NAME toggle ;;
   2) notify-send " Volume module" "\- Click to mute/unmute
 - Right click to launch mixer
 - Scroll to change" ;;
   3) i3-msg -q exec "$TERMINAL -t mypulsemixer -e pulsemixer" ;;
-  4) amixer -q -D pulse sset $BLOCK_INSTANCE 5%+ ;;
-  5) amixer -q -D pulse sset $BLOCK_INSTANCE 5%- ;;
-esac
-
-case $BLOCK_INSTANCE in
-  Master) GLYPH="" ;;
-  Capture) GLYPH="" ;;
+  4) pactl set-$TYPE-volume $NAME +5% ;;
+  5) pactl set-$TYPE-volume $NAME -5% ;;
 esac
 
 output() {
   echo "<span $1>$GLYPH $2%</span>"
 }
 
-VOL="$(amixer -c 0 -M -D pulse get $BLOCK_INSTANCE | awk '/[0-9]+%/' | awk -F '[' 'NR==1{print $(NF - 1)}' | tr -d ']' | tr -d '%')"
-STATE="$(amixer -c 0 -M -D pulse get $BLOCK_INSTANCE | awk '/[0-9]+%/' | awk -F '[' 'NR==1{print $NF}' | tr -d ']')"
+VOL="$(pactl get-$TYPE-volume $NAME | grep -Po '\d+(?=%)' | head -n 1)"
+STATE="$(pactl get-$TYPE-mute $NAME | cut -d' ' -f2)"
 
-if [ "$STATE" = "off" -o "$VOL" -eq "0" ]; then
+if [ "$STATE" = "yes" -o "$VOL" -eq "0" ]; then
   output "color='#6272A4'" $VOL
 elif [ "$BLOCK_INSTANCE" = "Capture" ]; then
   output "color='#FFB86C'" $VOL
@@ -38,4 +46,3 @@ elif [ "$VOL" -ge "40" ]; then
 else
   output "" $VOL
 fi
-
