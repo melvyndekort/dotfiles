@@ -9,4 +9,4 @@ case $BLOCK_BUTTON in
 esac
 
 MEMORY=$(free -h | awk '/^Mem:/ {print $3 " / " $2}')
-echo "<span size='20pt'></span> <span rise='4pt'>$MEMORY</span>"
+echo " $MEMORY"
