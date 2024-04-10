@@ -125,15 +125,15 @@ super + shift + x
 
 # toggle mic
 super + {z,m}
-  amixer -q -D pulse sset Capture toggle && pkill -RTMIN+2 i3blocks
+  pactl set-source-mute @DEFAULT_SOURCE@ toggle && pkill -RTMIN+2 i3blocks
 
 # control volume
 XF86Audio{Raise,Lower}Volume
-  amixer -q -D pulse sset Master 5%{+,-} && pkill -RTMIN+1 i3blocks
+  pactl set-sink-volume @DEFAULT_SINK@ {+,-}5% && pkill -RTMIN+1 i3blocks
 
 # mute volume
 XF86Audio{_,Mic}Mute
-  amixer -q -D pulse sset {Master,Capture} toggle && pkill -RTMIN+{1,2} i3blocks
+  pactl set-{sink,source}-mute @DEFAULT_{SINK,SOURCE}@ toggle && pkill -RTMIN+{1,2} i3blocks
 
 # control brightness
 XF86MonBrightness{Up,Down}
