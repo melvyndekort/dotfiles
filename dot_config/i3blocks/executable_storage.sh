@@ -15,7 +15,7 @@ output() {
     "/home")
       GLYPH="";;
   esac
-  echo "<span $1><span size='24pt'>$GLYPH</span> <span rise='6pt'>$2%</span></span>"
+  echo "<span $1>$GLYPH $2%</span>"
 }
 
 SPACE="$(df -h "${BLOCK_INSTANCE}" | awk 'FNR==2{print $5}' | tr -d '%')"

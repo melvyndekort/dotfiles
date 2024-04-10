@@ -1,7 +1,7 @@
 #!/bin/sh
 
 printline() {
-  echo "<span $1><span size='12pt'>$2</span> <span rise='1pt'>$3%</span></span>"
+  echo "<span $1>$2 $3%</span>"
 }
 
 case $BLOCK_BUTTON in
@@ -14,7 +14,7 @@ INSTANCE="BAT${BLOCK_INSTANCE:-0}"
 
 # exit when the system doesn't have a battery
 if [ ! -d "/sys/class/power_supply/${INSTANCE}" ]; then
-  echo "<span size='12pt'></span>"
+  echo ""
   exit 0
 fi
 
@@ -23,47 +23,47 @@ CAPACITY="$(cat /sys/class/power_supply/${INSTANCE}/capacity)"
 
 if [ "$STATUS" = "Charging" ]; then
   if [ "$CAPACITY" -le "10" ]; then
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   elif [ "$CAPACITY" -le "20" ]; then
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   elif [ "$CAPACITY" -le "30" ]; then
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   elif [ "$CAPACITY" -le "40" ]; then
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   elif [ "$CAPACITY" -le "50" ]; then
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   elif [ "$CAPACITY" -le "60" ]; then
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   elif [ "$CAPACITY" -le "70" ]; then
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   elif [ "$CAPACITY" -le "80" ]; then
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   elif [ "$CAPACITY" -le "90" ]; then
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   else
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   fi
 else
   if [ "$CAPACITY" -le "10" ]; then
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
     exit 33
   elif [ "$CAPACITY" -le "20" ]; then
-    printline "color='#FF5555'" "" "$CAPACITY"
+    printline "color='#FF5555'" "" "$CAPACITY"
   elif [ "$CAPACITY" -le "30" ]; then
-    printline "color='#FFB86C'" "" "$CAPACITY"
+    printline "color='#FFB86C'" "" "$CAPACITY"
   elif [ "$CAPACITY" -le "40" ]; then
-    printline "color='#F1FA8C'" "" "$CAPACITY"
+    printline "color='#F1FA8C'" "" "$CAPACITY"
   elif [ "$CAPACITY" -le "50" ]; then
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   elif [ "$CAPACITY" -le "60" ]; then
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   elif [ "$CAPACITY" -le "70" ]; then
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   elif [ "$CAPACITY" -le "80" ]; then
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   elif [ "$CAPACITY" -le "90" ]; then
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   else
-    printline "" "" "$CAPACITY"
+    printline "" "" "$CAPACITY"
   fi
 fi

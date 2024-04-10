@@ -11,12 +11,12 @@ case $BLOCK_BUTTON in
 esac
 
 case $BLOCK_INSTANCE in
-  Master) GLYPH="" ;;
+  Master) GLYPH="" ;;
   Capture) GLYPH="" ;;
 esac
 
 output() {
-  echo "<span ${1}><span size='17pt'>${GLYPH}</span> <span rise='3pt'>${2}%</span></span>"
+  echo "<span $1>$GLYPH $2%</span>"
 }
 
 VOL="$(amixer -c 0 -M -D pulse get $BLOCK_INSTANCE | awk '/[0-9]+%/' | awk -F '[' 'NR==1{print $(NF - 1)}' | tr -d ']' | tr -d '%')"
