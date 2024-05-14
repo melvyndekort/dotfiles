@@ -225,10 +225,10 @@ export ARTIFACTORY_URL="https://{{- urlquery (pass "portbase/artifactory" | b64d
 alias wpcs-build="mvn -T C1 clean package -DskipTests -Dnaomi.skip -Dmaven.antrun.skip -pl \!naomi/naomi-maven-plugin-test"
 alias sqlplus='docker container run --rm -it --network host melvyndekort/sqlplus'
 
-# Set New Relic API key environment variables
-nr() {
-  for KEY in $(pass ls portbase/newrelic | tail -n +2 | awk '{print $2}'); do
-    export NEW_RELIC_API_KEY_$KEY=$(pass portbase/newrelic/$KEY)
+# Set environment variables such as New Relic API keys
+pbvars() {
+  for KEY in $(pass portbase/env_vars | base64 -d); do
+    export $KEY;
   done
 }
 
