@@ -232,15 +232,8 @@ pbvars() {
   done
 }
 
-# Clear New Relic API key environment variables
-nrc() {
-  for ENV in prod accept kt sc stc; do
-    unset NEW_RELIC_API_KEY_${ENV}
-  done
-}
-
 # Find the account id of an AWS account
-acct() {
+pbacct() {
   grep -C3 $1 $HOME/.config/aws/config
 }
 {{- end }}
