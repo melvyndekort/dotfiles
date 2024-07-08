@@ -44,7 +44,7 @@ super + {Up,Down}
   light -{A,U} 10
 
 # ADB & Android
-super + {_, shift +} y
+super + {y, shift + y}
   {focus-or-start-scrcpy, rofi-adb}
 
 # generate password
