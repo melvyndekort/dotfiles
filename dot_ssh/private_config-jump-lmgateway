@@ -48,6 +48,11 @@ Host melvynpc
   User melvyn
   ProxyJump gw
 
+Host lmnuc
+  Hostname lmnuc.mdekort.lan
+  User melvyn
+  ProxyJump gw
+
 Host lmkodi01 kodi01 lmkodi kodi
   Hostname lmkodi01.mdekort.lan
   User root

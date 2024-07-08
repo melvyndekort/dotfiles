@@ -58,6 +58,11 @@ Host lmkodi01 kodi01 lmkodi kodi
   User root
   ProxyJump proxy
 
+Host lmnuc
+  Hostname lmnuc.mdekort.lan
+  User melvyn
+  ProxyJump proxy
+
 Host tuinhuis
   Hostname tuinhuis.mdekort.lan
   User melvyn
