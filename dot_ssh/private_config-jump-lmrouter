@@ -69,7 +69,7 @@ Host tuinhuis
   ProxyJump proxy
 
 Host lmmini mini
-  Hostname 10.104.0.1
+  Hostname 10.205.0.1
   User root
   PubkeyAcceptedAlgorithms +ssh-rsa
   HostkeyAlgorithms +ssh-rsa
