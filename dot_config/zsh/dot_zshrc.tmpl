@@ -220,14 +220,14 @@ alias wpcs-build="mvn -T C1 clean package -DskipTests -Dnaomi.skip -Dmaven.antru
 alias sqlplus='docker container run --rm -it --network host melvyndekort/sqlplus'
 
 # Set environment variables such as New Relic API keys
-pbvars() {
+pb-vars() {
   for KEY in $(pass portbase/env_vars | base64 -d); do
     export $KEY;
   done
 }
 
 # Find the account id of an AWS account
-pbacct() {
+pb-acct() {
   grep -C3 $1 $HOME/.config/aws/config
 }
 {{- end }}
