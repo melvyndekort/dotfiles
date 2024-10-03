@@ -1,7 +1,0 @@
-#!/bin/sh
-
-set -e
-
-yay -Syu --sudoloop --answerclean A --nodiffmenu --noupgrademenu
-pip freeze --user | xargs -rn1 pip uninstall -y
-pip install --user -r $HOME/src/melvyndekort/arch-setup/pkglist-pip.txt
