@@ -1,9 +1,0 @@
-#!/bin/sh
-
-if command -v dig >/dev/null 2>&1; then
-  dig +short myip.opendns.com @resolver1.opendns.com
-elif command -v wget >/dev/null 2>&1; then
-  echo $(wget -qO- http://ifconfig.me/ip)
-else
-  echo "unknown"
-fi
