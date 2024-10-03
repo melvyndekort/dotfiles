@@ -1,7 +1,0 @@
-#!/bin/sh
-
-aws ec2 describe-instances \
-  --filters Name=tag-key,Values=Name \
-  --filters Name=instance-state-name,Values=running \
-  --query 'Reservations[*].Instances[*].[InstanceId, Tags[?Key==`Name`] | [0].Value, PrivateIpAddress, InstanceType][] | sort_by(@, &[1])' \
-  --output table

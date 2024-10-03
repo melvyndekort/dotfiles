@@ -19,10 +19,6 @@ super + d
 super + Escape
   pkill -USR1 -x sxhkd; notify-send 'sxhkd' 'Reloaded config'
 
-# modify webcam settings
-super + {bracketleft,bracketright,semicolon,apostrophe,backslash}
-  webcam-brightness {exposure-down,exposure-up,gamma-down,gamma-up,reset}
-
 # swith to TTY
 super + ctrl + {F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11,F12}
   chvt-sudo {1,2,3,4,5,6,7,8,9,10,11,12}
@@ -39,14 +35,6 @@ super + shift + Home
 super + o; {w,v,s,t,e,p,j,i,m,r,z,y,Y,a}
   {rofi-browser, rofi-codium, rofi-ssh-config, rofi-terraform, subl, postman, rofi-java, intellij-idea-ultimate-edition, rofi-samba, galculator, teams --no-sandbox, rofi-yubikey clipboard, rofi-yubikey direct, rofi-emulator}
 
-# change brightness
-super + {Up,Down}
-  light -{A,U} 10
-
-# ADB & Android
-super + {y, shift + y}
-  {focus-or-start-scrcpy, rofi-adb}
-
 # generate password
 super + p
   pwgen -B -c -n -y -s 20 | tr -d '\n' | xclip -selection clipboard
@@ -55,21 +43,13 @@ super + p
 super + F1
   surf https://cheatsheets.mdekort.nl/
 
-# edit configs
-super + F6
-  rofi-config
-
 # bluetooth control
-super + {_, shift +} F7
-  {rofi-bluetooth, connect-bt-headphone.sh}
+super + F7
+  rofi-bluetooth
 
 # display menu
-super + F8
-  rofi-display
-
-# autolock menu
-super + shift + F8
-  rofi-autolock
+super + {_, shift +} F8
+  {rofi-display, rofi-autolock}
 
 # pass menu
 super + F9
@@ -79,29 +59,13 @@ super + F9
 super + F10
   rofi -modi Bitwarden:rofi-bw -show Bitwarden
 
-# lpass menu
-super + F11
-  rofi -modi LastPass:rofi-lpass -show LastPass
-
 # power menu
 super + F12
   rofi -modi power:rofi-power -show power
 
-# screenshot
-Print
-  screenshot all
-
-# screenshot single window
-super + Print
-  screenshot window
-
-# screenshot selected area
-super + shift + Print
-  flameshot gui
-
-# picom
-super + {_, shift +} i
-  {_, pkill} picom
+# screenshots
+{_, super +, super + shift +} Print
+  {screenshot all, screenshot window, flameshot gui}
 
 # dunst controls
 ctrl + {space,shift + space,grave}
@@ -110,10 +74,6 @@ ctrl + {space,shift + space,grave}
 # pause notifications
 super + n
   dunstctl set-paused toggle && pkill -RTMIN+3 i3blocks
-
-# control wireguard VPN
-super + {v,shift + v}
-  nmcli con {up,down} id LMVPN
 
 # lock the window manager
 super + x
@@ -135,6 +95,10 @@ XF86Audio{Raise,Lower}Volume
 XF86Audio{_,Mic}Mute
   pactl set-{sink,source}-mute @DEFAULT_{SINK,SOURCE}@ toggle && pkill -RTMIN+{1,2} i3blocks
 
-# control brightness
+# control brightness 1
 XF86MonBrightness{Up,Down}
   brightnessctl s {+10%,10%-}
+
+# control brightness 2
+super + {Up,Down}
+  light -{A,U} 10

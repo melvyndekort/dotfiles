@@ -122,12 +122,13 @@ bindsym $mod+Shift+period move workspace to output right
 for_window [class="^.*"] border pixel 1
 
 # float special windows
-for_window [title="galculator"] floating enable
 for_window [class="Surf"] floating enable
+for_window [class="qv4l2"] floating enable
+for_window [class="Sublime_text"] floating enable
+for_window [title="galculator"] floating enable
 for_window [title="mypulsemixer"] floating enable
 for_window [title="myforecast"] floating enable, resize set 1010 725
 for_window [instance="buienradar"] floating enable, resize set 550 550
-for_window [class="scrcpy"] floating enable, mark "android", move scratchpad, move position 0px 0px, move scratchpad, sticky enable, scratchpad show
 
 # All floating windows start centered
 for_window [floating] move position center
@@ -184,7 +185,3 @@ bar {
     binding_mode        #ff5555  #ff5555      #f8f8f2
   }
 }
-
-# Exec at startup
-exec /usr/bin/alacritty -e tmux new-session -A -s main
-exec /usr/bin/firefox -P default
