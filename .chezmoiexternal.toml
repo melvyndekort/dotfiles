@@ -32,3 +32,7 @@
   exact = true
   stripComponents = 1
   refreshPeriod = "168h"
+[".config/awesome/bling"]
+  type = "git-repo"
+  url = "https://github.com/BlingCorp/bling.git"
+  refreshPeriod = "168h"
