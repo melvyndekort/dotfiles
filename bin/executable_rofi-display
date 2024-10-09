@@ -4,7 +4,7 @@ choice="$(rofi -dmenu -p 'Display setup' << EOF | cut -d' ' -f1
 laptop 
 laptop-mon  度
 office  度
-home-pc 度
+melvynpc 度
 hdmi-clone 
 hdmi-expand  度
 EOF
@@ -22,7 +22,7 @@ case "$choice" in
 
   laptop-mon)
     xrandr \
-      --output eDP-1 --mode 1920x1080 --pos 0x628 --rotate normal \
+      --output eDP-1 --off \
       --output DP-1 --primary --mode 3440x1440 --pos 1920x0 --rotate normal \
       --output DP-2 --off \
       --output HDMI-1 --off \
@@ -38,7 +38,7 @@ case "$choice" in
       --output HDMI-2 --off \
       --output HDMI-3 --off ;;
 
-  home-pc)
+  melvynpc)
     xrandr \
       --output DP-0 --off \
       --output DP-1 --primary --auto --pos 0x0 --rotate normal \
