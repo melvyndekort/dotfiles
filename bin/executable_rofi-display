@@ -1,6 +1,7 @@
 #!/bin/sh
 
-choice="$(rofi -dmenu -p 'Display setup' << EOF | cut -d' ' -f1
+choice="$(
+	rofi -dmenu -p 'Display setup' <<EOF | cut -d' ' -f1
 laptop 
 laptop-mon  度
 office  度
@@ -11,59 +12,66 @@ EOF
 )"
 
 case "$choice" in
-  laptop)
-    xrandr \
-      --output eDP-1 --primary --auto --pos 0x0 \
-      --output DP-1 --off \
-      --output DP-2 --off \
-      --output HDMI-1 --off \
-      --output HDMI-2 --off \
-      --output HDMI-3 --off ;;
+laptop)
+	xrandr \
+		--output eDP-1 --primary --auto --pos 0x0 \
+		--output DP-1 --off \
+		--output DP-2 --off \
+		--output HDMI-1 --off \
+		--output HDMI-2 --off \
+		--output HDMI-3 --off
+	;;
 
-  laptop-mon)
-    xrandr \
-      --output eDP-1 --off \
-      --output DP-1 --primary --mode 3440x1440 --pos 1920x0 --rotate normal \
-      --output DP-2 --off \
-      --output HDMI-1 --off \
-      --output HDMI-2 --off \
-      --output HDMI-3 --off ;;
+laptop-mon)
+	xrandr \
+		--output eDP-1 --off \
+		--output DP-1 --primary --mode 3440x1440 --pos 1920x0 --rotate normal \
+		--output DP-2 --off \
+		--output HDMI-1 --off \
+		--output HDMI-2 --off \
+		--output HDMI-3 --off
+	;;
 
-  office)
-    xrandr \
-      --output eDP-1 --auto --pos 0x504 \
-      --output DP-1 --off \
-      --output DP-2 --off \
-      --output HDMI-1 --primary --auto --pos 1920x0 \
-      --output HDMI-2 --off \
-      --output HDMI-3 --off ;;
+office)
+	xrandr \
+		--output eDP-1 --auto --pos 0x1080 \
+		--output DP-1 --off \
+		--output DP-2 --off \
+		--output HDMI-1 --primary --auto --pos 0x0 \
+		--output HDMI-2 --off \
+		--output HDMI-3 --off
+	;;
 
-  melvynpc)
-    xrandr \
-      --output DP-0 --off \
-      --output DP-1 --primary --auto --pos 0x0 --rotate normal \
-      --output DVI-I-1 --off ;;
+melvynpc)
+	xrandr \
+		--output DP-0 --off \
+		--output DP-1 --primary --auto --pos 0x0 --rotate normal \
+		--output DVI-I-1 --off
+	;;
 
-  hdmi-clone)
-    xrandr \
-      --output eDP-1 --primary --auto --pos 0x0 \
-      --output DP-1 --off \
-      --output DP-2 --off \
-      --output HDMI-1 --auto --same-as eDP-1 \
-      --output HDMI-2 --off \
-      --output HDMI-3 --off ;;
+hdmi-clone)
+	xrandr \
+		--output eDP-1 --primary --auto --pos 0x0 \
+		--output DP-1 --off \
+		--output DP-2 --off \
+		--output HDMI-1 --auto --same-as eDP-1 \
+		--output HDMI-2 --off \
+		--output HDMI-3 --off
+	;;
 
-  hdmi-expand)
-    xrandr \
-      --output eDP-1 --primary --auto --pos 0x0 \
-      --output DP-1 --off \
-      --output DP-2 --off \
-      --output HDMI-1 --auto --pos 1920x0 \
-      --output HDMI-2 --off \
-      --output HDMI-3 --off ;;
+hdmi-expand)
+	xrandr \
+		--output eDP-1 --primary --auto --pos 0x0 \
+		--output DP-1 --off \
+		--output DP-2 --off \
+		--output HDMI-1 --auto --pos 1920x0 \
+		--output HDMI-2 --off \
+		--output HDMI-3 --off
+	;;
 
-  *)
-    exit 1 ;;
+*)
+	exit 1
+	;;
 esac
 
 notify-send "Configured display setup: $choice"
