@@ -98,9 +98,9 @@ super + shift + x
   #&& pkill -RTMIN+{1,2} i3blocks
 
 # control brightness 1
-XF86MonBrightness{Up,Down}
-  brightnessctl s {+10%,10%-}
+#XF86MonBrightness{Up,Down}
+  #brightnessctl s {+10%,10%-}
 
 # control brightness 2
-super + {Up,Down}
-  brightnessctl s {+10%,10%-}
+#super + {Up,Down}
+  #brightnessctl s {+10%,10%-}
