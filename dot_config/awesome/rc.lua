@@ -18,6 +18,14 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+-- Custom widgets
+local brightness_widget = require("widgets.brightness")
+local battery_widget = require("widgets.battery")
+local pactl_out_widget = require("widgets.pactl-out")
+local pactl_in_widget = require("widgets.pactl-in")
+local notifications_widget = require("widgets.notifications")
+local calendar_widget = require("widgets.calendar")
+
 -- Load Debian menu entries
 local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
@@ -75,23 +83,16 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-	-- awful.layout.suit.floating,
 	bling.layout.centered,
+	awful.layout.suit.spiral.dwindle,
 	awful.layout.suit.tile,
 	awful.layout.suit.tile.left,
 	awful.layout.suit.tile.bottom,
 	awful.layout.suit.tile.top,
 	awful.layout.suit.fair,
 	awful.layout.suit.fair.horizontal,
-	-- awful.layout.suit.spiral,
-	awful.layout.suit.spiral.dwindle,
 	awful.layout.suit.max,
-	-- awful.layout.suit.max.fullscreen,
-	-- awful.layout.suit.magnifier,
-	-- awful.layout.suit.corner.nw,
-	-- awful.layout.suit.corner.ne,
-	-- awful.layout.suit.corner.sw,
-	-- awful.layout.suit.corner.se,
+	awful.layout.suit.floating,
 }
 -- }}}
 
@@ -133,18 +134,20 @@ else
 	})
 end
 
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = mymainmenu })
-
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
-
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
+
+local cw = calendar_widget()
+
+mytextclock:connect_signal("button::press",
+	function(_, _, _, button)
+			if button == 1 then cw.toggle() end
+end)
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -193,8 +196,6 @@ awful.screen.connect_for_each_screen(function(s)
 	-- Each screen has its own tag table.
 	awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
-	-- Create a promptbox for each screen
-	s.mypromptbox = awful.widget.prompt()
 	-- Create an imagebox widget which will contain an icon indicating which layout we're using.
 	-- We need one layoutbox per screen.
 	s.mylayoutbox = awful.widget.layoutbox(s)
@@ -217,6 +218,19 @@ awful.screen.connect_for_each_screen(function(s)
 		screen = s,
 		filter = awful.widget.taglist.filter.all,
 		buttons = taglist_buttons,
+		widget_template = {
+			{
+				{
+					id     = 'text_role',
+					widget = wibox.widget.textbox,
+				},
+				left  = 6,  -- Add padding on the left
+				right = 6,  -- Add padding on the right (this increases the width)
+				widget = wibox.container.margin
+			},
+			id     = 'background_role',
+			widget = wibox.container.background,
+		}
 	})
 
 	-- Create a tasklist widget
@@ -227,21 +241,28 @@ awful.screen.connect_for_each_screen(function(s)
 	})
 
 	-- Create the wibox
-	s.mywibox = awful.wibar({ position = "top", screen = s })
+	s.mywibox = awful.wibar({
+		position = "top",
+		screen = s,
+	})
 
 	-- Add widgets to the wibox
 	s.mywibox:setup({
 		layout = wibox.layout.align.horizontal,
 		{ -- Left widgets
 			layout = wibox.layout.fixed.horizontal,
-			mylauncher,
 			s.mytaglist,
-			s.mypromptbox,
 		},
 		s.mytasklist, -- Middle widget
 		{ -- Right widgets
-			layout = wibox.layout.fixed.horizontal,
-			mykeyboardlayout,
+			spacing        = 20,
+			spacing_widget = wibox.widget.separator,
+			layout         = wibox.layout.fixed.horizontal,
+			--brightness_widget{},
+			battery_widget{},
+			pactl_out_widget{},
+			pactl_in_widget{},
+			notifications_widget{},
 			wibox.widget.systray(),
 			mytextclock,
 			s.mylayoutbox,
@@ -298,10 +319,40 @@ globalkeys = gears.table.join(
 		end
 	end, { description = "go back", group = "client" }),
 
+	-- Audio keybindings
+	awful.key({ modkey }, "z", function()
+	  awful.spawn.with_shell("pactl set-source-mute @DEFAULT_SOURCE@ toggle")
+		awesome.emit_signal("pactl_in_widget::update", true)
+	end, { description = "toggle microphone", group = "audio" }),
+	awful.key({ modkey }, "bracketleft", function()
+	  awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ -5%")
+		awesome.emit_signal("pactl_out_widget::update", true)
+	end, { description = "decrease volume", group = "audio" }),
+	awful.key({ modkey }, "bracketright", function()
+	  awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ +5%")
+		awesome.emit_signal("pactl_out_widget::update", true)
+	end, { description = "increase volume", group = "audio" }),
+	awful.key({ modkey }, "backslash", function()
+	  awful.spawn.with_shell("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+		awesome.emit_signal("pactl_out_widget::update", true)
+	end, { description = "toggle volume", group = "audio" }),
+	awful.key({}, "XF86AudioLowerVolume", function()
+	  awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ -5%")
+		awesome.emit_signal("pactl_out_widget::update", true)
+	end, { description = "decrease volume", group = "audio" }),
+	awful.key({}, "XF86AudioRaiseVolume", function()
+	  awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ +5%")
+		awesome.emit_signal("pactl_out_widget::update", true)
+	end, { description = "increase volume", group = "audio" }),
+
 	-- Standard program
 	-- awful.key({ modkey }, "Return", function()
 	--   awful.spawn(terminal)
 	-- end, { description = "open a terminal", group = "launcher" }),
+	awful.key({ modkey }, "n", function()
+		naughty.toggle()
+		awesome.emit_signal("notifications_widget::update", true)
+	end, { description = "pause notifications", group = "awesome" }),
 	awful.key({ modkey, "Control" }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
 	awful.key({ modkey, "Shift" }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
 
@@ -336,29 +387,12 @@ globalkeys = gears.table.join(
 		if c then
 			c:emit_signal("request::activate", "key.unminimize", { raise = true })
 		end
-	end, { description = "restore minimized", group = "client" }),
+	end, { description = "restore minimized", group = "client" })
 
-	-- Prompt
-	awful.key({ modkey }, "r", function()
-		awful.screen.focused().mypromptbox:run()
-	end, { description = "run prompt", group = "launcher" }),
-
-	-- awful.key({ modkey }, "d", function()
-	--   awful.spawn.with_shell("rofi -show combi")
-	-- end, { description = "run rofi", group = "launcher" }),
-
-	awful.key({ modkey }, "x", function()
-		awful.prompt.run({
-			prompt = "Run Lua code: ",
-			textbox = awful.screen.focused().mypromptbox.widget,
-			exe_callback = awful.util.eval,
-			history_path = awful.util.get_cache_dir() .. "/history_eval",
-		})
-	end, { description = "lua execute prompt", group = "awesome" }),
 	-- Menubar
-	awful.key({ modkey }, "p", function()
-		menubar.show()
-	end, { description = "show the menubar", group = "launcher" })
+	-- awful.key({ modkey }, "p", function()
+	-- 	menubar.show()
+	-- end, { description = "show the menubar", group = "launcher" })
 )
 
 clientkeys = gears.table.join(
@@ -503,6 +537,8 @@ awful.rules.rules = {
 				"xtightvncviewer",
 				"qv4l2",
 				"Sublime_text",
+				"Gcr-prompter",
+				"pulsemixer",
 			},
 
 			-- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -516,7 +552,7 @@ awful.rules.rules = {
 				"pop-up", -- e.g. Google Chrome's (detached) Developer Tools.
 			},
 		},
-		properties = { floating = true },
+		properties = { floating = true, placement = awful.placement.centered },
 	},
 
 	-- Add titlebars to normal clients and dialogs
