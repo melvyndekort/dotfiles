@@ -18,6 +18,9 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+-- Custom wallpapers
+local wallpaper = require("wallpaper")
+
 -- Custom widgets
 local brightness_widget = require("widgets.brightness")
 local battery_widget = require("widgets.battery")
