@@ -23,14 +23,6 @@ super + Escape
 super + ctrl + {F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11,F12}
   chvt-sudo {1,2,3,4,5,6,7,8,9,10,11,12}
 
-# wallpaper selector
-super + Home
-  sxiv -tf ~/Sync/pictures/wallpapers
-
-# random wallpaper
-super + shift + Home
-  set-wallpaper
-
 # app launcher
 super + o; {w,v,s,t,e,p,j,i,m,r,z,y,Y,a}
   {rofi-browser, rofi-codium, rofi-ssh-config, rofi-terraform, subl, postman, rofi-java, intellij-idea-ultimate-edition, rofi-samba, galculator, alacritty --class pulsemixer -e pulsemixer, rofi-yubikey clipboard, rofi-yubikey direct, rofi-emulator}
