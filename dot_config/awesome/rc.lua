@@ -21,6 +21,9 @@ require("awful.hotkeys_popup.keys")
 -- Custom wallpapers
 local wallpaper = require("wallpaper")
 
+-- Custom centered layout
+local centered_layout = require("layouts.centered")
+
 -- Custom widgets
 local brightness_widget = require("widgets.brightness")
 local battery_widget = require("widgets.battery")
@@ -69,9 +72,6 @@ end
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 beautiful.init("~/.config/awesome/theme.lua")
 
--- require custom module
-local bling = require("bling")
-
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
 editor = os.getenv("EDITOR") or "editor"
@@ -86,7 +86,7 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-	bling.layout.centered,
+	centered_layout,
 	awful.layout.suit.spiral.dwindle,
 	awful.layout.suit.tile,
 	awful.layout.suit.tile.left,
@@ -347,6 +347,20 @@ globalkeys = gears.table.join(
 	  awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ +5%")
 		awesome.emit_signal("pactl_out_widget::update", true)
 	end, { description = "increase volume", group = "audio" }),
+
+  -- Brightness keys
+	awful.key({}, "XF86MonBrightnessUp", function()
+	  awful.spawn.with_shell("brightnessctl s +10%")
+	end, { description = "brightness up", group = "brightness" }),
+	awful.key({}, "XF86MonBrightnessDown", function()
+	  awful.spawn.with_shell("brightnessctl s 10%-")
+	end, { description = "brightness up", group = "brightness" }),
+	awful.key({ modkey }, "Up", function()
+	  awful.spawn.with_shell("brightnessctl s +10%")
+	end, { description = "brightness up", group = "brightness" }),
+	awful.key({ modkey }, "Down", function()
+	  awful.spawn.with_shell("brightnessctl s 10%-")
+	end, { description = "brightness up", group = "brightness" }),
 
 	-- Standard program
 	-- awful.key({ modkey }, "Return", function()
