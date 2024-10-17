@@ -1,11 +1,11 @@
 #!/bin/bash
 
-#                         __ _ _      
-#  __  ___ __  _ __ ___  / _(_) | ___ 
+#                         __ _ _
+#  __  ___ __  _ __ ___  / _(_) | ___
 #  \ \/ / '_ \| '__/ _ \| |_| | |/ _ \
 # _ >  <| |_) | | | (_) |  _| | |  __/
 #(_)_/\_\ .__/|_|  \___/|_| |_|_|\___|
-#       |_|                           
+#       |_|
 #
 
 userresources="$XDG_CONFIG_HOME"/X11/Xresources
@@ -13,34 +13,33 @@ sysresources=/etc/X11/xinit/.Xresources
 
 # merge in defaults and keymaps
 if [ -f $sysresources ]; then
-  xrdb -merge $sysresources
+	xrdb -merge $sysresources
 fi
 
 if [ -f "$userresources" ]; then
-  xrdb -merge "$userresources"
+	xrdb -merge "$userresources"
 fi
 
 # start default X11 stuff
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
-  for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
-    [ -x "$f" ] && . "$f"
-  done
-  unset f
+	for f in /etc/X11/xinit/xinitrc.d/?*.sh; do
+		[ -x "$f" ] && . "$f"
+	done
+	unset f
 fi
 
 # set bitwarden session key
 if [ -f "$HOME/.config/bw-unlock.sh" ]; then
-  source "$HOME/.config/bw-unlock.sh"
+	source "$HOME/.config/bw-unlock.sh"
 fi
 
 # setup custom screen setup
 if [ -f $HOME/.config/default-screen-setup ]; then
-  $HOME/.config/default-screen-setup
+	$HOME/.config/default-screen-setup
 fi
 
 # setup graphics part of window manager
-picom -b --config $HOME/.config/picom/picom.conf
-set-wallpaper &
+picom -b
 
 # start simple X hotkey daemon
 sxhkd &
@@ -51,14 +50,12 @@ xss-lock -- $HOME/bin/lock-screen &
 # set default cursor to arrow
 xsetroot -cursor_name left_ptr
 
-# disable pointing stick on laptop
-xinput disable "DualPoint Stick"
-
 # applets
 nm-applet &
-dunst &
 udiskie -Atn &
 
 # auto-reload X11 resources
-( cd $HOME/.config/X11; ls Xresources | entr -n xrdb Xresources & )
-
+(
+	cd $HOME/.config/X11
+	ls Xresources | entr -n xrdb Xresources &
+)

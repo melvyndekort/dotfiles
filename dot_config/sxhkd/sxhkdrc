@@ -72,8 +72,8 @@ ctrl + {space,shift + space,grave}
   dunstctl {close,close-all,history-pop}
 
 # pause notifications
-super + n
-  dunstctl set-paused toggle && pkill -RTMIN+3 i3blocks
+#super + n
+  #pause-notifications.sh
 
 # lock the window manager
 super + x
@@ -84,25 +84,25 @@ super + shift + x
   systemctl suspend
 
 # toggle mic
-super + z
-  pactl set-source-mute @DEFAULT_SOURCE@ toggle
+#super + z
+  #pactl set-source-mute @DEFAULT_SOURCE@ toggle
   #&& pkill -RTMIN+2 i3blocks
 
 # control volume
-super + bracket{right,left}
-  pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
+#super + bracket{right,left}
+  #pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
 
-super + backslash
-  pactl set-sink-mute @DEFAULT_SINK@ toggle
+#super + backslash
+  #pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # control volume
-XF86Audio{Raise,Lower}Volume
-  pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
+#XF86Audio{Raise,Lower}Volume
+  #pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
   #&& pkill -RTMIN+1 i3blocks
 
 # mute volume
-XF86Audio{_,Mic}Mute
-  pactl set-{sink,source}-mute @DEFAULT_{SINK,SOURCE}@ toggle
+#XF86Audio{_,Mic}Mute
+  #pactl set-{sink,source}-mute @DEFAULT_{SINK,SOURCE}@ toggle
   #&& pkill -RTMIN+{1,2} i3blocks
 
 # control brightness 1

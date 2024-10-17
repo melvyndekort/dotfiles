@@ -36,7 +36,3 @@
   type = "git-repo"
   url = "https://github.com/BlingCorp/bling.git"
   refreshPeriod = "168h"
-[".config/awesome/awesome-wm-widgets"]
-  type = "git-repo"
-  url = "https://github.com/streetturtle/awesome-wm-widgets.git"
-  refreshPeriod = "168h"

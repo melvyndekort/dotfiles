@@ -9,23 +9,10 @@ local dpi = xresources.apply_dpi
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 
--- Dracula theme
-local colors = {}
-colors.background = "#282A36"
-colors.current = "#44475A"
-colors.foreground = "#F8F8F2"
-colors.comment = "#6272A4"
-colors.cyan = "#8BE9FD"
-colors.green = "#50FA7B"
-colors.orange = "#FFB86C"
-colors.pink = "#FF79C6"
-colors.purple = "#BD93F9"
-colors.red = "#FF55555"
-colors.yellow = "#F1FA8C"
+local colors = require("colors")
 
 local theme = {}
 
--- theme.font          = "sans 8"
 theme.font = "Hack Nerd Font Mono 11"
 
 theme.bg_normal = colors.background
