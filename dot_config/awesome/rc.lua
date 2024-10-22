@@ -25,6 +25,8 @@ local wallpaper = require("wallpaper")
 local centered_layout = require("layouts.centered")
 
 -- Custom widgets
+local load_widget = require("widgets.load")
+local memory_widget = require("widgets.memory")
 local brightness_widget = require("widgets.brightness")
 local battery_widget = require("widgets.battery")
 local pactl_out_widget = require("widgets.pactl-out")
@@ -262,6 +264,8 @@ awful.screen.connect_for_each_screen(function(s)
 			spacing_widget = wibox.widget.separator,
 			layout         = wibox.layout.fixed.horizontal,
 			--brightness_widget{},
+			load_widget{},
+			memory_widget{},
 			battery_widget{},
 			pactl_out_widget{},
 			pactl_in_widget{},
@@ -556,6 +560,7 @@ awful.rules.rules = {
 				"Sublime_text",
 				"Gcr-prompter",
 				"pulsemixer",
+				"Galculator",
 			},
 
 			-- Note that the name property shown in xprop might be set slightly after creation of the client
