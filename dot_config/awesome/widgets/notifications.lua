@@ -20,11 +20,17 @@ local function worker(user_args)
 
     mywidget = wibox.container.background(text)
 
+    local tooltip = awful.tooltip {
+        objects = { mywidget }
+    }
+
     local function update_widget()
         if naughty.is_suspended() then
             mywidget.fg = colors.orange
+            tooltip.text = "Notifications are OFF"
         else
             mywidget.fg = colors.foreground
+            tooltip.text = "Notifications are ON"
         end
     end
 
@@ -35,17 +41,8 @@ local function worker(user_args)
         )
     )
 
-    local tooltip = awful.tooltip {
-        objects = { mywidget }
-    }
-
     mywidget:connect_signal("mouse::enter", function()
         update_widget()
-        if naughty.is_suspended() then
-            tooltip.text = "Notifications are OFF"
-        else
-            tooltip.text = "Notifications are ON"
-        end
     end)
 
     awesome.connect_signal("notifications_widget::update", function(value)

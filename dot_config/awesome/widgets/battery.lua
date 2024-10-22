@@ -96,7 +96,7 @@ local function worker(user_args)
 
     mywidget:connect_signal("mouse::enter", function()
         awful.spawn.easy_async_with_shell('acpi', function(stdout, _, _, _)
-            tooltip.text = string.gsub(stdout, "\n$", "")
+            tooltip.text = stdout
         end)
     end)
 
