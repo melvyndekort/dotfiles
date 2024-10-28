@@ -138,22 +138,36 @@ local globalkeys = gears.table.join(
     awful.spawn.with_shell("brightnessctl s 10%-")
   end, { description = "brightness up", group = "brightness" }),
 
-  -- System control
-  awful.key({ modkey, "Control" }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
-  awful.key({ modkey, "Shift" }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
+  -- Awesome control
+  awful.key({ modkey, "Control" }, "r", function()
+    awesome.restart()
+  end, { description = "reload awesome", group = "awesome" }),
+  awful.key({ modkey, "Shift" }, "q", function()
+    awesome.quit()
+  end, { description = "quit awesome", group = "awesome" }),
+
+  -- Awesome extra
   awful.key({ modkey }, "n", function()
     naughty.toggle()
     awesome.emit_signal("notifications_widget::update", true)
-  end, { description = "pause notifications", group = "awesome" }),
+  end, { description = "pause notifications", group = "awesome extra" }),
   awful.key({ modkey }, "d", function()
     awful.spawn("rofi -show combi")
-  end, { description = "program launcher", group = "awesome"}),
+  end, { description = "program launcher", group = "awesome extra"}),
   awful.key({ modkey }, "x", function()
     awful.spawn("xset s activate")
-  end, { description = "lock", group = "awesome"}),
+  end, { description = "lock", group = "awesome extra"}),
   awful.key({ modkey, "Shift" }, "x", function()
     awful.spawn("systemctl suspend")
-  end, { description = "suspend", group = "awesome"}),
+  end, { description = "suspend", group = "awesome extra"}),
+  awful.key({ modkey }, "Home", function()
+    awful.screen.connect_for_each_screen(set_random_wallpaper)
+  end, { description = "Set random wallpaper", group = "awesome extra" }),
+
+  -- Notifications
+  awful.key({ modkey }, "Escape", function()
+    naughty.destroy_all_notifications()
+  end, {description = "Close all notifications", group = "notifications"}),
 
   -- Terminal programs
   awful.key({ modkey }, "Return", function()
