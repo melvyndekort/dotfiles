@@ -38,21 +38,8 @@ if [ -f $HOME/.config/default-screen-setup ]; then
 	$HOME/.config/default-screen-setup
 fi
 
-# setup graphics part of window manager
-picom -b
-
-# start simple X hotkey daemon
-sxhkd &
-
-# start lockscreen
-xss-lock -- $HOME/bin/lock-screen &
-
 # set default cursor to arrow
 xsetroot -cursor_name left_ptr
-
-# applets
-nm-applet &
-udiskie -Atn &
 
 # auto-reload X11 resources
 (
