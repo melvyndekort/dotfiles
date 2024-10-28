@@ -389,6 +389,7 @@ awful.rules.rules = {
 				"Gcr-prompter",
 				"pulsemixer",
 				"Galculator",
+				"Surf",
 			},
 
 			-- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -479,3 +480,13 @@ client.connect_signal("unfocus", function(c)
 	c.border_color = beautiful.border_normal
 end)
 -- }}}
+
+awful.spawn.single_instance("xss-lock -l -- i3lock -t -e -i /home/melvyn/Sync/pictures/locked.png")
+awful.spawn.single_instance("picom -b")
+awful.spawn.single_instance("nm-applet")
+
+awful.spawn.easy_async_with_shell("pgrep -u $USER udiskie", function(_,_,_,exitcode)
+	if exitcode > 0 then
+		awful.spawn("udiskie -Atn")
+	end
+end)
