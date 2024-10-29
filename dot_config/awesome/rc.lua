@@ -481,7 +481,7 @@ client.connect_signal("unfocus", function(c)
 end)
 -- }}}
 
-awful.spawn.single_instance("xss-lock -l -- i3lock -t -e -i /home/melvyn/Sync/pictures/locked.png")
+awful.spawn.single_instance("xss-lock -l -- lock.sh")
 awful.spawn.single_instance("picom -b")
 awful.spawn.single_instance("nm-applet")
 
