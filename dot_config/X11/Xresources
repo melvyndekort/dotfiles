@@ -2,7 +2,7 @@
 Xft.dpi: 96
 
 ! font configuration
-UXTerm*faceName:   Hack Nerd Font Mono
+UXTerm*faceName:   Hack
 UXTerm*faceSize:   10
 UXTerm*renderFont: true
 
