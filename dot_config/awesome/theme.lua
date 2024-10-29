@@ -15,7 +15,7 @@ local colors = require("colors")
 
 local theme = {}
 
-theme.font = "Hack Nerd Font Mono 11"
+theme.font = "Hack 10"
 
 theme.bg_normal = colors.background
 theme.bg_focus = colors.current

@@ -171,7 +171,7 @@ tfupdate() {
 
 # Use correct TERM variable in SSH connections
 ssh() {
-  if [ "$TERM" = "alacritty" ]; then
+  if [ "$TERM" = "kitty" ]; then
     TERM=xterm-256color /usr/bin/ssh $*
   elif [ "$TERM" = "tmux-256color" ]; then
     /usr/bin/ssh $*
