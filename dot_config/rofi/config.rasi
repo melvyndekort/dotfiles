@@ -12,7 +12,7 @@ configuration {
     lines: 25;
     columns: 2;
     width: 1000;
-	  font: "Hack Nerd Font 10";
+	  font: "Hack 10";
     foreground: #f8f8f2;
     background: #282a36;
     active-background: #6272a4;
