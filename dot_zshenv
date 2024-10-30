@@ -1,1 +1,7 @@
 export ZDOTDIR="$HOME/.config/zsh"
+
+alias assume=". assume"
+
+fpath=(/home/melvyn/.granted/zsh_autocomplete/assume/ $fpath)
+
+fpath=(/home/melvyn/.granted/zsh_autocomplete/granted/ $fpath)
