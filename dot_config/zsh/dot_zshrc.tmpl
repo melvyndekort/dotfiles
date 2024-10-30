@@ -114,6 +114,13 @@ fi
 
 alias hex='hexyl'
 
+# Set kitty aliases
+alias kitten='kitty +kitten'
+alias icat='kitty +kitten icat'
+alias setclip='kitty +kitten clipboard'
+alias getclip='kitty +kitten clipboard --get-clipboard'
+alias d='kitty +kitten diff'
+
 # Set MISC aliases
 alias rm='rm -Iv'
 alias cp='cp -v'
@@ -121,8 +128,6 @@ alias mv='mv -v'
 alias vim='nvim'
 alias netstat='echo NETSTAT is unavailable on Arch, please use \"ss -tulpn\"'
 alias lspath='for i in $(echo $PATH | sed "s/:/\ /g"); do find $i -maxdepth 1 -xtype f -executable; done | sort -u'
-alias setclip='xclip -selection clipboard'
-alias getclip='xclip -o -selection clipboard'
 alias syncwatch='watch grep -e Dirty: -e Writeback: /proc/meminfo'
 alias ripcd='abcde -d /dev/cdrom'
 alias cm="chezmoi"
@@ -170,15 +175,16 @@ tfupdate() {
 }
 
 # Use correct TERM variable in SSH connections
-ssh() {
-  if [ "$TERM" = "kitty" ]; then
-    TERM=xterm-256color /usr/bin/ssh $*
-  elif [ "$TERM" = "tmux-256color" ]; then
-    /usr/bin/ssh $*
-  else
-    /usr/bin/ssh $*
-  fi
-}
+#ssh() {
+#  if [ "$TERM" = "kitty" ]; then
+#    TERM=xterm-256color /usr/bin/ssh $*
+#  elif [ "$TERM" = "tmux-256color" ]; then
+#    /usr/bin/ssh $*
+#  else
+#    /usr/bin/ssh $*
+#  fi
+#}
+[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
 
 # Generate the public key fingerpirnt
 ssh-fingerprint() {
