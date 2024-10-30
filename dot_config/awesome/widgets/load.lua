@@ -4,12 +4,12 @@ local wibox = require("wibox")
 local watch = require("awful.widget.watch")
 local colors = require("colors")
 
-local mywidget = {}
+local load_widget = {}
 
 local function worker(user_args)
     local args = user_args or {}
 
-    mywidget = wibox.widget {
+    load_widget = wibox.widget {
         background_color = colors.background,
         border_color = colors.background,
         color = colors.pink,
@@ -17,14 +17,14 @@ local function worker(user_args)
         step_width = 3,
         step_spacing = 2,
         forced_height = 24,
-        forced_width = 100,
+        forced_width = 80,
         widget = wibox.widget.graph
     }
 
-    local padded_widget = wibox.container.margin(mywidget, 10, 0, 0, 0)
+    local padded_widget = wibox.container.margin(load_widget, 10, 0, 0, 0)
 
     awful.spawn.easy_async_with_shell("nproc", function(stdout, _, _, _)
-        mywidget.max_value = tonumber(stdout)
+        load_widget.max_value = tonumber(stdout)
     end)
 
     local function update_widget(widget, stdout)
@@ -32,13 +32,21 @@ local function worker(user_args)
         widget:add_value(tonumber(avg1min))
     end
 
-    watch("cat /proc/loadavg", 2, update_widget, mywidget)
+    watch("cat /proc/loadavg", 2, update_widget, load_widget)
+
+    load_widget:buttons(
+        awful.util.table.join(
+            awful.button({}, 1, function()
+                awful.spawn("kitty --single-instance --class floating -e htop")
+            end)
+        )
+    )
 
     local tooltip = awful.tooltip {
-        objects = { mywidget }
+        objects = { load_widget }
     }
 
-    mywidget:connect_signal("mouse::enter", function()
+    load_widget:connect_signal("mouse::enter", function()
         local myfile = io.open("/proc/loadavg", "r")
         tooltip.text = "  1m   5m  15m\n" .. myfile:read("*a")
         myfile:close()
@@ -47,6 +55,6 @@ local function worker(user_args)
     return padded_widget
 end
 
-return setmetatable(mywidget, { __call = function(_, ...)
+return setmetatable(load_widget, { __call = function(_, ...)
     return worker(...)
 end })

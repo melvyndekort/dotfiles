@@ -52,7 +52,7 @@ awful.keygrabber {
       awful.spawn("rofi-yubikey direct")
     end, { description = "foobar", group = "app launcher" }},
     {{}, "z", function()
-      awful.spawn("kitty --class=pulsemixer -e pulsemixer")
+      awful.spawn("kitty --single-instance --class=floating -e pulsemixer")
     end, { description = "foobar", group = "app launcher" }},
   },
   stop_event = "release",
@@ -171,13 +171,13 @@ local globalkeys = gears.table.join(
 
   -- Terminal programs
   awful.key({ modkey }, "Return", function()
-    awful.spawn("kitty")
+    awful.spawn("kitty --single-instance")
   end, { description = "Plain terminal", group = "terminal"}),
   awful.key({ modkey, "Control"}, "Return", function()
-    awful.spawn("kitty -e cmatrix")
+    awful.spawn("kitty --single-instance -e cmatrix")
   end, { description = "Matrix window", group = "terminal"}),
   awful.key({ modkey, "Shift"}, "Return", function()
-    awful.spawn("kitty -e ranger")
+    awful.spawn("kitty --single-instance -e ranger")
   end, { description = "Ranger filemanager", group = "terminal"}),
 
 -- Launchers
