@@ -36,8 +36,8 @@ local function worker(user_args)
 
 	local piechart_widget = wibox.widget({
 		colors = {
-			colors.orange,
-			colors.cyan,
+			colors.red,
+			colors.comment,
 			colors.green,
 		},
 		forced_height = 300,
@@ -69,8 +69,8 @@ local function worker(user_args)
 		visible = false,
 		placement = awful.placement.top_right,
 		shape = gears.shape.rounded_rect,
-		border_width = 2,
-		border_color = "#ffffff",
+		border_width = 1,
+		border_color = colors.background,
 	})
 
 	awful.spawn.easy_async_with_shell("free", function(stdout, _, _, _)
