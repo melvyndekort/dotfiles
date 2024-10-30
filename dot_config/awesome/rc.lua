@@ -388,7 +388,7 @@ awful.rules.rules = {
 				"qv4l2",
 				"Sublime_text",
 				"Gcr-prompter",
-				"pulsemixer",
+				"floating",
 				"Galculator",
 				"Surf",
 			},
