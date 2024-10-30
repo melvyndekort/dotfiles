@@ -31,12 +31,12 @@ local centered_layout = require("layouts.centered")
 -- Custom widgets
 local load_widget = require("widgets.load")
 local memory_widget = require("widgets.memory")
-local brightness_widget = require("widgets.brightness")
 local battery_widget = require("widgets.battery")
 local pactl_out_widget = require("widgets.pactl-out")
 local pactl_in_widget = require("widgets.pactl-in")
 local notifications_widget = require("widgets.notifications")
 local calendar_widget = require("widgets.calendar")
+local disk_widget = require("widgets.disk")
 
 -- Load Debian menu entries
 local debian = require("debian.menu")
@@ -146,9 +146,10 @@ mytextclock = wibox.widget.textclock()
 
 local cw = calendar_widget()
 
-mytextclock:connect_signal("button::press",
-	function(_, _, _, button)
-			if button == 1 then cw.toggle() end
+mytextclock:connect_signal("button::press", function(_, _, _, button)
+	if button == 1 then
+		cw.toggle()
+	end
 end)
 
 -- Create a wibox for each screen and add it
@@ -223,16 +224,16 @@ awful.screen.connect_for_each_screen(function(s)
 		widget_template = {
 			{
 				{
-					id     = 'text_role',
+					id = "text_role",
 					widget = wibox.widget.textbox,
 				},
-				left  = 6,  -- Add padding on the left
-				right = 6,  -- Add padding on the right (this increases the width)
-				widget = wibox.container.margin
+				left = 6, -- Add padding on the left
+				right = 6, -- Add padding on the right (this increases the width)
+				widget = wibox.container.margin,
 			},
-			id     = 'background_role',
+			id = "background_role",
 			widget = wibox.container.background,
-		}
+		},
 	})
 
 	-- Create a tasklist widget
@@ -257,16 +258,16 @@ awful.screen.connect_for_each_screen(function(s)
 		},
 		s.mytasklist, -- Middle widget
 		{ -- Right widgets
-			spacing        = 20,
+			spacing = 20,
 			spacing_widget = wibox.widget.separator,
-			layout         = wibox.layout.fixed.horizontal,
-			--brightness_widget{},
-			load_widget{},
-			memory_widget{},
-			battery_widget{},
-			pactl_out_widget{},
-			pactl_in_widget{},
-			notifications_widget{},
+			layout = wibox.layout.fixed.horizontal,
+			load_widget({}),
+			memory_widget({}),
+			disk_widget({}),
+			battery_widget({}),
+			pactl_out_widget({}),
+			pactl_in_widget({}),
+			notifications_widget({}),
 			wibox.widget.systray(),
 			mytextclock,
 			s.mylayoutbox,
@@ -485,7 +486,7 @@ awful.spawn.single_instance("xss-lock -l -- lock.sh")
 awful.spawn.single_instance("picom -b")
 awful.spawn.single_instance("nm-applet")
 
-awful.spawn.easy_async_with_shell("pgrep -u $USER udiskie", function(_,_,_,exitcode)
+awful.spawn.easy_async_with_shell("pgrep -u $USER udiskie", function(_, _, _, exitcode)
 	if exitcode > 0 then
 		awful.spawn("udiskie -Atn")
 	end
