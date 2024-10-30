@@ -9,18 +9,7 @@ local mywidget = {}
 local function worker(user_args)
     local args = user_args or {}
 
-    local text = wibox.widget {
-        font = "FontAwesome 10",
-        align = 'center',
-        valign = 'center',
-        text = "",
-        widget = wibox.widget.textbox
-    }
-
-    local text_with_background = wibox.container.background(text)
-
     mywidget = wibox.widget {
-        --text_with_background,
         background_color = colors.background,
         border_color = colors.background,
         color = colors.pink,
@@ -31,6 +20,8 @@ local function worker(user_args)
         forced_width = 100,
         widget = wibox.widget.graph
     }
+
+    local padded_widget = wibox.container.margin(mywidget, 10, 0, 0, 0)
 
     awful.spawn.easy_async_with_shell("nproc", function(stdout, _, _, _)
         mywidget.max_value = tonumber(stdout)
@@ -53,7 +44,7 @@ local function worker(user_args)
         myfile:close()
     end)
 
-    return mywidget
+    return padded_widget
 end
 
 return setmetatable(mywidget, { __call = function(_, ...)

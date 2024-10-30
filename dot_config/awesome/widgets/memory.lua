@@ -102,6 +102,13 @@ local function worker(user_args)
                         {"Free", memfree},
                     }
                 end)
+
+                -- Timer to hide the popup after 5 seconds
+                gears.timer.start_new(5, function()
+                    popup.visible = false
+                    return false -- Returning false ensures the timer runs only once
+                end)
+
                 popup.visible = true
             end)
         )

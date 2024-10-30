@@ -174,8 +174,8 @@ local globalkeys = gears.table.join(
     awful.spawn("kitty")
   end, { description = "Plain terminal", group = "terminal"}),
   awful.key({ modkey, "Control"}, "Return", function()
-    awful.spawn("kitty -e tmux new-session -A -s main")
-  end, { description = "TMUX terminal", group = "terminal"}),
+    awful.spawn("kitty -e cmatrix")
+  end, { description = "Matrix window", group = "terminal"}),
   awful.key({ modkey, "Shift"}, "Return", function()
     awful.spawn("kitty -e ranger")
   end, { description = "Ranger filemanager", group = "terminal"}),
