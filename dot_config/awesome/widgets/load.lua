@@ -37,7 +37,7 @@ local function worker(user_args)
     load_widget:buttons(
         awful.util.table.join(
             awful.button({}, 1, function()
-                awful.spawn("kitty --single-instance --class floating -e htop")
+                awful.spawn("kitty --single-instance -e btop")
             end)
         )
     )
