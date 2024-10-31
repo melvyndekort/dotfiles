@@ -53,7 +53,9 @@ local function worker(user_args)
 				{
 					text = "Memory usage",
 					align = "center",
-					widget = wibox.widget.textbox,
+					valign = "center",
+					font = "Hack Bold 14",
+					widget = wibox.widget.textbox
 				},
 				{
 					piechart_widget,
@@ -67,7 +69,7 @@ local function worker(user_args)
 		},
 		ontop = true,
 		visible = false,
-		placement = awful.placement.top_right,
+		placement = awful.placement.centered,
 		shape = gears.shape.rounded_rect,
 		border_width = 1,
 		border_color = colors.background,
@@ -100,16 +102,16 @@ local function worker(user_args)
 		end)
 
 		-- Timer to hide the popup after 5 seconds
-		gears.timer.start_new(5, function()
+		gears.timer.start_new(10, function()
 			popup.visible = false
 			return false -- Returning false ensures the timer runs only once
 		end)
 
-		popup.visible = true
+		popup.visible = not popup.visible
 	end)))
 
 	popup:connect_signal("button::press", function()
-		popup.visible = false
+		popup.visible = not popup.visible
 	end)
 
 	return mywidget
