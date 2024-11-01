@@ -1,13 +1,13 @@
 #!/bin/sh
 
 choice="$(
-	rofi -dmenu -p 'Display setup' <<EOF | cut -d' ' -f1
-laptop 
-laptop-mon  度
-office  度
-melvynpc 度
-hdmi-clone 
-hdmi-expand  度
+	rofi -dmenu -p 'Display setup' <<EOF
+laptop
+laptop-ext
+office
+melvynpc
+hdmi-clone
+hdmi-expand
 EOF
 )"
 
@@ -22,7 +22,7 @@ laptop)
 		--output HDMI-3 --off
 	;;
 
-laptop-mon)
+laptop-ext)
 	xrandr \
 		--output eDP-1 --off \
 		--output DP-1 --primary --mode 3440x1440 --pos 1920x0 --rotate normal \
