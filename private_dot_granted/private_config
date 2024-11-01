@@ -1,0 +1,10 @@
+DefaultBrowser = "FIREFOX"
+CustomBrowserPath = "/usr/bin/firefox"
+CustomSSOBrowserPath = ""
+Ordering = ""
+ExportCredentialSuffix = ""
+CredentialProcessAutoLogin = true
+
+[Keyring]
+  Backend = "pass"
+  PassDir = "~/.granted/.password-store"
