@@ -147,10 +147,6 @@ local globalkeys = gears.table.join(
   end, { description = "quit awesome", group = "awesome" }),
 
   -- Awesome extra
-  awful.key({ modkey }, "n", function()
-    naughty.toggle()
-    awesome.emit_signal("notifications_widget::update", true)
-  end, { description = "pause notifications", group = "awesome extra" }),
   awful.key({ modkey }, "d", function()
     awful.spawn("rofi -show combi")
   end, { description = "program launcher", group = "awesome extra"}),
@@ -165,7 +161,11 @@ local globalkeys = gears.table.join(
   end, { description = "Set random wallpaper", group = "awesome extra" }),
 
   -- Notifications
-  awful.key({ modkey }, "Escape", function()
+  awful.key({ modkey }, "n", function()
+    naughty.toggle()
+    awesome.emit_signal("notifications_widget::update", true)
+  end, { description = "pause notifications", group = "notifications" }),
+  awful.key({ modkey, "Shift" }, "n", function()
     naughty.destroy_all_notifications()
   end, {description = "Close all notifications", group = "notifications"}),
 
