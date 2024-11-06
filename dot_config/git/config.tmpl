@@ -9,6 +9,20 @@
 [core]
 	autocrlf = input
 	filemode = false
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  navigate = true
+  side-by-side = true
+  dark = true
+  line-numbers = true
+  hyperlinks = true
+
+[merge]
+  conflictstyle = zdiff3
 
 [commit]
   gpgsign = true
@@ -21,6 +35,7 @@
 
 [diff]
 	tool = meld
+  colorMoved = default
 
 [pull]
 	rebase = true
