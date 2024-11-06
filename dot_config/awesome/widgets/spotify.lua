@@ -1,6 +1,7 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
+local naughty = require("naughty")
 local watch = require("awful.widget.watch")
 
 local function ellipsize(text, length)
@@ -119,14 +120,25 @@ local function worker()
 
     spotify_widget:connect_signal("button::press", function(_, _, _, button)
         if (button == 1) then
-            awful.spawn('sp play', false)
+            awful.spawn.easy_async('sp status', function(stdout, stderr, exitreason, exitcode)
+                if string.find(stdout, 'Error: Spotify is not running.') ~= nil then
+                    naughty.notify({
+                        preset = naughty.config.presets.normal,
+                        title = "Spotify",
+                        text  = "Starting Spotify"
+                    })
+                    awful.spawn('spotify', false)
+                else
+                    awful.spawn('sp play', false)
+                end
+            end)
         elseif (button == 4) then
             awful.spawn('sp next', false)
         elseif (button == 5) then
             awful.spawn('sp prev', false)
         end
 
-        gears.timer.start_new(0.1, function()
+        gears.timer.start_new(0.2, function()
             awful.spawn.easy_async('sp status', function(stdout, stderr, exitreason, exitcode)
                 update_widget_icon(spotify_widget, stdout, stderr, exitreason, exitcode)
             end)
