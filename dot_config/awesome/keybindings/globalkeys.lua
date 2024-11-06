@@ -150,7 +150,7 @@ local globalkeys = gears.table.join(
   awful.key({ modkey }, "d", function()
     awful.spawn("rofi -show combi")
   end, { description = "program launcher", group = "awesome extra"}),
-  awful.key({ modkey }, "x", function()
+  awful.key({ modkey }, "l", function()
     awful.spawn("xset s activate")
   end, { description = "lock", group = "awesome extra"}),
   awful.key({ modkey, "Shift" }, "x", function()
