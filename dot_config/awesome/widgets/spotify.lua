@@ -120,6 +120,7 @@ local function worker()
 
     spotify_widget:connect_signal("button::press", function(_, _, _, button)
         if (button == 1) then
+            -- Left-click (button 1) to toggle play/pause or start Spotify
             awful.spawn.easy_async('sp status', function(stdout, stderr, exitreason, exitcode)
                 if string.find(stdout, 'Error: Spotify is not running.') ~= nil then
                     naughty.notify({
@@ -132,9 +133,17 @@ local function worker()
                     awful.spawn('sp play', false)
                 end
             end)
+        elseif (button == 3) then
+            -- Right-click (button 3) to close Spotify
+            awful.spawn('pkill spotify', false)
+            cur_artist = ''
+            cur_title = ''
+            cur_album = ''
         elseif (button == 4) then
+            -- Scroll up (button 4) to play next track
             awful.spawn('sp next', false)
         elseif (button == 5) then
+            -- Scroll down (button 5) to play previous track
             awful.spawn('sp prev', false)
         end
 
