@@ -29,6 +29,7 @@ require("wallpaper")
 local centered_layout = require("layouts.centered")
 
 -- Custom widgets
+local radio_widget = require("widgets.radio")
 local spotify_widget = require("widgets.spotify")
 local load_widget = require("widgets.load")
 local memory_widget = require("widgets.memory")
@@ -264,6 +265,7 @@ awful.screen.connect_for_each_screen(function(s)
       layout = wibox.layout.fixed.horizontal,
       load_widget({}),
       memory_widget({}),
+      radio_widget({}),
       spotify_widget({}),
       disk_widget({}),
       battery_widget({}),
