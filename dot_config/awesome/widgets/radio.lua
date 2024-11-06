@@ -40,7 +40,7 @@ local function worker(user_args)
             tooltip.text = "Radio: Stopped"
         else
             -- Start the stream using mpv
-            awful.spawn("mpv --no-config --terminal=no --no-video " .. radio_stream_url, false)
+            awful.spawn("mpv --no-config --terminal=no --no-video --loop --volume=100 --cache-secs=60 " .. radio_stream_url, false)
             image.image = gears.filesystem.get_configuration_dir() .. "icons/radio_neg.png"
             mywidget.bg = colors.green
             tooltip.text = "Radio: Playing"
