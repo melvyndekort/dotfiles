@@ -108,8 +108,12 @@ alias dv='docker volume'
 # Set tool replacement aliases
 if [ -f "/usr/bin/batcat" ]; then
   alias cat='batcat'
+  alias fzf='fzf --preview "batcat --color=always --style=numbers --line-range=:500 {}"'
 elif [ -f "/usr/bin/bat" ]; then
   alias cat='bat'
+  alias fzf='fzf --preview "bat --color=always --style=numbers --line-range=:500 {}"'
+else
+  alias fzf='fzf --preview "cat -n {} | head -n 500"'
 fi
 
 alias hex='hexyl'
@@ -143,14 +147,16 @@ alias pdf="mupdf"
 alias img='sxiv'
 alias t='tmux new-session -A -s main'
 alias lsmounts='mount | egrep "^/" | awk '"'"'{print $1" "$3}'"'"' | column -t | sort'
+alias mtn='mtn -f /usr/share/fonts/TTF/DejaVuSans.ttf'
+alias awslocal='aws --endpoint-url=http://localhost:4566'
+alias ssudo='pass linux/melvyn | sudo -SH'
+alias prettyjson='jq -C | less'
+alias prettyfollow='batcat --paging=never -l log'
 
 # Run specific docker containers
 alias alpine='docker container run --rm -it alpine:latest /bin/sh'
 alias nginx='docker container run --rm -it -v `pwd`:/usr/share/nginx/html:ro -p 80:80 nginx:latest'
 alias localstack='docker container run --rm -it -e SERVICES=serverless -e DEFAULT_REGION=eu-west-1 -p 4566:4566 -p 4571:4571 localstack/localstack:latest'
-alias awslocal='aws --endpoint-url=http://localhost:4566'
-alias ssudo='pass linux/melvyn | sudo -SH'
-alias mtn='mtn -f /usr/share/fonts/TTF/DejaVuSans.ttf'
 
 # Set bitwarden session key
 if [ -f "$HOME/.config/bw-unlock.sh" ]; then
@@ -170,23 +176,6 @@ alias vagrant='docker run --rm -it \
 # Fun command to wait a long time
 alias coffee='for i in `seq 0 100`;do timeout 6 dialog --gauge "Install..." 6 40 "$i";done'
 
-# Upgrade to latest Terraform version
-tfupdate() {
-  VERSION=$(tfenv list-remote | head -n 1)
-  tfenv install $VERSION
-  tfenv use $VERSION
-}
-
-# Use correct TERM variable in SSH connections
-#ssh() {
-#  if [ "$TERM" = "kitty" ]; then
-#    TERM=xterm-256color /usr/bin/ssh $*
-#  elif [ "$TERM" = "tmux-256color" ]; then
-#    /usr/bin/ssh $*
-#  else
-#    /usr/bin/ssh $*
-#  fi
-#}
 [ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
 
 # Generate the public key fingerpirnt
