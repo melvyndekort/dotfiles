@@ -122,6 +122,7 @@ elif [ -f "/usr/bin/bat" ]; then
   export MANROFFOPT="-c"
 else
   alias fzf='fzf --preview "cat -n {} | head -n 500"'
+  export MANPAGER="most"
 fi
 
 alias hex='hexyl'
