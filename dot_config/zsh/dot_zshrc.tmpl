@@ -65,7 +65,7 @@ fi
 # Change foreground color of the autosuggest plugin
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=7'
 
-plugins=(archlinux aws catimg command-not-found common-aliases copyfile copypath docker docker-compose extract fancy-ctrl-z fzf gh git gpg-agent history httpie jsontools lpass nmap pass safe-paste sublime sudo systemd terraform tmux ubuntu urltools vscode z zsh-interactive-cd zsh-autosuggestions history-substring-search zsh-syntax-highlighting)
+plugins=(aliases alias-finder archlinux aws catimg chezmoi command-not-found common-aliases copyfile copypath docker docker-compose extract eza fancy-ctrl-z fzf gh git gpg-agent history httpie jsontools nmap pass safe-paste snap ssh sublime sudo systemd terraform tig tldr ubuntu ufw urltools vscode z zsh-interactive-cd zsh-autosuggestions history-substring-search zsh-syntax-highlighting)
 
 # Autostart tmux on zsh startup
 ZSH_TMUX_AUTOSTART="false"
@@ -90,12 +90,6 @@ autoload zmv
 bindkey '^f' autosuggest-accept
 bindkey '^j' history-substring-search-down
 bindkey '^k' history-substring-search-up
-
-# Set ls aliases
-alias l='eza --hyperlink -l'
-alias la='eza --hyperlink -la'
-alias ll='eza --hyperlink -lah'
-alias ls='eza --hyperlink'
 
 # Set docker aliases
 alias d='docker'
@@ -145,12 +139,9 @@ alias vim='nvim'
 alias netstat='echo NETSTAT is unavailable on Arch, please use \"ss -tulpn\"'
 alias lspath='for i in $(echo $PATH | sed "s/:/\ /g"); do find $i -maxdepth 1 -xtype f -executable; done | sort -u'
 alias syncwatch='watch grep -e Dirty: -e Writeback: /proc/meminfo'
-alias ripcd='abcde -d /dev/cdrom'
 alias cm="chezmoi"
 alias r="ranger"
 alias v='vim'
-alias yt="youtube-dl --add-metadata -ic"
-alias yta="youtube-dl --add-metadata -xic"
 alias rg="rg -S --no-ignore --hidden --glob '!{.git,node_modules,**/.terraform}/**'"
 alias pdf="mupdf"
 alias img='sxiv'
@@ -159,7 +150,6 @@ alias lsmounts='mount | egrep "^/" | awk '"'"'{print $1" "$3}'"'"' | column -t |
 alias mtn='mtn -f /usr/share/fonts/TTF/DejaVuSans.ttf'
 alias awslocal='aws --endpoint-url=http://localhost:4566'
 alias ssudo='pass linux/melvyn | sudo -SH'
-alias prettyjson='jq -C | less'
 alias prettyfollow='batcat --paging=never -l log'
 
 # Run specific docker containers

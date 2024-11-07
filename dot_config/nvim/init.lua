@@ -12,6 +12,10 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin')
 Plug 'Mofiqul/dracula.nvim'
 Plug 'jeffkreeftmeijer/neovim-sensible'
+Plug('junegunn/fzf', { ['do'] = function()
+  vim.fn['fzf#install']()
+end })
+Plug 'junegunn/fzf.vim'
 vim.call('plug#end')
 
 vim.cmd[[colorscheme dracula]]
