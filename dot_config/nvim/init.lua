@@ -1,36 +1,50 @@
-local data_dir = vim.fn.stdpath('data')
-if vim.fn.empty(vim.fn.glob(data_dir .. '/site/autoload/plug.vim')) == 1 then
-  vim.cmd('silent !curl -fLo ' .. data_dir .. '/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
-  vim.o.runtimepath = vim.o.runtimepath
-  vim.cmd('autocmd VimEnter * PlugInstall --sync | source $MYVIMRC')
+-- Bootstrap Lazy if not already installed
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
--- vim-plug section
-local vim = vim
-local Plug = vim.fn['plug#']
+-- Enable filetype detection, plugins, and indentation
+vim.cmd([[
+  filetype plugin indent on
+]])
 
-vim.call('plug#begin')
-Plug 'Mofiqul/dracula.nvim'
-Plug 'jeffkreeftmeijer/neovim-sensible'
-Plug('junegunn/fzf', { ['do'] = function()
-  vim.fn['fzf#install']()
-end })
-Plug 'junegunn/fzf.vim'
-vim.call('plug#end')
+-- Load plugins from external file
+require("plugins")
 
-vim.cmd[[colorscheme dracula]]
+-- Additional settings not covered by vim-sensible
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.cursorline = true
+vim.opt.termguicolors = true
+vim.opt.wrap = false
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+vim.opt.clipboard = "unnamedplus"
+vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
+vim.opt.undofile = true
+vim.opt.undodir = vim.fn.stdpath("data") .. "/undo"
+vim.opt.wildmenu = true
+vim.opt.wildmode = "longest:full,full"
 
--- Basic settings
-vim.o.number = true -- Enable line numbers
-vim.o.relativenumber = true -- Enable relative line numbers
-vim.o.tabstop = 2 -- Number of spaces a tab represents
-vim.o.shiftwidth = 2 -- Number of spaces for each indentation
-vim.o.expandtab = true -- Convert tabs to spaces
-vim.o.smartindent = true -- Automatically indent new lines
-vim.o.wrap = false -- Disable line wrapping
-vim.o.cursorline = true -- Highlight the current line
-vim.o.termguicolors = true -- Enable 24-bit RGB colors
+-- Keybindings for Telescope
+vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>ft", "<cmd>Telescope tags<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>fr", "<cmd>Telescope resume<cr>", { noremap = true, silent = true })
 
--- Syntax highlighting and filetype plugins
-vim.cmd('syntax enable')
-vim.cmd('filetype plugin indent on')
+-- Bufferline keybindings
+vim.api.nvim_set_keymap("n", "<leader>bc", ":BufferLinePick<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>bn", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>bp", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
