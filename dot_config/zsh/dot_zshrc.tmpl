@@ -67,6 +67,9 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=7'
 
 plugins=(aliases alias-finder archlinux aws chezmoi command-not-found common-aliases copyfile copypath docker docker-compose extract eza fancy-ctrl-z fzf gh git gpg-agent history httpie jsontools nmap pass safe-paste snap ssh sublime sudo systemd terraform tig tldr ubuntu ufw urltools vscode z zsh-interactive-cd zsh-autosuggestions history-substring-search zsh-syntax-highlighting)
 
+# Configure eza to alway print hyperlinks
+zstyle ':omz:plugins:eza' 'hyperlink' yes
+
 # Autostart tmux on zsh startup
 ZSH_TMUX_AUTOSTART="false"
 ZSH_TMUX_CONFIG="$XDG_CONFIG_HOME/tmux/tmux.conf"
