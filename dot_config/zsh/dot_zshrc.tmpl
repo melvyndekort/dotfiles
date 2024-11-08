@@ -65,7 +65,7 @@ fi
 # Change foreground color of the autosuggest plugin
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=7'
 
-plugins=(aliases alias-finder archlinux aws catimg chezmoi command-not-found common-aliases copyfile copypath docker docker-compose extract eza fancy-ctrl-z fzf gh git gpg-agent history httpie jsontools nmap pass safe-paste snap ssh sublime sudo systemd terraform tig tldr ubuntu ufw urltools vscode z zsh-interactive-cd zsh-autosuggestions history-substring-search zsh-syntax-highlighting)
+plugins=(aliases alias-finder archlinux aws chezmoi command-not-found common-aliases copyfile copypath docker docker-compose extract eza fancy-ctrl-z fzf gh git gpg-agent history httpie jsontools nmap pass safe-paste snap ssh sublime sudo systemd terraform tig tldr ubuntu ufw urltools vscode z zsh-interactive-cd zsh-autosuggestions history-substring-search zsh-syntax-highlighting)
 
 # Autostart tmux on zsh startup
 ZSH_TMUX_AUTOSTART="false"
@@ -105,6 +105,9 @@ bindkey '^y' yy
 bindkey '^f' autosuggest-accept
 bindkey '^j' history-substring-search-down
 bindkey '^k' history-substring-search-up
+
+# Override aliasses from plugins
+alias l='ls -lh'
 
 # Set docker aliases
 alias d='docker'
