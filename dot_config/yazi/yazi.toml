@@ -1,5 +1,11 @@
+[manager]
+linemode = "size"
+
 [open]
 rules = [
+	{ name = "*.avi", use = "play" },
+	{ name = "*.AVI", use = "play" },
+
 	{ name = "*.mov", use = "play" },
 	{ name = "*.MOV", use = "play" },
 
