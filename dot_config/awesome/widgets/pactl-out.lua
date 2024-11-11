@@ -71,7 +71,7 @@ local function worker(user_args)
 	end
 
 	local function mywidget_mixer()
-		awesome.spawn("kitty --class=pulsemixer -e pulsemixer")
+		awesome.spawn("kitty --single-instance --class=pulsemixer -e pulsemixer")
 	end
 
 	local function mywidget_inc()

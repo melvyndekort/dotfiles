@@ -177,7 +177,7 @@ local globalkeys = gears.table.join(
     awful.spawn("kitty --single-instance -e cmatrix")
   end, { description = "Matrix window", group = "terminal"}),
   awful.key({ modkey, "Shift"}, "Return", function()
-    awful.spawn("kitty --single-instance -e ranger")
+    awful.spawn("kitty --single-instance -e yazi")
   end, { description = "Ranger filemanager", group = "terminal"}),
 
 -- Launchers

@@ -37,5 +37,5 @@ desc = "Go to Ubuntu mount dir"
 
 [[manager.prepend_keymap]]
 on   = "!"
-run  = 'shell "$SHELL" --block --confirm'
-desc = "Open shell here"
+run  = 'suspend'
+desc = "Temporarily go back to parent shell"
