@@ -161,6 +161,7 @@ alias netstat='echo NETSTAT is unavailable on Arch, please use \"ss -tulpn\"'
 alias lspath='for i in $(echo $PATH | sed "s/:/\ /g"); do find $i -maxdepth 1 -xtype f -executable; done | sort -u'
 alias syncwatch='watch grep -e Dirty: -e Writeback: /proc/meminfo'
 alias cm="chezmoi"
+alias cme="chezmoi edit --apply"
 alias y="yazi"
 alias rg="rg -S --no-ignore --hidden --glob '!{.git,node_modules,**/.terraform}/**'"
 alias pdf="mupdf"
