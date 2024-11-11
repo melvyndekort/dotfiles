@@ -99,10 +99,6 @@ local globalkeys = gears.table.join(
   end, { description = "go back", group = "client" }),
 
   -- Audio keybindings
-  awful.key({ modkey }, "z", function()
-    awful.spawn.with_shell("pactl set-source-mute @DEFAULT_SOURCE@ toggle")
-    awesome.emit_signal("pactl_in_widget::update", true)
-  end, { description = "toggle microphone", group = "audio" }),
   awful.key({ modkey }, "bracketleft", function()
     awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ -5%")
     awesome.emit_signal("pactl_out_widget::update", true)
@@ -123,6 +119,18 @@ local globalkeys = gears.table.join(
     awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ +5%")
     awesome.emit_signal("pactl_out_widget::update", true)
   end, { description = "increase volume", group = "audio" }),
+  awful.key({}, "XF86AudioMute", function()
+    awful.spawn.with_shell("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+    awesome.emit_signal("pactl_out_widget::update", true)
+  end, { description = "toggle volume", group = "audio" }),
+  awful.key({}, "XF86AudioMicMute", function()
+    awful.spawn.with_shell("pactl set-source-mute @DEFAULT_SOURCE@ toggle")
+    awesome.emit_signal("pactl_in_widget::update", true)
+  end, { description = "toggle microphone", group = "audio" }),
+  awful.key({ modkey }, "z", function()
+    awful.spawn.with_shell("pactl set-source-mute @DEFAULT_SOURCE@ toggle")
+    awesome.emit_signal("pactl_in_widget::update", true)
+  end, { description = "toggle microphone", group = "audio" }),
 
   -- Brightness keys
   awful.key({}, "XF86MonBrightnessUp", function()
@@ -187,7 +195,7 @@ local globalkeys = gears.table.join(
   awful.key({ modkey }, "F7", function()
     awful.spawn("rofi-bluetooth")
   end, { description = "bluetooth control", group = "launchers"}),
-  awful.key({ modkey }, "F8", function()
+  awful.key({ modkey }, "p", function()
     awful.spawn("rofi-display")
   end, { description = "display control", group = "launchers"}),
   awful.key({ modkey, "Shift"}, "F8", function()
