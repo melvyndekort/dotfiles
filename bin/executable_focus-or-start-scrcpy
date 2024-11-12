@@ -1,9 +1,0 @@
-#!/bin/sh
-
-count=$(pgrep -c scrcpy)
-
-if [ $count -eq 0 ]; then
-  scrcpy --disable-screensaver --prefer-text --turn-screen-off --stay-awake --shortcut-mod lctrl &
-else
-  i3-msg '[con_mark="android"] scratchpad show' &
-fi
