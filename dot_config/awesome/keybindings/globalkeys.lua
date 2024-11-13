@@ -198,7 +198,10 @@ local globalkeys = gears.table.join(
   awful.key({ modkey }, "p", function()
     awful.spawn("rofi-display")
   end, { description = "display control", group = "launchers"}),
-  awful.key({ modkey, "Shift"}, "F8", function()
+  awful.key({ modkey, "Shift" }, "p", function()
+    awful.spawn("rofi-autolock")
+  end, { description = "autolock control", group = "launchers"}),
+  awful.key({ modkey }, "F8", function()
     awful.spawn("rofi-autolock")
   end, { description = "autolock control", group = "launchers"}),
   awful.key({ modkey }, "F9", function()
