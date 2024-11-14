@@ -126,22 +126,22 @@ local function worker(user_args)
         widget = cal
     }
     
-	local auto_hide_timer = gears.timer({
-		timeout = args.timeout or 2,
-		single_shot = true,
-		callback = function()
-			mywidget.toggle()
-		end,
-	})
+  local auto_hide_timer = gears.timer({
+    timeout = args.timeout or 2,
+    single_shot = true,
+    callback = function()
+      mywidget.toggle()
+    end,
+  })
 
-	popup:connect_signal("mouse::leave", function()
+  popup:connect_signal("mouse::leave", function()
         if args.auto_hide then 
             auto_hide_timer:again()
         end
-	end)
-	popup:connect_signal("mouse::enter", function()
-		auto_hide_timer:stop()
-	end)
+  end)
+  popup:connect_signal("mouse::enter", function()
+    auto_hide_timer:stop()
+  end)
 
     popup:buttons(
             awful.util.table.join(
