@@ -48,7 +48,6 @@ local calendar_widget = require("widgets.calendar")
 local disk_widget = require("widgets.disk")
 
 -- Load Debian menu entries
-local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 
 -- {{{ Error handling
@@ -139,7 +138,6 @@ else
   mymainmenu = awful.menu({
     items = {
       menu_awesome,
-      { "Debian", debian.menu.Debian_menu.Debian },
       menu_terminal,
     },
   })
