@@ -10,12 +10,10 @@ if [ -n "$choice" ]; then
   case $OPTION in
     clipboard)
       echo -n "$code" | xclip -selection clipboard
+      notify-send "Your code for $choice is: $code"
       ;;
     direct)
       xdotool type $code
       ;;
   esac
-
-  notify-send "Your code for $choice is: $code"
 fi
-
