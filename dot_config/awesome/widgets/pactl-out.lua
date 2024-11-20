@@ -1,38 +1,60 @@
-local awful = require("awful")
-local naughty = require("naughty")
-local gears = require("gears")
 local wibox = require("wibox")
+local awful = require("awful")
+local gears = require("gears")
 local watch = require("awful.widget.watch")
 local colors = require("colors")
 
 local mywidget = {}
+local mute = "no"
 
-local function worker(user_args)
-  local args = user_args or {}
+local function worker()
   local cmd_get_volume = "pactl get-sink-volume @DEFAULT_SINK@"
   local cmd_get_mute = "pactl get-sink-mute @DEFAULT_SINK@"
 
-  local mute = "no"
-
-  local image = wibox.widget {
-    image = gears.filesystem.get_configuration_dir() .. "icons/volume.png",
-    resize = true,
-    widget = wibox.widget.imagebox,
+  mywidget = wibox.widget {
+    {
+      {
+        id = "progressbar",
+        max_value = 100,
+        forced_height = 16,
+        forced_width = 65,
+        background_color = colors.current,
+        shape = gears.shape.rounded_rect,
+        widget = wibox.widget.progressbar,
+      },
+      top = 4,
+      bottom = 4,
+      widget = wibox.container.margin,
+    },
+    {
+        id = "text_and_image",
+        layout = wibox.layout.fixed.horizontal,
+        {
+          id = "image",
+          widget = wibox.container.place,
+          valign = "center",
+          {
+            image = gears.filesystem.get_configuration_dir() .. "icons/volume.png",
+            resize = true,
+            forced_height = 21,
+            forced_width = 21,
+            widget = wibox.widget.imagebox,
+          }
+        },
+        {
+            {
+                id = "text",
+                align = "center",
+                valign = "center",
+                font = "Hack 11",
+                widget = wibox.widget.textbox,
+            },
+            fg = '#000000',
+            widget = wibox.container.background,
+        },
+    },
+    layout = wibox.layout.stack,
   }
-
-  local img_with_background = wibox.container.background(image)
-
-  mywidget = wibox.widget({
-    img_with_background,
-    max_value = 100,
-    thickness = 2,
-    start_angle = 2 * math.pi * 3 / 4,
-    forced_height = 26,
-    forced_width = 26,
-    bg = colors.background,
-    paddings = 2,
-    widget = wibox.container.arcchart,
-  })
 
   local tooltip = awful.tooltip({
     objects = { mywidget },
@@ -45,18 +67,28 @@ local function worker(user_args)
   local function update_widget(widget, stdout)
     local volume_str = string.match(stdout, "(%d+)%s*%%")
     local volume = tonumber(volume_str)
-
-    widget.value = volume
     tooltip.text = "Volume: " .. volume .. "%"
 
     if mute == "yes" or volume == 0 then
-      img_with_background.bg = colors.current
-    elseif volume < 50 then
-      img_with_background.bg = colors.green
-    elseif volume < 75 then
-      img_with_background.bg = colors.orange
+      mywidget:get_children_by_id("progressbar")[1].color = colors.current
+      mywidget:get_children_by_id("progressbar")[1].value = volume
+      mywidget:get_children_by_id("text")[1].text = "mute"
+    elseif volume < 40 then
+      mywidget:get_children_by_id("progressbar")[1].color = colors.green
+      mywidget:get_children_by_id("progressbar")[1].value = volume
+      mywidget:get_children_by_id("text")[1].text = tostring(volume) .. "%"
+    elseif volume < 60 then
+      mywidget:get_children_by_id("progressbar")[1].color = colors.yellow
+      mywidget:get_children_by_id("progressbar")[1].value = volume
+      mywidget:get_children_by_id("text")[1].text = tostring(volume) .. "%"
+    elseif volume < 80 then
+      mywidget:get_children_by_id("progressbar")[1].color = colors.orange
+      mywidget:get_children_by_id("progressbar")[1].value = volume
+      mywidget:get_children_by_id("text")[1].text = tostring(volume) .. "%"
     else
-      img_with_background.bg = colors.red
+      mywidget:get_children_by_id("progressbar")[1].color = colors.red
+      mywidget:get_children_by_id("progressbar")[1].value = volume
+      mywidget:get_children_by_id("text")[1].text = tostring(volume) .. "%"
     end
   end
 
@@ -71,18 +103,18 @@ local function worker(user_args)
   end
 
   local function mywidget_mixer()
-    awesome.spawn("kitty --single-instance --class=pulsemixer -e pulsemixer")
+    awesome.spawn("kitty --single-instance --class=floating -e pulsemixer")
   end
 
   local function mywidget_inc()
-    awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ +5%")
+    awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ +2%")
     awful.spawn.easy_async_with_shell(cmd_get_volume, function(stdout, _, _, _)
       update_widget(mywidget, stdout)
     end)
   end
 
   local function mywidget_dec()
-    awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ -5%")
+    awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ -2%")
     awful.spawn.easy_async_with_shell(cmd_get_volume, function(stdout, _, _, _)
       update_widget(mywidget, stdout)
     end)
@@ -108,7 +140,10 @@ local function worker(user_args)
 
   mywidget:connect_signal("mouse::enter", function()
     awful.spawn.easy_async_with_shell(cmd_get_volume, function(stdout, _, _, _)
-      tooltip.text = "Volume: " .. string.match(stdout, "(%d+%%)")
+      local volume_str = string.match(stdout, "(%d+)%s*%%")
+      local volume = tonumber(volume_str)
+      mywidget.value = volume
+      tooltip.text = "Volume: " .. volume .. "%"
     end)
   end)
 

@@ -47,8 +47,16 @@ local notifications_widget = require("widgets.notifications")
 local calendar_widget = require("widgets.calendar")
 local disk_widget = require("widgets.disk")
 
+<<<<<<< HEAD
 -- Load Debian menu entries
+||||||| parent of f2875f3 (Multiple improvements for awesome wm)
+-- Load Debian menu entries
+local debian = require("debian.menu")
+=======
+>>>>>>> f2875f3 (Multiple improvements for awesome wm)
 local has_fdo, freedesktop = pcall(require, "freedesktop")
+
+local config_dir = gears.filesystem.get_configuration_dir()
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -84,7 +92,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.init("~/.config/awesome/theme.lua")
+beautiful.init(config_dir .. "theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
@@ -150,6 +158,8 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
+mytextclock.format = "   %a %d %b %H:%M"
+mytextclock.refresh = 10
 
 local cw = calendar_widget()
 
@@ -256,6 +266,9 @@ awful.screen.connect_for_each_screen(function(s)
     screen = s,
   })
 
+  local systray = wibox.widget.systray()
+  systray:set_base_size(23)
+
   -- Add widgets to the wibox
   s.mywibox:setup({
     layout = wibox.layout.align.horizontal,
@@ -265,19 +278,19 @@ awful.screen.connect_for_each_screen(function(s)
     },
     s.mytasklist, -- Middle widget
     { -- Right widgets
-      spacing = 20,
-      spacing_widget = wibox.widget.separator,
+      spacing = 15,
+      --spacing_widget = wibox.widget.separator,
       layout = wibox.layout.fixed.horizontal,
       load_widget({}),
       memory_widget({}),
+      battery_widget({}),
       radio_widget({}),
       spotify_widget({}),
       disk_widget({}),
-      battery_widget({}),
       pactl_out_widget({}),
       pactl_in_widget({}),
       notifications_widget({}),
-      wibox.widget.systray(),
+      systray,
       mytextclock,
       s.mylayoutbox,
     },
@@ -339,6 +352,10 @@ for i = 1, 9 do
   )
 end
 
+-- Set keys
+root.keys(globalkeys)
+-- }}}
+
 clientbuttons = gears.table.join(
   awful.button({}, 1, function(c)
     c:emit_signal("request::activate", "mouse_click", { raise = true })
@@ -353,11 +370,6 @@ clientbuttons = gears.table.join(
   end)
 )
 
--- Set keys
-root.keys(globalkeys)
--- }}}
-
--- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
   -- All clients will match this rule.
@@ -384,6 +396,7 @@ awful.rules.rules = {
         "pinentry",
       },
       class = {
+        "floating", -- my custom floating class
         "Arandr",
         "Blueman-manager",
         "Gpick",
@@ -397,7 +410,6 @@ awful.rules.rules = {
         "qv4l2",
         "Sublime_text",
         "Gcr-prompter",
-        "floating",
         "Galculator",
         "Surf",
       },
@@ -413,13 +425,14 @@ awful.rules.rules = {
         "pop-up", -- e.g. Google Chrome's (detached) Developer Tools.
       },
     },
-    properties = { floating = true, placement = awful.placement.centered },
+    properties = {
+      floating = true,
+      ontop = true,
+      placement = awful.placement.centered
+    },
   },
 
-  -- Add titlebars to normal clients and dialogs
-  { rule_any = { type = { "normal", "dialog" } }, properties = { titlebars_enabled = false } },
-
-  -- Set Firefox to always map on the tag named "2" on screen 1.
+  -- Set applications to always appear on specific tags
   { rule = { class = "firefox" },
     properties = { screen = 1, tag = "2" } },
   { rule = { class = "Slack" },
@@ -433,7 +446,6 @@ awful.rules.rules = {
   { rule = { class = "Spotify" },
     properties = { screen = 1, tag = "9" } },
 }
--- }}}
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
@@ -502,28 +514,27 @@ end)
 -- }}}
 
 -- Fix to move clients to the same tags on another monitor
-tag.connect_signal("request::screen",
-  function(t)
-    local fallback_tag = nil
+tag.connect_signal("request::screen", function(t)
+  local fallback_tag = nil
 
-    -- find tag with same name on any other screen
-    for other_screen in screen do
-      if other_screen ~= t.screen then
-        fallback_tag = awful.tag.find_by_name(other_screen, t.name)
-        if fallback_tag ~= nil then
-          break
-        end
+  -- find tag with same name on any other screen
+  for other_screen in screen do
+    if other_screen ~= t.screen then
+      fallback_tag = awful.tag.find_by_name(other_screen, t.name)
+      if fallback_tag ~= nil then
+        break
       end
     end
+  end
 
-    -- no tag with same name exists, chose random one
-    if fallback_tag == nil then
-      fallback_tag = awful.tag.find_fallback()
-    end
+  -- no tag with same name exists, chose random one
+  if fallback_tag == nil then
+    fallback_tag = awful.tag.find_fallback()
+  end
 
-    -- delete the tag and move it to other screen
-    t:delete(fallback_tag, true)
-  end)
+  -- delete the tag and move it to other screen
+  t:delete(fallback_tag, true)
+end)
 
 -- Spawn applications
 awful.spawn.single_instance("xss-lock -l -- lock.sh")
