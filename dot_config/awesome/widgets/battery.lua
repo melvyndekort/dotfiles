@@ -6,6 +6,7 @@ local watch = require("awful.widget.watch")
 local colors = require("colors")
 
 local mywidget = {}
+local config_dir = gears.filesystem.get_configuration_dir()
 
 local function worker(user_args)
   local image = wibox.widget {
@@ -32,7 +33,7 @@ local function worker(user_args)
 
   local function show_battery_warning()
     naughty.notify({
-      icon = "/home/melvyn/.config/awesome/widgets/warning.png",
+      icon = config_dir .. "icons/warning.png",
       icon_size = 100,
       text = "Connect a charger!",
       title = "Battery is dying",

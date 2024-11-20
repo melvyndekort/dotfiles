@@ -47,13 +47,6 @@ local notifications_widget = require("widgets.notifications")
 local calendar_widget = require("widgets.calendar")
 local disk_widget = require("widgets.disk")
 
-<<<<<<< HEAD
--- Load Debian menu entries
-||||||| parent of f2875f3 (Multiple improvements for awesome wm)
--- Load Debian menu entries
-local debian = require("debian.menu")
-=======
->>>>>>> f2875f3 (Multiple improvements for awesome wm)
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 
 local config_dir = gears.filesystem.get_configuration_dir()
