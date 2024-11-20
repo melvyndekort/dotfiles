@@ -76,12 +76,12 @@ local globalkeys = gears.table.join(
     awful.key({ modkey, "Shift", "Control" }, 'w', function()
       awful.spawn("rofi-browser")
     end, { description = "Execute Web Browser", group = "app launcher" }),
-    awful.key({ modkey, "Shift", "Control" }, "y", function()
+    awful.key({ modkey }, "y", function()
+      awful.spawn("rofi-yubikey direct")
+    end, { description = "Execute Yubikey", group = "app launcher" }),
+    awful.key({ modkey, "Shift" }, "y", function()
       awful.spawn("rofi-yubikey clipboard")
     end, { description = "Execute Yubikey clipboard", group = "app launcher" }),
-    awful.key({ modkey, "Shift", }, "y", function()
-      awful.spawn("rofi-yubikey direct")
-    end, { description = "Execute Yubikey direct", group = "app launcher" }),
     awful.key({ modkey, "Shift", "Control" }, "z", function()
       awful.spawn("kitty --single-instance --class=floating -e pulsemixer")
     end, { description = "Execute Pulse Mixer", group = "app launcher" }),
@@ -197,12 +197,12 @@ local globalkeys = gears.table.join(
   awful.key({ modkey }, "Return", function()
     awful.spawn("kitty --single-instance")
   end, { description = "Plain terminal", group = "terminal"}),
+  awful.key({ modkey, "Shift"}, "Return", function()
+    awful.spawn("kitty --single-instance -e yazi")
+  end, { description = "Yazi filemanager", group = "terminal"}),
   awful.key({ modkey, "Control"}, "Return", function()
     awful.spawn("kitty --single-instance -e cmatrix")
   end, { description = "Matrix window", group = "terminal"}),
-  awful.key({ modkey, "Shift"}, "Return", function()
-    awful.spawn("kitty --single-instance -e yazi")
-  end, { description = "Ranger filemanager", group = "terminal"}),
 
 -- Screenshot bindings
   awful.key({}, "Print", function()
@@ -213,7 +213,7 @@ local globalkeys = gears.table.join(
   end, { description = "screenshot window", group = "screenshot"}),
   awful.key({ modkey, "Shift" }, "Print", function()
     awful.spawn("flameshot gui")
-  end, { description = "custom screenshot", group = "screenshot"}),
+  end, { description = "select screenshot", group = "screenshot"}),
 
 -- Layout bindings
   awful.key({ modkey }, "l", function()
