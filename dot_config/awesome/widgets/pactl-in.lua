@@ -13,6 +13,9 @@ local function worker()
 
   mywidget = wibox.widget {
     {
+      widget = wibox.container.margin,
+      top = 4,
+      bottom = 4,
       {
         id = "progressbar",
         max_value = 100,
@@ -22,9 +25,6 @@ local function worker()
         shape = gears.shape.rounded_rect,
         widget = wibox.widget.progressbar,
       },
-      top = 4,
-      bottom = 4,
-      widget = wibox.container.margin,
     },
     {
         layout = wibox.layout.fixed.horizontal,
