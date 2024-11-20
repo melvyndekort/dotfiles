@@ -146,7 +146,7 @@ local globalkeys = gears.table.join(
   end, { description = "brightness up", group = "brightness" }),
   awful.key({ modkey }, "Down", function()
     awful.spawn.with_shell("brightnessctl s 10%-")
-  end, { description = "brightness up", group = "brightness" }),
+  end, { description = "brightness down", group = "brightness" }),
 
   -- Brightness keys without help message
   awful.key({}, "XF86MonBrightnessUp", function()
@@ -200,9 +200,6 @@ local globalkeys = gears.table.join(
   awful.key({ modkey, "Shift"}, "Return", function()
     awful.spawn("kitty --single-instance -e yazi")
   end, { description = "Yazi filemanager", group = "terminal"}),
-  awful.key({ modkey, "Control"}, "Return", function()
-    awful.spawn("kitty --single-instance -e cmatrix")
-  end, { description = "Matrix window", group = "terminal"}),
 
 -- Screenshot bindings
   awful.key({}, "Print", function()
