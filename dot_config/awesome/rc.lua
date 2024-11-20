@@ -151,7 +151,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
-mytextclock.format = "   %a %d %b %H:%M"
+mytextclock.format = "%a %d %b %H:%M"
 mytextclock.refresh = 10
 
 local cw = calendar_widget()
@@ -274,6 +274,7 @@ awful.screen.connect_for_each_screen(function(s)
       spacing = 15,
       --spacing_widget = wibox.widget.separator,
       layout = wibox.layout.fixed.horizontal,
+      systray,
       load_widget({}),
       memory_widget({}),
       battery_widget({}),
@@ -283,7 +284,6 @@ awful.screen.connect_for_each_screen(function(s)
       pactl_out_widget({}),
       pactl_in_widget({}),
       notifications_widget({}),
-      systray,
       mytextclock,
       s.mylayoutbox,
     },
