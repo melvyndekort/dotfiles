@@ -5,17 +5,23 @@ local wibox = require("wibox")
 local colors = require("colors")
 
 local mywidget = {}
+local config_dir = gears.filesystem.get_configuration_dir()
 
 local function worker(user_args)
-  local args = user_args or {}
-
-  local image = wibox.widget {
-    image = gears.filesystem.get_configuration_dir() .. "icons/disk.png",
-    resize = true,
-    widget = wibox.widget.imagebox,
+  mywidget = wibox.widget {
+    widget = wibox.container.background,
+    {
+      widget = wibox.container.place,
+      valign = "center",
+      {
+        widget = wibox.widget.imagebox,
+        image = config_dir .. "icons/disk.png",
+        resize = true,
+        forced_width = 27,
+        forced_height = 27,
+      },
+    },
   }
-
-  mywidget = wibox.container.background(image)
 
   -- Function to get color based on value
   local function get_progress_color(value, max_value)
