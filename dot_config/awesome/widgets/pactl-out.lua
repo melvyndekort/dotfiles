@@ -4,6 +4,8 @@ local gears = require("gears")
 local watch = require("awful.widget.watch")
 local colors = require("colors")
 
+local config_dir = gears.filesystem.get_configuration_dir()
+
 local mywidget = {}
 local mute = "no"
 
@@ -13,45 +15,43 @@ local function worker()
 
   mywidget = wibox.widget {
     {
+      widget = wibox.container.margin,
+      top = 4,
+      bottom = 4,
       {
         id = "progressbar",
         max_value = 100,
         forced_height = 16,
         forced_width = 65,
-        background_color = colors.current,
+        color = colors.green,
         shape = gears.shape.rounded_rect,
         widget = wibox.widget.progressbar,
       },
-      top = 4,
-      bottom = 4,
-      widget = wibox.container.margin,
     },
     {
-        id = "text_and_image",
-        layout = wibox.layout.fixed.horizontal,
+      layout = wibox.layout.fixed.horizontal,
+      {
+        widget = wibox.container.place,
+        valign = "center",
         {
           id = "image",
-          widget = wibox.container.place,
-          valign = "center",
-          {
-            image = gears.filesystem.get_configuration_dir() .. "icons/volume.png",
-            resize = true,
-            forced_height = 21,
-            forced_width = 21,
-            widget = wibox.widget.imagebox,
-          }
-        },
+          widget = wibox.widget.imagebox,
+          resize = true,
+          forced_height = 21,
+          forced_width = 21,
+        }
+      },
+      {
+        id = "text_color",
+        widget = wibox.container.background,
         {
-            {
-                id = "text",
-                align = "center",
-                valign = "center",
-                font = "Hack 11",
-                widget = wibox.widget.textbox,
-            },
-            fg = '#000000',
-            widget = wibox.container.background,
+          id = "text",
+          align = "center",
+          valign = "center",
+          font = "Hack 11",
+          widget = wibox.widget.textbox,
         },
+      },
     },
     layout = wibox.layout.stack,
   }
@@ -70,24 +70,16 @@ local function worker()
     tooltip.text = "Volume: " .. volume .. "%"
 
     if mute == "yes" or volume == 0 then
-      mywidget:get_children_by_id("progressbar")[1].color = colors.current
-      mywidget:get_children_by_id("progressbar")[1].value = volume
+      mywidget:get_children_by_id("progressbar")[1].background_color = colors.current
+      mywidget:get_children_by_id("progressbar")[1].value = 0
+      mywidget:get_children_by_id("text_color")[1].fg = colors.foreground
+      mywidget:get_children_by_id("image")[1].image = config_dir .. "icons/volume_neg.png"
       mywidget:get_children_by_id("text")[1].text = "mute"
-    elseif volume < 40 then
-      mywidget:get_children_by_id("progressbar")[1].color = colors.green
-      mywidget:get_children_by_id("progressbar")[1].value = volume
-      mywidget:get_children_by_id("text")[1].text = tostring(volume) .. "%"
-    elseif volume < 60 then
-      mywidget:get_children_by_id("progressbar")[1].color = colors.yellow
-      mywidget:get_children_by_id("progressbar")[1].value = volume
-      mywidget:get_children_by_id("text")[1].text = tostring(volume) .. "%"
-    elseif volume < 80 then
-      mywidget:get_children_by_id("progressbar")[1].color = colors.orange
-      mywidget:get_children_by_id("progressbar")[1].value = volume
-      mywidget:get_children_by_id("text")[1].text = tostring(volume) .. "%"
     else
-      mywidget:get_children_by_id("progressbar")[1].color = colors.red
+      mywidget:get_children_by_id("progressbar")[1].background_color = colors.foreground
       mywidget:get_children_by_id("progressbar")[1].value = volume
+      mywidget:get_children_by_id("text_color")[1].fg = "#000000"
+      mywidget:get_children_by_id("image")[1].image = config_dir .. "icons/volume.png"
       mywidget:get_children_by_id("text")[1].text = tostring(volume) .. "%"
     end
   end
