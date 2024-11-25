@@ -2,8 +2,8 @@ local awful = require("awful")
 local gears = require("gears")
 local beautiful = require("beautiful")
 
-local modkey = require("keybindings.mod")
-local clientkeys = require("keybindings.clientkeys")
+local modkey = require("config.keybindings.mod")
+local clientkeys = require("config.keybindings.clientkeys")
 
 clientbuttons = gears.table.join(
   awful.button({}, 1, function(c)

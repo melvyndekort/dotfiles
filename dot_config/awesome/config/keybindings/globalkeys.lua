@@ -1,7 +1,7 @@
 local awful = require("awful")
 local gears = require("gears")
 local naughty = require("naughty")
-local modkey = require("keybindings.mod")
+local modkey = require("config.keybindings.mod")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
 

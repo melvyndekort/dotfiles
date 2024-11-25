@@ -2,7 +2,7 @@ local awful = require("awful")
 local naughty = require("naughty")
 local gears = require("gears")
 local wibox = require("wibox")
-local colors = require("colors")
+local colors = require("config.colors")
 
 local mywidget = {}
 local config_dir = gears.filesystem.get_configuration_dir()

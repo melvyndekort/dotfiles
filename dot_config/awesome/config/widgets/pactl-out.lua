@@ -2,7 +2,7 @@ local wibox = require("wibox")
 local awful = require("awful")
 local gears = require("gears")
 local watch = require("awful.widget.watch")
-local colors = require("colors")
+local colors = require("config.colors")
 
 local config_dir = gears.filesystem.get_configuration_dir()
 
