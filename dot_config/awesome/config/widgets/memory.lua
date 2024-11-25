@@ -3,7 +3,7 @@ local naughty = require("naughty")
 local wibox = require("wibox")
 local watch = require("awful.widget.watch")
 local gears = require("gears")
-local colors = require("colors")
+local colors = require("config.colors")
 
 local mywidget = {}
 

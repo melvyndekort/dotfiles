@@ -26,7 +26,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- require("awful.hotkeys_popup.keys")
 
 -- Custom wallpapers
-require("wallpaper")
+require("config.wallpaper")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -63,7 +63,7 @@ end
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 local config_dir = gears.filesystem.get_configuration_dir()
-beautiful.init(config_dir .. "theme.lua")
+beautiful.init(config_dir .. "config/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
@@ -71,7 +71,7 @@ editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
-local centered_layout = require("layouts.centered")
+local centered_layout = require("config.layouts.centered")
 awful.layout.layouts = {
   centered_layout,
   awful.layout.suit.spiral.dwindle,
@@ -87,14 +87,14 @@ awful.layout.layouts = {
 -- }}}
 
 -- Custom wibar
-require("wibar")
+require("config.wibar")
 
 -- {{{ Key bindings
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-local modkey = require("keybindings.mod")
-local globalkeys = require("keybindings.globalkeys")
+local modkey = require("config.keybindings.mod")
+local globalkeys = require("config.keybindings.globalkeys")
 for i = 1, 9 do
   globalkeys = gears.table.join(
     globalkeys,
@@ -140,7 +140,7 @@ root.keys(globalkeys)
 -- }}}
 
 -- Rules to apply to new clients (through the "manage" signal).
-local rules = require("rules") -- Adjust path as needed
+local rules = require("config.rules") -- Adjust path as needed
 awful.rules.rules = rules
 
 -- {{{ Signals
