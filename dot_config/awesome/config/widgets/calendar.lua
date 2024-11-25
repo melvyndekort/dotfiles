@@ -3,7 +3,7 @@ local beautiful = require("beautiful")
 local wibox = require("wibox")
 local gears = require("gears")
 local naughty = require("naughty")
-local colors = require("colors")
+local colors = require("config.colors")
 
 local mywidget = {}
 

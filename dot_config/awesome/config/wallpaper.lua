@@ -1,6 +1,6 @@
 local gears = require("gears")
 local awful = require("awful")
-local colors = require("colors")
+local colors = require("config.colors")
 
 -- Base directory for wallpapers
 local wallpaper_base_dir = "/home/melvyn/Sync/pictures/wallpapers/"

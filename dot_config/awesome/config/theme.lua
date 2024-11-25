@@ -12,7 +12,7 @@ local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 local config_dir = gears.filesystem.get_configuration_dir()
 
-local colors = require("colors")
+local colors = require("config.colors")
 
 local theme = {}
 
