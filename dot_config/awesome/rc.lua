@@ -107,47 +107,6 @@ awful.layout.layouts = {
 }
 -- }}}
 
--- {{{ Menu
--- Create a launcher widget and a main menu
-myawesomemenu = {
-  {
-    "hotkeys",
-    function()
-      hotkeys_popup.show_help(nil, awful.screen.focused())
-    end,
-  },
-  { "manual", terminal .. " -e man awesome" },
-  { "edit config", editor_cmd .. " " .. awesome.conffile },
-  { "restart", awesome.restart },
-  {
-    "quit",
-    function()
-      awesome.quit()
-    end,
-  },
-}
-
-local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
-local menu_terminal = { "open terminal", terminal }
-
-if has_fdo then
-  mymainmenu = freedesktop.menu.build({
-    before = { menu_awesome },
-    after = { menu_terminal },
-  })
-else
-  mymainmenu = awful.menu({
-    items = {
-      menu_awesome,
-      menu_terminal,
-    },
-  })
-end
-
--- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
--- }}}
-
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
@@ -183,25 +142,6 @@ local taglist_buttons = gears.table.join(
   end),
   awful.button({}, 5, function(t)
     awful.tag.viewprev(t.screen)
-  end)
-)
-
-local tasklist_buttons = gears.table.join(
-  awful.button({}, 1, function(c)
-    if c == client.focus then
-      c.minimized = true
-    else
-      c:emit_signal("request::activate", "tasklist", { raise = true })
-    end
-  end),
-  awful.button({}, 3, function()
-    awful.menu.client_list({ theme = { width = 250 } })
-  end),
-  awful.button({}, 4, function()
-    awful.client.focus.byidx(1)
-  end),
-  awful.button({}, 5, function()
-    awful.client.focus.byidx(-1)
   end)
 )
 
@@ -241,10 +181,8 @@ awful.screen.connect_for_each_screen(function(s)
             id = 'text_role',
             widget = wibox.widget.textbox,
           },
-          top = 2,
-          bottom = 2,
-          left = 18,
-          right = 18,
+          left = 16,
+          right = 16,
           widget = wibox.container.margin,
         },
         id = 'background_role',
@@ -299,16 +237,6 @@ awful.screen.connect_for_each_screen(function(s)
     },
   })
 end)
--- }}}
-
--- {{{ Mouse bindings
-root.buttons(gears.table.join(
-  awful.button({}, 3, function()
-    mymainmenu:toggle()
-  end),
-  awful.button({}, 4, awful.tag.viewnext),
-  awful.button({}, 5, awful.tag.viewprev)
-))
 -- }}}
 
 -- {{{ Key bindings
