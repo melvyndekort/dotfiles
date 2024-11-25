@@ -55,13 +55,16 @@ theme.border_marked = colors.orange
 
 theme.taglist_fg_empty = colors.current
 
-theme.taglist_spacing = 10
+theme.taglist_spacing = 8
 
 theme.taglist_shape = function(cr, width, height)
   gears.shape.rounded_rect(cr, width, height, 5)
 end
 
 theme.taglist_shape_border_width = 1
+theme.taglist_shape_border_width_focus = 2
+theme.taglist_shape_border_width_urgent = 2
+
 theme.taglist_shape_border_color = colors.foreground
 theme.taglist_shape_border_color_focus = colors.cyan
 theme.taglist_shape_border_color_empty = colors.current
