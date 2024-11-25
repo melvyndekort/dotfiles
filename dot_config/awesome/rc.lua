@@ -13,43 +13,20 @@ pcall(require, "luarocks.loader")
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
--- Widget and layout library
-local wibox = require("wibox")
+
 -- Theme handling library
 local beautiful = require("beautiful")
+
 -- Notification library
 local naughty = require("naughty")
-local menubar = require("menubar")
+
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 -- require("awful.hotkeys_popup.keys")
 
-local modkey = require("keybindings.mod")
-local globalkeys = require("keybindings.globalkeys")
-local clientkeys = require("keybindings.clientkeys")
-
 -- Custom wallpapers
 require("wallpaper")
-
--- Custom centered layout
-local centered_layout = require("layouts.centered")
-
--- Custom widgets
-local radio_widget = require("widgets.radio")
-local spotify_widget = require("widgets.spotify")
-local load_widget = require("widgets.load")
-local memory_widget = require("widgets.memory")
-local battery_widget = require("widgets.battery")
-local pactl_out_widget = require("widgets.pactl-out")
-local pactl_in_widget = require("widgets.pactl-in")
-local notifications_widget = require("widgets.notifications")
-local calendar_widget = require("widgets.calendar")
-local disk_widget = require("widgets.disk")
-
-local has_fdo, freedesktop = pcall(require, "freedesktop")
-
-local config_dir = gears.filesystem.get_configuration_dir()
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -85,6 +62,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+local config_dir = gears.filesystem.get_configuration_dir()
 beautiful.init(config_dir .. "theme.lua")
 
 -- This is used later as the default terminal and editor to run.
@@ -93,6 +71,7 @@ editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
+local centered_layout = require("layouts.centered")
 awful.layout.layouts = {
   centered_layout,
   awful.layout.suit.spiral.dwindle,
@@ -107,142 +86,15 @@ awful.layout.layouts = {
 }
 -- }}}
 
--- {{{ Wibar
--- Create a textclock widget
-mytextclock = wibox.widget.textclock()
-mytextclock.format = "%a %d %b %H:%M"
-mytextclock.refresh = 10
-
-local cw = calendar_widget()
-
-mytextclock:connect_signal("button::press", function(_, _, _, button)
-  if button == 1 then
-    cw.toggle()
-  end
-end)
-
--- Create a wibox for each screen and add it
-local taglist_buttons = gears.table.join(
-  awful.button({}, 1, function(t)
-    t:view_only()
-  end),
-  awful.button({ modkey }, 1, function(t)
-    if client.focus then
-      client.focus:move_to_tag(t)
-    end
-  end),
-  awful.button({}, 3, awful.tag.viewtoggle),
-  awful.button({ modkey }, 3, function(t)
-    if client.focus then
-      client.focus:toggle_tag(t)
-    end
-  end),
-  awful.button({}, 4, function(t)
-    awful.tag.viewnext(t.screen)
-  end),
-  awful.button({}, 5, function(t)
-    awful.tag.viewprev(t.screen)
-  end)
-)
-
-awful.screen.connect_for_each_screen(function(s)
-  -- Each screen has its own tag table.
-  awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
-
-  -- Create an imagebox widget which will contain an icon indicating which layout we're using.
-  -- We need one layoutbox per screen.
-  s.mylayoutbox = awful.widget.layoutbox(s)
-  s.mylayoutbox:buttons(gears.table.join(
-    awful.button({}, 1, function()
-      awful.layout.inc(1)
-    end),
-    awful.button({}, 3, function()
-      awful.layout.inc(-1)
-    end),
-    awful.button({}, 4, function()
-      awful.layout.inc(1)
-    end),
-    awful.button({}, 5, function()
-      awful.layout.inc(-1)
-    end)
-  ))
-
-  -- Create a taglist widget
-  s.mytaglist = awful.widget.taglist {
-    screen  = s,
-    filter  = awful.widget.taglist.filter.all,
-    layout   = {
-      layout  = wibox.layout.fixed.horizontal
-    },
-    widget_template = {
-      {
-        {
-          {
-            id = 'text_role',
-            widget = wibox.widget.textbox,
-          },
-          left = 16,
-          right = 16,
-          widget = wibox.container.margin,
-        },
-        id = 'background_role',
-        widget = wibox.container.background,
-      },
-      top = 3,
-      bottom = 3,
-      widget = wibox.container.margin
-    },
-    buttons = taglist_buttons
-  }
-
-  -- Create the wibox
-  s.mywibox = awful.wibar({
-    position = "top",
-    screen = s,
-  })
-
-  local systray = wibox.widget.systray()
-  systray:set_base_size(23)
-
-  s.mywibox:setup({
-    layout = wibox.layout.stack,
-    {
-      layout = wibox.layout.align.horizontal,
-      {
-        layout = wibox.layout.fixed.horizontal,
-        s.mytaglist,
-      },
-      nil,
-      {
-        spacing = 15,
-        layout = wibox.layout.fixed.horizontal,
-        systray,
-        load_widget({}),
-        memory_widget({}),
-        disk_widget({}),
-        radio_widget({}),
-        spotify_widget({}),
-        pactl_out_widget({}),
-        pactl_in_widget({}),
-        battery_widget({}),
-        notifications_widget({}),
-        s.mylayoutbox,
-      },
-    },
-    {
-      layout = wibox.container.place,
-      halign = "center",
-      valign = "center",
-      mytextclock,
-    },
-  })
-end)
--- }}}
+-- Custom wibar
+require("wibar")
 
 -- {{{ Key bindings
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
+local modkey = require("keybindings.mod")
+local globalkeys = require("keybindings.globalkeys")
 for i = 1, 9 do
   globalkeys = gears.table.join(
     globalkeys,
@@ -287,96 +139,9 @@ end
 root.keys(globalkeys)
 -- }}}
 
-clientbuttons = gears.table.join(
-  awful.button({}, 1, function(c)
-    c:emit_signal("request::activate", "mouse_click", { raise = true })
-  end),
-  awful.button({ modkey }, 1, function(c)
-    c:emit_signal("request::activate", "mouse_click", { raise = true })
-    awful.mouse.client.move(c)
-  end),
-  awful.button({ modkey }, 3, function(c)
-    c:emit_signal("request::activate", "mouse_click", { raise = true })
-    awful.mouse.client.resize(c)
-  end)
-)
-
 -- Rules to apply to new clients (through the "manage" signal).
-awful.rules.rules = {
-  -- All clients will match this rule.
-  {
-    rule = {},
-    properties = {
-      border_width = beautiful.border_width,
-      border_color = beautiful.border_normal,
-      focus = awful.client.focus.filter,
-      raise = true,
-      keys = clientkeys,
-      buttons = clientbuttons,
-      screen = awful.screen.preferred,
-      placement = awful.placement.no_overlap + awful.placement.no_offscreen,
-    },
-  },
-
-  -- Floating clients.
-  {
-    rule_any = {
-      instance = {
-        "DTA", -- Firefox addon DownThemAll.
-        "copyq", -- Includes session name in class.
-        "pinentry",
-      },
-      class = {
-        "floating", -- my custom floating class
-        "Arandr",
-        "Blueman-manager",
-        "Gpick",
-        "Kruler",
-        "MessageWin", -- kalarm.
-        "Sxiv",
-        "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-        "Wpa_gui",
-        "veromix",
-        "xtightvncviewer",
-        "qv4l2",
-        "Sublime_text",
-        "Gcr-prompter",
-        "Galculator",
-        "Surf",
-      },
-
-      -- Note that the name property shown in xprop might be set slightly after creation of the client
-      -- and the name shown there might not match defined rules here.
-      name = {
-        "Event Tester", -- xev.
-      },
-      role = {
-        "AlarmWindow", -- Thunderbird's calendar.
-        "ConfigManager", -- Thunderbird's about:config.
-        "pop-up", -- e.g. Google Chrome's (detached) Developer Tools.
-      },
-    },
-    properties = {
-      floating = true,
-      ontop = true,
-      placement = awful.placement.centered
-    },
-  },
-
-  -- Set applications to always appear on specific tags
-  { rule = { class = "firefox" },
-    properties = { screen = 1, tag = "2" } },
-  { rule = { class = "Slack" },
-    properties = { screen = 1, tag = "3" } },
-  { rule = { class = "TelegramDesktop" },
-    properties = { screen = 1, tag = "4" } },
-  { rule = { class = "VSCodium" },
-    properties = { screen = 1, tag = "6" } },
-  { rule = { class = "Chromium" },
-    properties = { screen = 1, tag = "7" } },
-  { rule = { class = "Spotify" },
-    properties = { screen = 1, tag = "9" } },
-}
+local rules = require("rules") -- Adjust path as needed
+awful.rules.rules = rules
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
@@ -389,46 +154,6 @@ client.connect_signal("manage", function(c)
     -- Prevent clients from being unreachable after screen count changes.
     awful.placement.no_offscreen(c)
   end
-end)
-
--- Add a titlebar if titlebars_enabled is set to true in the rules.
-client.connect_signal("request::titlebars", function(c)
-  -- buttons for the titlebar
-  local buttons = gears.table.join(
-    awful.button({}, 1, function()
-      c:emit_signal("request::activate", "titlebar", { raise = true })
-      awful.mouse.client.move(c)
-    end),
-    awful.button({}, 3, function()
-      c:emit_signal("request::activate", "titlebar", { raise = true })
-      awful.mouse.client.resize(c)
-    end)
-  )
-
-  awful.titlebar(c):setup({
-    { -- Left
-      awful.titlebar.widget.iconwidget(c),
-      buttons = buttons,
-      layout = wibox.layout.fixed.horizontal,
-    },
-    { -- Middle
-      { -- Title
-        align = "center",
-        widget = awful.titlebar.widget.titlewidget(c),
-      },
-      buttons = buttons,
-      layout = wibox.layout.flex.horizontal,
-    },
-    { -- Right
-      awful.titlebar.widget.floatingbutton(c),
-      awful.titlebar.widget.maximizedbutton(c),
-      awful.titlebar.widget.stickybutton(c),
-      awful.titlebar.widget.ontopbutton(c),
-      awful.titlebar.widget.closebutton(c),
-      layout = wibox.layout.fixed.horizontal(),
-    },
-    layout = wibox.layout.align.horizontal,
-  })
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
@@ -467,7 +192,7 @@ tag.connect_signal("request::screen", function(t)
   t:delete(fallback_tag, true)
 end)
 
--- Spawn applications
+-- Spawn applications at startup
 awful.spawn.single_instance("xss-lock -l -- lock.sh")
 awful.spawn.single_instance("picom -b")
 awful.spawn.single_instance("nm-applet")
