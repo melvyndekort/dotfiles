@@ -16,4 +16,12 @@
 #
 #xfce-mcs-manager &
 feh --bg-center --image-bg "#282A36" ~/Sync/pictures/wallpapers/default.png &
+tint2 &
+xss-lock -l -- lock.sh &
+picom -b &
+nm-applet &
+ckb-next -b &
 
+if ! pgrep udiskie; then
+  udiskie -Atn &
+fi
