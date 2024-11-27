@@ -305,9 +305,133 @@
       <command>kitty --single-instance</command>
     </action>
   </keybind>
+  <keybind key="W-S-Return">
+    <action name="Execute">
+      <command>kitty --single-instance -e yazi</command>
+    </action>
+  </keybind>
   <keybind key="W-d">
     <action name="Execute">
       <command>rofi -show combi</command>
+    </action>
+  </keybind>
+  <keybind key="W-p">
+    <action name="Execute">
+      <command>rofi-display</command>
+    </action>
+  </keybind>
+  <keybind key="W-S-p">
+    <action name="Execute">
+      <command>rofi-autolock</command>
+    </action>
+  </keybind>
+  <keybind key="S-C-W-a">
+    <action name="Execute">
+      <command>rofi-emulator</command>
+    </action>
+  </keybind>
+  <keybind key="S-C-W-e">
+    <action name="Execute">
+      <command>subl</command>
+    </action>
+  </keybind>
+  <keybind key="S-C-W-g">
+    <action name="Execute">
+      <command>galculator</command>
+    </action>
+  </keybind>
+  <keybind key="S-C-W-j">
+    <action name="Execute">
+      <command>rofi-java</command>
+    </action>
+  </keybind>
+  <keybind key="S-C-W-m">
+    <action name="Execute">
+      <command>rofi-samba</command>
+    </action>
+  </keybind>
+  <keybind key="S-C-W-o">
+    <action name="Execute">
+      <command>obsidian</command>
+    </action>
+  </keybind>
+  <keybind key="S-C-W-p">
+    <action name="Execute">
+      <command>postman</command>
+    </action>
+  </keybind>
+  <keybind key="S-C-W-s">
+    <action name="Execute">
+      <command>rofi-ssh-config</command>
+    </action>
+  </keybind>
+  <keybind key="S-C-W-t">
+    <action name="Execute">
+      <command>rofi-terraform</command>
+    </action>
+  </keybind>
+  <keybind key="S-C-W-v">
+    <action name="Execute">
+      <command>rofi-codium</command>
+    </action>
+  </keybind>
+  <keybind key="S-C-W-w">
+    <action name="Execute">
+      <command>rofi-browser</command>
+    </action>
+  </keybind>
+  <keybind key="S-C-W-z">
+    <action name="Execute">
+      <command>kitty --single-instance -e pulsemixer</command>
+    </action>
+  </keybind>
+
+  <!-- Audio keybindings -->
+  <keybind key="W-bracketleft">
+    <action name="Execute">
+      <command>pactl set-sink-volume @DEFAULT_SINK@ -2%</command>
+    </action>
+  </keybind>
+  <keybind key="W-bracketright">
+    <action name="Execute">
+      <command>pactl set-sink-volume @DEFAULT_SINK@ +2%</command>
+    </action>
+  </keybind>
+  <keybind key="W-backslash">
+    <action name="Execute">
+      <command>pactl set-sink-mute @DEFAULT_SINK@ toggle</command>
+    </action>
+  </keybind>
+  <keybind key="W-z">
+    <action name="Execute">
+      <command>pactl set-source-mute @DEFAULT_SOURCE@ toggle</command>
+    </action>
+  </keybind>
+
+  <!-- F-key keybindings -->
+  <keybind key="W-F1">
+    <action name="Execute">
+      <command>surf https://cheatsheets.mdekort.nl/</command>
+    </action>
+  </keybind>
+  <keybind key="W-F8">
+    <action name="Execute">
+      <command>rofi-bluetooth</command>
+    </action>
+  </keybind>
+  <keybind key="W-F9">
+    <action name="Execute">
+      <command>pass clip -r</command>
+    </action>
+  </keybind>
+  <keybind key="W-F10">
+    <action name="Execute">
+      <command>rofi -modi Bitwarden:rofi-bw -show Bitwarden</command>
+    </action>
+  </keybind>
+  <keybind key="W-F12">
+    <action name="Execute">
+      <command>rofi -modi power:rofi-power -show power</command>
     </action>
   </keybind>
 </keyboard>
