@@ -32,3 +32,10 @@
   exact = true
   stripComponents = 1
   refreshPeriod = "168h"
+[".local/share/themes"]
+  type = "archive"
+  url = "https://github.com/dracula/openbox/archive/master.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
+  include = ["*/Dracula/**", "*/Dracula-withoutBorder/**"]
