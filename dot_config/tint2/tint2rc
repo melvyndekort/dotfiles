@@ -42,7 +42,7 @@ border_color = #F8F8F2 100
 
 #-------------------------------------
 # Panel
-panel_items = TSBC
+panel_items = LTSBC
 panel_size = 100% 36
 panel_margin = 0 0
 panel_padding = 10 0 8
@@ -68,7 +68,6 @@ mouse_pressed_icon_asb = 100 0 0
 #-------------------------------------
 # Taskbar
 taskbar_mode = multi_desktop
-#taskbar_mode = single_desktop
 taskbar_hide_if_empty = 0
 taskbar_padding = 0 0 6
 taskbar_background_id = 0
@@ -76,7 +75,7 @@ taskbar_active_background_id = 0
 taskbar_name = 1
 taskbar_hide_inactive_tasks = 0
 taskbar_hide_different_monitor = 1
-taskbar_hide_different_desktop = 1
+taskbar_hide_different_desktop = 0
 taskbar_always_show_all_desktop_tasks = 0
 taskbar_name_padding = 4 2
 taskbar_name_background_id = 0
@@ -130,6 +129,7 @@ launcher_icon_theme_override = 0
 startup_notifications = 1
 launcher_tooltip = 1
 launcher_item_app = tint2conf.desktop
+launcher_item_app = kitty.desktop
 
 #-------------------------------------
 # Clock
@@ -152,8 +152,8 @@ clock_dwheel_command =
 # Battery
 battery_tooltip = 1
 battery_low_status = 10
-battery_low_cmd = xmessage 'tint2: Battery low!'
-battery_full_cmd = 
+battery_low_cmd =
+battery_full_cmd =
 battery_font_color = #F8F8F2 100
 bat1_format = %P
 bat2_format = %s
