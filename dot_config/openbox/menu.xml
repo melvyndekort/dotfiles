@@ -20,6 +20,11 @@
                 <execute>rofi -show combi</execute>
             </action>
         </item>
+        <item label="Pulsemixer">
+            <action name="Execute">
+                <execute>kitty --single-instance -e pulsemixer</execute>
+            </action>
+        </item>
         <separator />
         <item label="Configurations">
             <action name="Execute">
@@ -28,6 +33,9 @@
         </item>
         <item label="Reconfigure">
             <action name="Reconfigure" />
+            <action name="Execute">
+                <execute>sh -c "pkill tint2; sleep 1; tint2"</execute>
+            </action>
         </item>
         <separator />
         <menu id="exit" label="Exit" >
