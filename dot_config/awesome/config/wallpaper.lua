@@ -1,45 +1,33 @@
 local gears = require("gears")
 local awful = require("awful")
-local colors = require("config.colors")
+local beautiful = require("beautiful")
 
--- Base directory for wallpapers
-local wallpaper_base_dir = "/home/melvyn/Sync/pictures/wallpapers/"
+wallpaper_basedir = "/home/melvyn/Sync/pictures/wallpapers/"
+local default_wallpaper = wallpaper_basedir .. "default.png"
+local cache_file = "/home/melvyn/.cache/wall"
 
--- Function to get a random wallpaper file from the specified directory using shuf
-local function get_random_wallpaper_file(dir)
-  local p = io.popen('find "' .. dir .. '" -type f | shuf -n 1')
-  local wallpaper = p:read("*line") -- Read the randomly selected wallpaper file
-  p:close()
-  return wallpaper
+local function set_wallpaper()
+    local selected_wallpaper = default_wallpaper
+
+    -- Check if the cache file exists and read its content
+    local file = io.open(cache_file, "r")
+    if file then
+        local cached_wallpaper = file:read("*all"):match("^%s*(.-)%s*$") -- Trim whitespace
+        file:close()
+
+        -- If the cache file has a valid wallpaper, use it
+        if cached_wallpaper and gears.filesystem.file_readable(cached_wallpaper) then
+            selected_wallpaper = cached_wallpaper
+        else
+            print("Invalid wallpaper in cache, using default wallpaper.")
+        end
+    else
+        print("Cache file not found, using default wallpaper.")
+    end
+
+    for s in screen do
+      gears.wallpaper.fit(selected_wallpaper, s, beautiful.bg_normal)
+    end
 end
 
--- Function to set a random wallpaper based on screen resolution
-function set_random_wallpaper(s)
-  -- Get the screen resolution
-  local resolution_folder = s.geometry.width .. "x" .. s.geometry.height
-  local wallpaper_dir = wallpaper_base_dir .. resolution_folder .. "/"
-
-  -- Get a random wallpaper in the matching resolution folder
-  local wallpaper = get_random_wallpaper_file(wallpaper_dir)
-  if wallpaper then
-    -- Set the wallpaper for the screen
-    gears.wallpaper.fit(wallpaper, s, colors.background)
-  else
-    -- Optionally, handle the case when no wallpapers are found for the resolution
-    gears.debug.print_warning("No wallpapers found in " .. wallpaper_dir)
-    gears.wallpaper.fit(wallpaper_base_dir .. "default.png", s, colors.background)
-  end
-end
-
--- Apply the wallpaper when Awesome starts or when screen geometry changes
-screen.connect_signal("property::geometry", set_random_wallpaper)
-
--- Timer to change the wallpaper every 60 seconds
-local wallpaper_timer = gears.timer({
-    timeout = 60, -- Time in seconds
-    autostart = true,
-    call_now = true,
-    callback = function()
-      awful.screen.connect_for_each_screen(set_random_wallpaper)
-    end,
-})
+set_wallpaper()

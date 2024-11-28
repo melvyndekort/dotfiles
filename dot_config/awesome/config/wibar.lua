@@ -1,6 +1,7 @@
 local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
+local beautiful = require("beautiful")
 
 local modkey = require("config.keybindings.mod")
 
@@ -107,6 +108,8 @@ awful.screen.connect_for_each_screen(function(s)
   s.mywibox = awful.wibar({
     position = "top",
     screen = s,
+    ontop = true,  -- Make the wibar act like a client window
+    type = "normal",  -- Treat it like a docked window (so picom can add a shadow)
   })
 
   local systray = wibox.widget.systray()
