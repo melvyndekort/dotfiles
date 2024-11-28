@@ -25,9 +25,6 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 -- require("awful.hotkeys_popup.keys")
 
--- Custom wallpapers
-require("config.wallpaper")
-
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -69,6 +66,9 @@ beautiful.init(config_dir .. "config/theme.lua")
 terminal = "kitty"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
+
+-- Custom wallpapers
+require("config.wallpaper")
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local centered_layout = require("config.layouts.centered")
