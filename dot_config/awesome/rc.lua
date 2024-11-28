@@ -70,20 +70,8 @@ editor_cmd = terminal .. " -e " .. editor
 -- Custom wallpapers
 require("config.wallpaper")
 
--- Table of layouts to cover with awful.layout.inc, order matters.
-local centered_layout = require("config.layouts.centered")
-awful.layout.layouts = {
-  centered_layout,
-  awful.layout.suit.spiral.dwindle,
-  awful.layout.suit.tile,
-  awful.layout.suit.tile.left,
-  awful.layout.suit.tile.bottom,
-  awful.layout.suit.tile.top,
-  awful.layout.suit.fair,
-  awful.layout.suit.fair.horizontal,
-  awful.layout.suit.max,
-  awful.layout.suit.floating,
-}
+-- Layout setup
+require("config.layouts.init")
 -- }}}
 
 -- Custom wibar
