@@ -181,12 +181,7 @@ local globalkeys = gears.table.join(
     awful.spawn("systemctl suspend")
   end, { description = "suspend", group = "awesome extra"}),
   awful.key({ modkey }, "Home", function()
-    local full_path = wallpaper_basedir .. screen.primary.geometry.width .. "x" .. screen.primary.geometry.height
-    if gears.filesystem.dir_readable(full_path) then
-      awful.spawn.with_shell("select_wallpaper.sh " .. full_path)
-    else
-      awful.spawn.with_shell("select_wallpaper.sh " .. wallpaper_basedir)
-    end
+    awful.spawn("select_wallpaper.sh")
   end, { description = "Select wallpaper", group = "awesome extra" }),
 
   -- Notifications
