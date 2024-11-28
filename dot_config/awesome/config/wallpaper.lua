@@ -26,7 +26,7 @@ local function set_wallpaper()
     end
 
     for s in screen do
-      gears.wallpaper.fit(selected_wallpaper, s, beautiful.bg_normal)
+      gears.wallpaper.maximized(selected_wallpaper, s, beautiful.bg_normal)
     end
 end
 
