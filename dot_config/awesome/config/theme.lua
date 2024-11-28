@@ -146,9 +146,10 @@ theme.icon_theme = "/usr/share/icons/Papirus-Dark"
 -- Systray
 theme.systray_icon_spacing = 6
 
-theme.wibar_shadow = true  -- Enable shadow under the wibar
-theme.wibar_shadow_offset = {x = 0, y = 5}  -- Adjust shadow position
-theme.wibar_shadow_color = "#000000"  -- Set shadow color (black)
-theme.wibar_shadow_blur_radius = 5  -- Set the blur radius
+-- Wibar
+theme.wibar_border_width = theme.border_width
+theme.wibar_border_color = theme.border_normal
+theme.wibar_opacity = 1
+theme.wibar_type = "normal"
 
 return theme

@@ -108,43 +108,46 @@ awful.screen.connect_for_each_screen(function(s)
   s.mywibox = awful.wibar({
     position = "top",
     screen = s,
-    --ontop = true,  -- Make the wibar act like a client window
-    type = "normal",  -- Treat it like a docked window (so picom can add a shadow)
   })
 
   local systray = wibox.widget.systray()
   systray:set_base_size(23)
 
   s.mywibox:setup({
-    layout = wibox.layout.stack,
+    layout = wibox.layout.margin,
+    left = 6,
+    right = 6,
     {
-      layout = wibox.layout.align.horizontal,
+      layout = wibox.layout.stack,
       {
-        layout = wibox.layout.fixed.horizontal,
-        s.mytaglist,
+        layout = wibox.layout.align.horizontal,
+        {
+          layout = wibox.layout.fixed.horizontal,
+          s.mytaglist,
+        },
+        nil,
+        {
+          spacing = 15,
+          layout = wibox.layout.fixed.horizontal,
+          systray,
+          load_widget({}),
+          memory_widget({}),
+          disk_widget({}),
+          radio_widget({}),
+          spotify_widget({}),
+          pactl_out_widget({}),
+          pactl_in_widget({}),
+          battery_widget({}),
+          notifications_widget({}),
+          s.mylayoutbox,
+        },
       },
-      nil,
       {
-        spacing = 15,
-        layout = wibox.layout.fixed.horizontal,
-        systray,
-        load_widget({}),
-        memory_widget({}),
-        disk_widget({}),
-        radio_widget({}),
-        spotify_widget({}),
-        pactl_out_widget({}),
-        pactl_in_widget({}),
-        battery_widget({}),
-        notifications_widget({}),
-        s.mylayoutbox,
+        layout = wibox.container.place,
+        halign = "center",
+        valign = "center",
+        mytextclock,
       },
-    },
-    {
-      layout = wibox.container.place,
-      halign = "center",
-      valign = "center",
-      mytextclock,
-    },
+    }
   })
 end)
