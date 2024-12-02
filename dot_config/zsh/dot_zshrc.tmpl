@@ -13,6 +13,9 @@ source $HOME/.profile
 autoload bashcompinit
 bashcompinit
 
+autoload -U compinit
+compinit
+
 if [ -f "$HOME/.config/oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme" ]; then
   source $HOME/.config/oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
 elif [ -f "/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme" ]; then
