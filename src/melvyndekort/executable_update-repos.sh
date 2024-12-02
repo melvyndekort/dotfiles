@@ -27,5 +27,7 @@ for REPO in $REPOLIST; do
   DIRLIST=$(echo ${DIRLIST/$REPO/})
 done
 
-[ "" != "$DIRLIST" ] && echo "Repositories which aren't managed anymore: $DIRLIST"
+if [ -n "$DIRLIST" ]; then
+   echo "Repositories which aren't managed anymore: $DIRLIST"
+fi
 
