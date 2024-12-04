@@ -11,7 +11,7 @@ UNLOCK="$(udisksctl unlock -b $LOOP | get_path)"
 echo "Mounting unlocked device"
 MOUNT="$(udisksctl mount --no-user-interaction -b $UNLOCK | get_path)"
 
-ranger "$MOUNT"
+yazi "$MOUNT"
 
 echo "Unmounting unlocked device"
 udisksctl unmount -b $UNLOCK 1>/dev/null
