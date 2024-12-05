@@ -114,7 +114,7 @@ awful.screen.connect_for_each_screen(function(s)
   systray:set_base_size(23)
 
   s.mywibox:setup({
-    layout = wibox.layout.margin,
+    layout = wibox.container.margin,
     left = 6,
     right = 6,
     {
