@@ -8,11 +8,11 @@ do_mount() {
   host=$(echo $1 | cut -d'/' -f1)
   ip=$(host -tA $host | awk '{print $NF}')
   mkdir -p $BASEDIR/$1
-  sudo mount.cifs -o ip=$ip,username=melvyn,password=$PASSWORD,uid=$(id -u),gid=$(id -g),forceuid,forcegid //$1 $BASEDIR/$1
+  sudo -n /usr/sbin/mount.cifs -o ip=$ip,username=melvyn,password=$PASSWORD,uid=$(id -u),gid=$(id -g),forceuid,forcegid //$1 $BASEDIR/$1
 }
 
 do_umount() {
-  sudo umount $BASEDIR/$1
+  sudo -n /usr/bin/umount $BASEDIR/$1
   notify-send "$(rmdir -p $BASEDIR/$1)"
 }
 
