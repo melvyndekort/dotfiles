@@ -36,6 +36,11 @@ run  = "cd /run/media/$USER"
 desc = "Go to Ubuntu mount dir"
 
 [[manager.prepend_keymap]]
+on   = "<C-s>"
+run  = "shell zsh --block --confirm"
+desc = "Temporarily go to shell"
+
+[[manager.prepend_keymap]]
 on   = "!"
 run  = 'suspend'
 desc = "Temporarily go back to parent shell"
