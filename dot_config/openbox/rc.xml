@@ -302,12 +302,12 @@
   <!-- Keybindings for running applications -->
   <keybind key="W-Return">
     <action name="Execute">
-      <command>kitty --single-instance</command>
+      <command>ghostty</command>
     </action>
   </keybind>
   <keybind key="W-S-Return">
     <action name="Execute">
-      <command>kitty --single-instance -e yazi</command>
+      <command>ghostty -e yazi</command>
     </action>
   </keybind>
   <keybind key="W-d">
@@ -382,7 +382,7 @@
   </keybind>
   <keybind key="S-C-W-z">
     <action name="Execute">
-      <command>kitty --single-instance -e pulsemixer</command>
+      <command>ghostty -e pulsemixer</command>
     </action>
   </keybind>
 
