@@ -148,13 +148,8 @@ else
 fi
 
 alias hex='hexyl'
-
-# Set kitty aliases
-alias kitten='kitty +kitten'
-alias icat='kitty +kitten icat'
-alias setclip='kitty +kitten clipboard'
-alias getclip='kitty +kitten clipboard --get-clipboard'
-alias d='kitty +kitten diff'
+alias setclip='xclip'
+alias getclip='xclip -o'
 
 # Set MISC aliases
 alias rm='rm -Iv'
@@ -202,8 +197,6 @@ alias vagrant='docker run --rm -it \
 
 # Fun command to wait a long time
 alias coffee='for i in `seq 0 100`;do timeout 6 dialog --gauge "Install..." 6 40 "$i";done'
-
-[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
 
 # Generate the public key fingerpirnt
 ssh-fingerprint() {

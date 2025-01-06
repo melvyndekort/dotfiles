@@ -1,7 +1,7 @@
 configuration {
     modi: "combi";
     show-icons: true;
-    terminal: "kitty";
+    terminal: "ghostty";
     display-combi: "Run";
     matching: "fuzzy";
     combi-modi: "drun,run";

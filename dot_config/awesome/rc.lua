@@ -63,7 +63,7 @@ local config_dir = gears.filesystem.get_configuration_dir()
 beautiful.init(config_dir .. "config/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "kitty"
+terminal = "ghostty"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 

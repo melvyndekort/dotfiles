@@ -34,7 +34,7 @@ local function worker()
   mywidget:buttons(
     awful.util.table.join(
       awful.button({}, 1, function()
-        awful.spawn("kitty --single-instance -e btop")
+        awful.spawn("ghostty -e btop")
       end)
     )
   )
