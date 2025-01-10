@@ -83,7 +83,7 @@ local globalkeys = gears.table.join(
       awful.spawn("rofi-yubikey clipboard")
     end, { description = "Execute Yubikey clipboard", group = "app launcher" }),
     awful.key({ modkey, "Shift", "Control" }, "z", function()
-      awful.spawn("ghostty --class=ghostty.floating -e pulsemixer")
+      awful.spawn("kitty --class=floating -e pulsemixer")
     end, { description = "Execute Pulse Mixer", group = "app launcher" }),
 
   -- App Launchers F-keys
@@ -195,10 +195,10 @@ local globalkeys = gears.table.join(
 
   -- Terminal programs
   awful.key({ modkey }, "Return", function()
-    awful.spawn("ghostty")
+    awful.spawn("kitty")
   end, { description = "Plain terminal", group = "terminal"}),
   awful.key({ modkey, "Shift"}, "Return", function()
-    awful.spawn("ghostty -e yazi")
+    awful.spawn("kitty -e yazi")
   end, { description = "Yazi filemanager", group = "terminal"}),
 
 -- Screenshot bindings
