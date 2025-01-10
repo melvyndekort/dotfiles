@@ -95,7 +95,7 @@ local function worker()
   end
 
   local function mywidget_mixer()
-    awesome.spawn("ghostty --class=ghostty.floating -e pulsemixer")
+    awesome.spawn("kitty --class=floating -e pulsemixer")
   end
 
   local function mywidget_inc()
