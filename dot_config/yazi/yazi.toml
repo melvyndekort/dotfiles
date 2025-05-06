@@ -21,6 +21,7 @@ prepend_rules = [
   { name = "*.mp4", use = ["play", "reveal"] },
   { name = "*.mpeg", use = ["play", "reveal"] },
   { name = "*.ogv", use = ["play", "reveal"] },
+  { name = "*.ts", use = ["play", "reveal"] },
   { name = "*.webm", use = ["play", "reveal"] },
   { name = "*.wmv", use = ["play", "reveal"] },
 
