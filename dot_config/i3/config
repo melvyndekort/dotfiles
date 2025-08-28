@@ -24,6 +24,20 @@ set $mod Mod4
 floating_modifier $mod
 tiling_drag modifier titlebar
 
+# Borders
+default_border pixel 2
+default_floating_border normal
+
+# Color theme
+# class                 border      bground     text        indicator     child_border
+client.focused          #ff79c6     #44475a     #f8f8f2     #50fa7b       #ff79c6
+client.focused_inactive #6272a4     #282a36     #f8f8f2     #8be9fd       #6272a4
+client.unfocused        #282a36     #282a36     #6272a4     #282a36       #282a36
+client.urgent           #ff5555     #282a36     #f8f8f2     #ffb86c       #ff5555
+client.placeholder      #f1fa8c     #282a36     #282a36     #f1fa8c       #f1fa8c
+
+client.background       #282a36
+
 # Kill focused window
 bindsym $mod+q kill
 
@@ -106,15 +120,13 @@ assign [class="Chromium"] $ws8
 # Assign properties to windows
 for_window [class="floating"] floating enable, resize set 1024 768, move position center
 for_window [class="Galculator"] floating enable, move position center
+for_window [class="qv4l2"] floating enable, move position center
 for_window [class="Sublime_text"] floating enable, resize set 1024 768, move position center
 
 # Reload, restart, exit
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3?' -B 'Yes, exit i3' 'i3-msg exit'"
-
-default_border pixel 1
-default_floating_border pixel 1
 
 # Resize mode
 mode "resize" {
@@ -188,6 +200,7 @@ bindsym $mod+Shift+Home exec --no-startup-id ~/.config/polybar/launch.sh
 # Notification bindings
 bindsym $mod+n exec --no-startup-id dunstctl set-paused toggle && polybar-msg action "#notify.hook.0"
 bindsym $mod+Shift+n exec --no-startup-id dunstctl close-all
+bindsym $mod+Control+Shift+n exec --no-startup-id dunstctl history-pop
 
 # Screenshot bindings
 bindsym Print exec --no-startup-id screenshot all
