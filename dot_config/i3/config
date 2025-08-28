@@ -26,7 +26,7 @@ tiling_drag modifier titlebar
 
 # Borders
 default_border pixel 2
-default_floating_border normal
+default_floating_border pixel 2
 
 # Color theme
 # class                 border      bground     text        indicator     child_border
