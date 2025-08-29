@@ -193,7 +193,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 10%-
 bindsym $mod+x exec --no-startup-id xset s activate
 bindsym $mod+Shift+x exec --no-startup-id systemctl suspend
 bindsym $mod+p exec rofi-display
-bindsym $mod+Shift+p exec rofi-autolock
+bindsym $mod+Shift+p exec screensaver-toggle.sh && polybar-msg action "#screensaver.hook.0"
 bindsym $mod+Home exec --no-startup-id wallpaper-set.sh
 bindsym $mod+Shift+Home exec --no-startup-id ~/.config/polybar/launch.sh
 
