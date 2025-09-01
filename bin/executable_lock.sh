@@ -47,7 +47,7 @@ dunstctl set-paused true
 polybar-msg action "#notify.hook.0"
 
 # Lock the screen with the final image using specified flags
-i3lock -e -c 282A36 -i "$tmpbg"
+i3lock -e -c 282A36 -f -i "$tmpbg"
 
 # Remove the temporary background image after locking
 rm "$tmpbg"
