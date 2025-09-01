@@ -42,6 +42,10 @@ done
 # Execute the command to process the image
 eval $command "$tmpbg"
 
+# Disable notifications
+dunstctl set-paused true
+polybar-msg action "#notify.hook.0"
+
 # Lock the screen with the final image using specified flags
 i3lock -e -c 282A36 -i "$tmpbg"
 
