@@ -183,11 +183,6 @@ alias prettyfollow='batcat --paging=never -l log'
 # Run specific docker containers
 alias alpine='podman container run --rm -it alpine:latest'
 
-# Set bitwarden session key
-if [ -f "$HOME/.config/bw-unlock.sh" ]; then
-  source "$HOME/.config/bw-unlock.sh"
-fi
-
 # Vagrant for libvirt
 alias vagrant='docker run --rm -it \
   -e LIBVIRT_DEFAULT_URI \
