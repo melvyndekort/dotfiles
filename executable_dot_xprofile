@@ -38,6 +38,9 @@ if [ -f $HOME/.config/default-screen-setup ]; then
   $HOME/.config/default-screen-setup
 fi
 
+# Start or reuse ssh-agent through keychain
+eval "$(keychain --eval --quiet --agents ssh fido-main fido-backup bitbucket)"
+
 # set default cursor to arrow
 xsetroot -cursor_name left_ptr
 
