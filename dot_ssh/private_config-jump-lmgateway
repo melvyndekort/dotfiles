@@ -69,9 +69,9 @@ Host lmmini mini
   PubkeyAcceptedAlgorithms +ssh-rsa
   HostkeyAlgorithms +ssh-rsa
 
-##############
-##  GITHUB  ##
-##############
+#################
+##  BITBUCKET  ##
+#################
 Host bitbucket.org
   User git
 
