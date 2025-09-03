@@ -1,0 +1,3 @@
+#!/bin/sh
+
+export BW_SESSION=$(bw unlock $(pass show bitwarden/melvyn) --raw)

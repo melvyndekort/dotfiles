@@ -59,6 +59,8 @@ debug() {
   echo "$@" > /dev/stderr
 }
 
+. bw-unlock
+
 if is-entry-selected "$1"; then
   selected="$1"
 

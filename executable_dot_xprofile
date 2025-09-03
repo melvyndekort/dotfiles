@@ -34,10 +34,10 @@ if [ -f $HOME/.config/default-screen-setup ]; then
 fi
 
 # Unlock Bitwarden
-export BW_SESSION=$(bw unlock $(pass show bitwarden/melvyn) --raw)
+export BW_SESSION=$(bw unlock $(pass show bitwarden/melvyn) --raw) || true
 
 # Start or reuse ssh-agent through keychain
-eval "$(keychain --eval --quiet --agents ssh fido-main fido-backup bitbucket)"
+eval "$(keychain --eval --quiet --agents ssh fido-main fido-backup bitbucket rsa-legacy)"
 
 # set default cursor to arrow
 xsetroot -cursor_name left_ptr

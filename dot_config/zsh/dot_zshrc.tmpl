@@ -179,62 +179,24 @@ alias mtn='mtn -f /usr/share/fonts/TTF/DejaVuSans.ttf'
 alias awslocal='aws --endpoint-url=http://localhost:4566'
 alias ssudo='pass linux/melvyn | sudo -SH'
 alias prettyfollow='batcat --paging=never -l log'
+alias bw-unlock='. $HOME/bin/bw-unlock'
 
 # Run specific docker containers
 alias alpine='podman container run --rm -it alpine:latest'
-
-# Vagrant for libvirt
-alias vagrant='docker run --rm -it \
-  -e LIBVIRT_DEFAULT_URI \
-  -v /var/run/libvirt/:/var/run/libvirt/ \
-  -v ~/.vagrant.d:/.vagrant.d \
-  -v "$(pwd):$(pwd)" \
-  -w "$(pwd)" \
-  vagrantlibvirt/vagrant-libvirt:latest \
-  vagrant'
 
 # Fun command to wait a long time
 alias coffee='for i in `seq 0 100`;do timeout 6 dialog --gauge "Install..." 6 40 "$i";done'
 
 [ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
 
-# Generate the public key fingerpirnt
-ssh-fingerprint() {
-  ssh-keyscan $@ | ssh-keygen -l -E md5 -f -
-}
-
-# Generate an MFA token
-mfa() {
-  if pacman -qQ oath-toolkit > /dev/null; then
-    if [ -f $HOME/.mfa/$1.mfa ]; then
-      oathtool --base32 --totp "$(cat ~/.mfa/${1}.mfa)" ;
-    else
-      echo "MFA config ${1} does not exist"
-    fi
-  else
-    sudo pacman -S oath-toolkit
-  fi
-}
-
 # TMUX configuration
 if [ ! -d "$XDG_CONFIG_HOME/tmux/plugins/tpm" ]; then
   git clone https://github.com/tmux-plugins/tpm $XDG_CONFIG_HOME/tmux/plugins/tpm
 fi
 
-# Configure maven
-mvn-or-mvnw() {
-	if [ -x ./mvnw ]; then
-		echo "executing mvnw instead of mvn"
-		./mvnw --global-settings $XDG_CONFIG_HOME/maven/settings.xml "$@"
-	else
-		command mvn --global-settings $XDG_CONFIG_HOME/maven/settings.xml "$@"
-	fi
-}
-
 {{if .work }}
 # Work related stuff
 export ARTIFACTORY_URL="https://{{- urlquery (pass "portbase/artifactory" | b64dec | splitn ":" 2)._0 -}}:{{- urlquery (pass "portbase/artifactory" | b64dec | splitn ":" 2)._1 -}}@artifactory.portbase.io/artifactory"
-alias wpcs-build="mvn -T C1 clean package -DskipTests -Dnaomi.skip -Dmaven.antrun.skip -pl \!naomi/naomi-maven-plugin-test"
 alias sqlplus='docker container run --rm -it --network host melvyndekort/sqlplus'
 
 # Set environment variables such as New Relic API keys
