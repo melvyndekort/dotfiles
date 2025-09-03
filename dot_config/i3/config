@@ -74,6 +74,9 @@ bindsym $mod+Shift+space floating toggle ; [floating] resize set 1024 768 ; move
 bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 bindsym $mod+Shift+a focus child
+bindsym $mod+g floating enable, resize set 1920 1080, move position center
+bindsym $mod+Shift+g floating enable, resize set 1600 900, move position center
+bindsym $mod+Shift+Control+g floating enable, resize set 1280 720, move position center
 
 # Scratchpad
 bindsym $mod+Shift+minus move scratchpad
