@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if dunstctl is-paused | grep -q true; then
-  echo "%{F#FFB86C}%{F-}"
+  echo "%{F#FF5555}%{F-}"
 else
-  echo "%{F#6272A4}%{F-}"
+  echo "%{F#50FA7B}%{F-}"
 fi
