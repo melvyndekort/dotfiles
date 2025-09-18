@@ -46,6 +46,15 @@ eval $command "$tmpbg"
 dunstctl set-paused true
 polybar-msg action "#notify.hook.0"
 
+# Start a background process to wait for unlock and unpause notifications
+(
+    while pgrep i3lock > /dev/null; do
+        sleep 0.5
+    done
+    dunstctl set-paused false
+    polybar-msg action "#notify.hook.0"
+) &
+
 # Lock the screen with the final image using specified flags
 i3lock -e -c 282A36 -f -i "$tmpbg"
 
