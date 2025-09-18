@@ -199,6 +199,7 @@ bindsym $mod+p exec rofi-display
 bindsym $mod+Shift+p exec screensaver-toggle.sh && polybar-msg action "#screensaver.hook.0"
 bindsym $mod+Home exec --no-startup-id wallpaper-set.sh
 bindsym $mod+Shift+Home exec --no-startup-id ~/.config/polybar/launch.sh
+bindsym $mod+Shift+Control+Home exec --no-startup-id "killall picom; sleep 0.5; picom --config ~/.config/picom/picom.conf &"
 
 # Notification bindings
 bindsym $mod+n exec --no-startup-id dunstctl set-paused toggle && polybar-msg action "#notify.hook.0"
