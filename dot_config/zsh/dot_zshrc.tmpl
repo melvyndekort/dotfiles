@@ -131,14 +131,12 @@ alias dv='docker volume'
 if [ -f "/usr/bin/batcat" ]; then
   alias cat='batcat'
   alias fzf='fzf --preview "batcat --color=always --style=numbers --line-range=:500 {}"'
-  alias -g -- -h='-h 2>&1 | batcat --language=help --style=plain'
   alias -g -- --help='--help 2>&1 | batcat --language=help --style=plain'
   export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
   export MANROFFOPT="-c"
 elif [ -f "/usr/bin/bat" ]; then
   alias cat='bat'
   alias fzf='fzf --preview "bat --color=always --style=numbers --line-range=:500 {}"'
-  alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
   alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
   export MANROFFOPT="-c"
