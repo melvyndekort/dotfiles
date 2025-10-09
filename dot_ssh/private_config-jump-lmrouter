@@ -100,3 +100,7 @@ Host *
   ServerAliveInterval 10
   ServerAliveCountMax 3
   NoHostAuthenticationForLocalhost yes
+  AddKeysToAgent yes
+  ControlMaster auto
+  ControlPath ~/.ssh/control-%h-%p-%r
+  ControlPersist 10m
