@@ -31,7 +31,7 @@ fi
 [ -f $HOME/.config/default-screen-setup ] && $HOME/.config/default-screen-setup
 
 # Start or reuse ssh-agent through keychain
-eval "$(keychain --eval --quiet --agents ssh fido-main fido-backup legacy-ed25519 legacy-rsa bitbucket-pb)"
+eval "$(keychain --eval --quiet --agents ssh yubikey-main yubikey-backup legacy-ed25519 legacy-rsa bitbucket-pb)"
 
 
 # set default cursor to arrow
