@@ -1,4 +1,4 @@
 #!/bin/sh
 
 AVD="$(avdmanager list avd -c | rofi -dmenu -p 'Pick Android Virtual Device')"
-emulator -avd "$AVD"
+$HOME/Android/Sdk/emulator/emulator -avd "$AVD"

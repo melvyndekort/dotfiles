@@ -22,7 +22,6 @@ export XDG_CACHE_HOME="$HOME/.cache"
 
 # Set MISC variables
 export _Z_DATA="$XDG_DATA_HOME/z"
-export ANDROID_HOME="$HOME/android-sdk"
 export ANDROID_USER_HOME="$XDG_CONFIG_HOME/android"
 export ANDROID_AVD_HOME="$ANDROID_USER_HOME/avd"
 export AWS_DEFAULT_REGION="eu-west-1"
@@ -45,5 +44,5 @@ export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
 alias irssi="irssi --config=$XDG_CONFIG_HOME/irssi/config --home=$XDG_DATA_HOME/irssi "
 
 # Set PATH variable
-export ANDROID_PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/emulator"
+export ANDROID_PATH="$HOME/Android/Sdk/cmdline-tools/latest/bin"
 export PATH="$HOME/bin:$HOME/Sync/bin:$HOME/.local/bin:$HOME/src/portbase-bin:$ANDROID_PATH:$PATH"
