@@ -3,19 +3,13 @@ font pango:Hack Nerd Font Mono 10
 
 # Autostart backend applications
 exec_always --no-startup-id ~/bin/wallpaper-set.sh
-exec --no-startup-id dex --autostart --environment i3
 exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- lock.sh
-exec --no-startup-id nm-applet
 exec --no-startup-id picom -b
 exec --no-startup-id ~/.config/polybar/scripts/pulse_monitor.sh sink
 exec --no-startup-id ~/.config/polybar/scripts/pulse_monitor.sh source
 exec --no-startup-id ntfy sub --from-config
-
-# Autostart frontend applications
-exec --no-startup-id kitty
-exec --no-startup-id firefox -P default
-exec --no-startup-id slack
 
 # Directional keys
 set $left h
