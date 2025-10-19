@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=ckb-next
+Exec=ckb-next --background
