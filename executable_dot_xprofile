@@ -33,6 +33,8 @@ fi
 # Start or reuse ssh-agent through keychain
 eval "$(keychain --eval --quiet --agents ssh yubikey-main yubikey-backup legacy-ed25519 legacy-rsa bitbucket-pb)"
 
+# Fix GTK applications in i3/X11 environment
+export GDK_BACKEND=x11
 
 # set default cursor to arrow
 xsetroot -cursor_name left_ptr
