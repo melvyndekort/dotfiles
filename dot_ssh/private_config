@@ -1,67 +1,49 @@
 ##########
 ## HOME ##
 ##########
-Host gw
-  Hostname localhost
-  User melvyn
-  StrictHostKeyChecking no
-  UserKnownHostsFile /dev/null
-  ProxyCommand sh -c "aws ec2-instance-connect open-tunnel --instance-id $(aws ec2 describe-instances --filters Name=instance-state-name,Values=running Name=tag:Name,Values=lmgateway --query 'Reservations[*].Instances[*].[InstanceId]' --output text)"
-
 Host lmrouter
   Hostname lmrouter.mdekort.lan
   User melvyn
-  ProxyJump gw
 
 Host pihole
   Hostname pihole.mdekort.lan
   User melvyn
-  ProxyJump gw
 
 Host lm-ap-1 lmap1 ap1
   Hostname lm-ap-1.mdekort.lan
   User root
-  ProxyJump gw
 
 Host lm-ap-2 lmap2 ap2
   Hostname lm-ap-2.mdekort.lan
   User root
-  ProxyJump gw
 
 Host lm-ap-3 lmap3 ap3
   Hostname lm-ap-3.mdekort.lan
   User root
-  ProxyJump gw
 
 Host lm-ap-4 lmap4 ap4
   Hostname lm-ap-4.mdekort.lan
   User root
-  ProxyJump gw
 
 Host lmserver
   Hostname lmserver.mdekort.lan
   User core
-  ProxyJump gw
 
 Host melvynpc
   Hostname melvynpc.mdekort.lan
   User melvyn
-  ProxyJump gw
-
-Host lmnuc
-  Hostname lmnuc.mdekort.lan
-  User melvyn
-  ProxyJump gw
 
 Host kodi1 kodi
   Hostname kodi1.mdekort.lan
   User root
-  ProxyJump gw
+
+Host lmnuc nuc
+  Hostname lmnuc.mdekort.lan
+  User melvyn
 
 Host tuinhuis
   Hostname tuinhuis.mdekort.lan
   User melvyn
-  ProxyJump gw
 
 Host lmmini mini
   Hostname 10.205.0.1
@@ -74,6 +56,7 @@ Host lmmini mini
 #################
 Host bitbucket.org
   User git
+  AddressFamily inet
 
 ##############
 ##  GITHUB  ##
@@ -84,9 +67,21 @@ Host github.com
   User git
 
 #############
+## AWS SSM ##
+#############
+Host i-* mi-*
+  ProxyCommand sh -c "aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
+  User ec2-user
+  ForwardAgent yes
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+
+#############
 ## DEFAULT ##
 #############
 Host *
+  CanonicalDomains mdekort.lan
+  CanonicalizeFallbackLocal yes
   ForwardAgent yes
   ForwardX11 no
   ForwardX11Trusted no
