@@ -2,21 +2,9 @@ default-host: https://ntfy.mdekort.nl
 default-token: {{pass "ntfy/melvyn" }}
 
 subscribe:
-  - topic: sonarr
-    command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
-  - topic: radarr
-    command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
-  - topic: lidarr
-    command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
-  - topic: prowlarr
-    command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
-  - topic: bazarr
+  - topic: media
     command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
   - topic: smarthome
     command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
-  - topic: watchtower
-    command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
   - topic: lmserver
-    command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
-  - topic: router-events
     command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
