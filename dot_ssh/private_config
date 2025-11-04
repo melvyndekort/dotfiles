@@ -7,7 +7,7 @@ Host lmrouter
 
 Host pihole
   Hostname pihole.mdekort.lan
-  User melvyn
+  User core
 
 Host lm-ap-1 lmap1 ap1
   Hostname lm-ap-1.mdekort.lan
