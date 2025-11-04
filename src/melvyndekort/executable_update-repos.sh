@@ -28,9 +28,16 @@ for REPO in $REPOLIST; do
   DIRLIST=$(echo ${DIRLIST/$REPO/})
 done
 
-UNMANAGED=$(echo "$DIRLIST $ARCHIVED_REPOS" | tr ' ' '\n' | grep -v '^$' | sort -u | tr '\n' ' ')
+ARCHIVED_ON_DISK=""
+for REPO in $ARCHIVED_REPOS; do
+  if [ -d "$REPO" ]; then
+    ARCHIVED_ON_DISK="$ARCHIVED_ON_DISK $REPO"
+  fi
+done
+
+UNMANAGED=$(echo "$DIRLIST $ARCHIVED_ON_DISK" | tr ' ' '\n' | grep -v '^$' | sort -u | tr '\n' ' ')
 
 if [ -n "$UNMANAGED" ]; then
-   echo "Repositories which aren't managed anymore: $UNMANAGED"
+   echo "Repositories which aren't managed: $UNMANAGED"
 fi
 
