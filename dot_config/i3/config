@@ -163,6 +163,7 @@ bindsym $mod+Shift+Control+m exec rofi-samba
 bindsym $mod+Shift+Control+o exec obsidian
 bindsym $mod+Shift+Control+p exec postman
 bindsym $mod+Shift+Control+r exec galculator
+bindsym $mod+Shift+Control+s exec slack
 bindsym $mod+Shift+Control+t exec rofi-terraform
 bindsym $mod+Shift+Control+v exec rofi-codium
 bindsym $mod+Shift+Control+w exec rofi-browser
@@ -197,6 +198,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 10%-
 bindsym $mod+x exec --no-startup-id xset s activate
 bindsym $mod+Shift+x exec --no-startup-id systemctl suspend
 bindsym $mod+p exec rofi-display
+bindsym $mod+Shift+s exec --no-startup-id ssh -O exit '*'
 bindsym $mod+Shift+p exec screensaver-toggle.sh && polybar-msg action "#screensaver.hook.0"
 bindsym $mod+Home exec --no-startup-id wallpaper-set.sh
 bindsym $mod+Shift+Home exec --no-startup-id ~/.config/polybar/launch.sh
