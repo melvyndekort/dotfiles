@@ -2,6 +2,8 @@ default-host: https://ntfy.mdekort.nl
 default-token: {{pass "ntfy/melvyn" }}
 
 subscribe:
+  - topic: aws
+    command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
   - topic: media
     command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
   - topic: smarthome
