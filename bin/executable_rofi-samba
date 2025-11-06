@@ -1,44 +1,94 @@
-#!/bin/sh
+#!/bin/bash
 
-BASEDIR=$HOME/mnt
-PASSWORD="$(pass show samba/lmserver/melvyn)"
-HOSTS="lmserver"
+set -euo pipefail
+
+readonly BASEDIR="$HOME/mnt"
+readonly HOSTS="lmserver"
+readonly USERNAME="melvyn"
+
+get_password() {
+    pass show samba/lmserver/melvyn 2>/dev/null || {
+        notify-send "Error" "Failed to retrieve password"
+        exit 1
+    }
+}
 
 do_mount() {
-  host=$(echo $1 | cut -d'/' -f1)
-  ip=$(host -tA $host | awk '{print $NF}')
-  mkdir -p $BASEDIR/$1
-  sudo -n /usr/sbin/mount.cifs -o ip=$ip,username=melvyn,password=$PASSWORD,uid=$(id -u),gid=$(id -g),forceuid,forcegid //$1 $BASEDIR/$1
+    local share="$1"
+    local host="${share%/*}"
+    local password
+    
+    password=$(get_password)
+    
+    local ip
+    ip=$(getent hosts "$host" | awk '{print $1}') || {
+        notify-send "Error" "Cannot resolve host: $host"
+        exit 1
+    }
+    
+    local mount_point="$BASEDIR/$share"
+    mkdir -p "$mount_point"
+    
+    if sudo -n /usr/sbin/mount.cifs -o "ip=$ip,username=$USERNAME,password=$password,uid=$(id -u),gid=$(id -g),forceuid,forcegid" "//$share" "$mount_point"; then
+        notify-send "Mounted" "$share at $mount_point"
+    else
+        notify-send "Error" "Failed to mount $share"
+        rmdir "$mount_point" 2>/dev/null || true
+        exit 1
+    fi
 }
 
 do_umount() {
-  sudo -n /usr/bin/umount $BASEDIR/$1
-  notify-send "$(rmdir -p $BASEDIR/$1)"
+    local share="$1"
+    local mount_point="$BASEDIR/$share"
+    
+    if sudo -n /usr/bin/umount "$mount_point"; then
+        find "$BASEDIR" -type d -empty -delete 2>/dev/null || true
+        notify-send "Unmounted" "$share"
+    else
+        notify-send "Error" "Failed to unmount $share"
+        exit 1
+    fi
 }
 
 list_options() {
-  for host in $HOSTS; do
-    for i in $(smbclient -U "melvyn%${PASSWORD}" -L //$host -g | grep '^Disk' | sort | cut -d'|' -f2); do
-      if grep -q //$host/$i /proc/mounts; then
-        echo $i | sed "s|^|unmount $host/|"
-      else
-        echo $i | sed "s|^|mount $host/|"
-      fi
+    local password
+    password=$(get_password)
+    
+    for host in $HOSTS; do
+        local shares
+        shares=$(smbclient -U "$USERNAME%$password" -L "//$host" -g 2>/dev/null | grep '^Disk' | cut -d'|' -f2 | sort) || {
+            notify-send "Error" "Failed to list shares from $host"
+            continue
+        }
+        
+        while IFS= read -r share; do
+            [[ -n "$share" ]] || continue
+            if grep -q "//$host/$share" /proc/mounts; then
+                echo "unmount $host/$share"
+            else
+                echo "mount $host/$share"
+            fi
+        done <<< "$shares"
     done
-  done
 }
 
-choice="$(list_options | rofi -dmenu -p 'Manage SAMBA shares')"
+main() {
+    local choice
+    choice=$(list_options | rofi -dmenu -p 'Manage SAMBA shares' -i) || exit 0
+    
+    case "$choice" in
+        "mount "*)
+            do_mount "${choice#mount }"
+            ;;
+        "unmount "*)
+            do_umount "${choice#unmount }"
+            ;;
+        *)
+            notify-send "Error" "Invalid choice: $choice"
+            exit 1
+            ;;
+    esac
+}
 
-case "$choice" in
-  mount*)
-    do_mount $(echo $choice | cut -d' ' -f2)
-    ;;
-  unmount*)
-    do_umount $(echo $choice | cut -d' ' -f2)
-    ;;
-  *)
-    echo 'Unsupported choice'
-    exit 1
-    ;;
-esac
+main "$@"
