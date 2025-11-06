@@ -2,47 +2,47 @@
 ## HOME ##
 ##########
 Host lmrouter
-  Hostname lmrouter.mdekort.lan
+  Hostname lmrouter.mdekort.nl
   User melvyn
 
 Host pihole
-  Hostname pihole.mdekort.lan
+  Hostname pihole.mdekort.nl
   User core
 
 Host lm-ap-1 lmap1 ap1
-  Hostname lm-ap-1.mdekort.lan
+  Hostname lm-ap-1.mdekort.nl
   User root
 
 Host lm-ap-2 lmap2 ap2
-  Hostname lm-ap-2.mdekort.lan
+  Hostname lm-ap-2.mdekort.nl
   User root
 
 Host lm-ap-3 lmap3 ap3
-  Hostname lm-ap-3.mdekort.lan
+  Hostname lm-ap-3.mdekort.nl
   User root
 
 Host lm-ap-4 lmap4 ap4
-  Hostname lm-ap-4.mdekort.lan
+  Hostname lm-ap-4.mdekort.nl
   User root
 
 Host lmserver
-  Hostname lmserver.mdekort.lan
+  Hostname lmserver.mdekort.nl
   User core
 
 Host melvynpc
-  Hostname melvynpc.mdekort.lan
+  Hostname melvynpc.mdekort.nl
   User melvyn
 
 Host kodi1 kodi
-  Hostname kodi1.mdekort.lan
+  Hostname kodi1.mdekort.nl
   User root
 
 Host lmnuc nuc
-  Hostname lmnuc.mdekort.lan
+  Hostname lmnuc.mdekort.nl
   User melvyn
 
 Host tuinhuis
-  Hostname tuinhuis.mdekort.lan
+  Hostname tuinhuis.mdekort.nl
   User melvyn
 
 Host lmmini mini
@@ -80,7 +80,7 @@ Host i-* mi-*
 ## DEFAULT ##
 #############
 Host *
-  CanonicalDomains mdekort.lan
+  CanonicalDomains mdekort.nl
   CanonicalizeFallbackLocal yes
   ForwardAgent yes
   ForwardX11 no
