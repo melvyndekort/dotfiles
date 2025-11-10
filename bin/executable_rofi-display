@@ -1,77 +1,13 @@
 #!/bin/sh
 
-choice="$(
-  rofi -dmenu -p 'Display setup' <<EOF
-laptop
-laptop-ext
-office
-melvynpc
-hdmi-clone
-hdmi-expand
-EOF
-)"
+choice="$(find ~/.config/screenlayout -name "*.sh" -executable -printf "%f\n" | sed 's/\.sh$//' | sort | rofi -dmenu -p 'Display setup')"
 
-case "$choice" in
-laptop)
-  xrandr \
-    --output eDP-1 --primary --auto \
-    --output DP-1 --off \
-    --output DP-2 --off \
-    --output HDMI-1 --off \
-    --output HDMI-2 --off \
-    --output HDMI-3 --off
-  ;;
-
-laptop-ext)
-  xrandr \
-    --output eDP-1 --off \
-    --output DP-1 --primary --auto \
-    --output DP-2 --off \
-    --output HDMI-1 --off \
-    --output HDMI-2 --off \
-    --output HDMI-3 --off
-  ;;
-
-office)
-  xrandr \
-    --output eDP-1 --auto --pos 0x1080 \
-    --output DP-1 --off \
-    --output DP-2 --off \
-    --output HDMI-1 --primary --auto --pos 0x0 \
-    --output HDMI-2 --off \
-    --output HDMI-3 --off
-  ;;
-
-melvynpc)
-  xrandr \
-    --output DP-0 --off \
-    --output DP-1 --primary --auto \
-    --output DVI-I-1 --off
-  ;;
-
-hdmi-clone)
-  xrandr \
-    --output eDP-1 --primary --auto \
-    --output DP-1 --off \
-    --output DP-2 --off \
-    --output HDMI-1 --auto --same-as eDP-1 \
-    --output HDMI-2 --off \
-    --output HDMI-3 --off
-  ;;
-
-hdmi-expand)
-  xrandr \
-    --output eDP-1 --primary --auto --pos 0x0\
-    --output DP-1 --off \
-    --output DP-2 --off \
-    --output HDMI-1 --auto --pos 1920x0 \
-    --output HDMI-2 --off \
-    --output HDMI-3 --off
-  ;;
-
-*)
+if [ -f ~/.config/screenlayout/"$choice".sh ]; then
+  ~/.config/screenlayout/"$choice".sh
+  sleep 3
+  ~/bin/wallpaper-set
+  ~/.config/polybar/launch.sh
+  notify-send "Configured display setup: $choice"
+else
   exit 1
-  ;;
-esac
-
-notify-send "Configured display setup: $choice"
+fi
