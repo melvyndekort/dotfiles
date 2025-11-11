@@ -1,36 +1,48 @@
 #!/bin/sh
 
+# Exit if rofi cancelled
 choice="$(rofi -dmenu -p 'Launch browser' << EOF
-Firefox default
-Firefox private
-Firefox ProfileManager
-Chromium default
-Chromium private
+🦊 Firefox default
+🕵️ Firefox private
+⚙️ Firefox ProfileManager
+🌐 Chromium default
+🕵️ Chromium private
+🥷 Chromium incognito
 EOF
-)"
+)" || exit 1
+
+[ -z "$choice" ] && exit 1
+
+# Helper function for chromium
+launch_chromium() {
+    profile="$1"
+    command -v chromium >/dev/null || { echo "chromium not found"; exit 1; }
+    
+    data_dir="${XDG_DATA_HOME:-$HOME/.local/share}/chromium/$profile"
+    if [ "$(command -v chromium)" = "/snap/bin/chromium" ]; then
+        data_dir="$HOME/snap/chromium/common/profiles/$profile"
+    fi
+    
+    chromium --user-data-dir="$data_dir" &
+}
 
 case "$choice" in
-  'Firefox default')
-    firefox -P default
-    ;;
-  'Firefox private')
-    firefox -P private
-    ;;
-  'Firefox ProfileManager')
-    firefox --ProfileManager
-    ;;
-  'Chromium default')
-    if [ "$(which chromium)" = "/snap/bin/chromium" ]; then
-      chromium --user-data-dir=$HOME/snap/chromium/common/profiles/default
-    else
-      chromium --user-data-dir=${XDG_DATA_HOME}/chromium/default
-    fi
-    ;;
-  'Chromium private')
-    if [ "$(which chromium)" = "/snap/bin/chromium" ]; then
-      chromium --user-data-dir=$HOME/snap/chromium/common/profiles/private
-    else
-      chromium --user-data-dir=${XDG_DATA_HOME}/chromium/private
-    fi
-    ;;
+    '🦊 Firefox default')
+        command -v firefox >/dev/null && firefox -P default &
+        ;;
+    '🕵️ Firefox private')
+        command -v firefox >/dev/null && firefox -P private &
+        ;;
+    '⚙️ Firefox ProfileManager')
+        command -v firefox >/dev/null && firefox --ProfileManager &
+        ;;
+    '🌐 Chromium default')
+        launch_chromium default
+        ;;
+    '🕵️ Chromium private')
+        launch_chromium private
+        ;;
+    '🥷 Chromium incognito')
+        command -v chromium >/dev/null && chromium --incognito &
+        ;;
 esac
