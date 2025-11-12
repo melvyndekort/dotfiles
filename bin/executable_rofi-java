@@ -1,19 +1,40 @@
-#!/bin/sh
+#!/bin/bash
 
-lsb_release -i | if grep -iq ubuntu; then
-  choice="$(update-java-alternatives -l | awk '{print $3}' | rofi -dmenu -p 'Java version')"
-  if [ -n "$choice" ]; then
-    sudo update-java-alternatives -s "$choice"
-    notify-send "Java set to $choice"
-    exit 0
-  fi
-fi
+set -euo pipefail
 
-lsb_release -i | if grep -iq arch; then
-  choice="$(archlinux-java status | grep '^ ' | sed -e 's/^[ \t]*//' | rofi -dmenu -p 'Java version' | awk '{print $1}')"
-  if [ -n "$choice" ]; then
-    sudo archlinux-java set "$choice"
-    notify-send "Java set to $choice"
-    exit 0
-  fi
+# Check dependencies
+command -v rofi >/dev/null || { echo "rofi not found" >&2; exit 1; }
+
+# Ubuntu/Debian
+if command -v update-java-alternatives >/dev/null; then
+    current_path=$(readlink -f /usr/bin/java 2>/dev/null)
+    choice=$(update-java-alternatives -l | while read name priority path; do
+        resolved_path=$(readlink -f "$path/bin/java" 2>/dev/null)
+        if [[ "$current_path" == "$resolved_path" ]]; then
+            echo "$name (current)"
+        else
+            echo "$name"
+        fi
+    done | rofi -dmenu -p 'Java version' -i | awk '{print $1}')
+    
+    [[ -n "$choice" ]] || exit 0
+    
+    sudo update-java-alternatives -s "$choice" 2>/dev/null || 
+    sudo update-java-alternatives --jre -s "$choice"
+    
+    notify-send "Java switched to $choice"
+
+# Arch/Manjaro  
+elif command -v archlinux-java >/dev/null; then
+    current=$(archlinux-java get 2>/dev/null || echo "none")
+    choice=$(archlinux-java status | grep '^ ' | sed 's/^[ \t]*//' | awk -v current="$current" '
+        { marker = ($1 == current) ? " (current)" : ""; print $1 marker }
+    ' | rofi -dmenu -p 'Java version' -i | awk '{print $1}')
+    
+    [[ -n "$choice" ]] && sudo archlinux-java set "$choice" && 
+    notify-send "Java switched to $choice"
+
+else
+    echo "Java version switching not supported on this system" >&2
+    exit 1
 fi
