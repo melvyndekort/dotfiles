@@ -1,90 +1,95 @@
 #!/bin/bash
-set -e
-set -o pipefail
 
-print-account-list() {
-  bw list items | jq -r '.[] | (.name + " (" + .login.username+")"+" ["+.id+"]")' 2>&1
+set -euo pipefail
+
+# Configuration
+BW_SESSION_FILE="$HOME/.cache/bw-session"
+BW_ACCOUNTS_CACHE="$HOME/.cache/bw-accounts"
+SESSION_TIMEOUT=3600
+CACHE_TIMEOUT=1800  # 30 minutes instead of 5
+
+# Check dependencies
+for cmd in bw jq xclip pass; do
+    command -v "$cmd" >/dev/null || { echo "$cmd not found" >&2; exit 1; }
+done
+
+# Fast session management - skip validation, just try to use
+get_session() {
+    local session_file="$BW_SESSION_FILE"
+    
+    # Use existing session if recent
+    if [[ -f "$session_file" ]] && [[ $(($(date +%s) - $(stat -c %Y "$session_file"))) -lt $SESSION_TIMEOUT ]]; then
+        export BW_SESSION=$(cat "$session_file")
+        return 0
+    fi
+    
+    # Get new session
+    local password session
+    password=$(pass show bitwarden/melvyn) || exit 1
+    session=$(echo "$password" | bw unlock --raw) || exit 1
+    
+    umask 077
+    echo "$session" > "$session_file"
+    export BW_SESSION="$session"
 }
 
-copy-account-field() {
-  bw get ${2} "$1" | xclip -r -selection clipboard > /dev/null 2>/dev/null
+# Optimized account fetching
+get_accounts() {
+    local cache_file="$BW_ACCOUNTS_CACHE"
+    
+    # Use cache if recent (30 minutes)
+    if [[ -f "$cache_file" ]] && [[ $(($(date +%s) - $(stat -c %Y "$cache_file"))) -lt $CACHE_TIMEOUT ]]; then
+        cat "$cache_file"
+        return
+    fi
+    
+    # Fetch and process in one go - much faster
+    bw list items --search login 2>/dev/null | \
+    jq -r --unbuffered '.[] | select(.login.username) | "\(.name) (\(.login.username)) [\(.id)]"' > "$cache_file"
+    cat "$cache_file"
 }
 
-open-account-url() {
-  local url=$(bw get uri"$1")
-  if [[ -n $url ]]; then
-    xdg-open "$url" >/dev/null 2>/dev/null
-  else
-    exit 2
-  fi
+# Fast field extraction
+copy_field() {
+    local id="$1" field="$2"
+    local value
+    
+    value=$(bw get "$field" "$id") || exit 1
+    echo -n "$value" | xclip -selection clipboard
+    
+    # Background clipboard clear
+    (sleep 30 && echo -n "" | xclip -selection clipboard) &
 }
 
-is-actual-url() {
-  local url="$1"
-  if [[ -n $url && "$url" != " " && "$url" != "http://" && "$url" != "https://" ]]; then
-    return 0
-  else
-    return 1
-  fi
+# Extract ID
+extract_id() {
+    echo "$1" | grep -oE '\[[^]]+\]' | tr -d '[]'
 }
 
-show-account-options() {
-  local id="$1"
-
-  echo ">> Copy password [$id]"
-  echo ">> Copy username [$id]"
-
-  url=$(bw get uri "$id")
-  if is-actual-url "$url"; then
-    echo ">> Open $url [$id]"
-    echo ">> Copy URI [$id]"
-  fi
-
-  echo ">> Copy ID [$id]"
+# Main
+main() {
+    get_session
+    
+    if [[ -n "${1:-}" ]]; then
+        local id
+        id=$(extract_id "$1")
+        [[ -n "$id" ]] || exit 1
+        
+        case "$1" in
+            *"Copy password"*) copy_field "$id" password ;;
+            *"Copy username"*) copy_field "$id" username ;;
+            *"Copy URL"*) copy_field "$id" uri ;;
+            *"Open URL"*) xdg-open "$(bw get uri "$id")" ;;
+            *) 
+                echo "🔑 Copy password [$id]"
+                echo "👤 Copy username [$id]"
+                local url=$(bw get uri "$id" 2>/dev/null || echo "")
+                [[ "$url" =~ ^https?:// ]] && echo "🌐 Open URL [$id]" && echo "📋 Copy URL [$id]"
+                ;;
+        esac
+    else
+        get_accounts
+    fi
 }
 
-is-entry-selected() {
-  if [[ -n $@ ]]; then
-    return 0
-  else
-    return 1
-  fi
-}
-
-id-in-selection() {
-  echo "$1" | grep -oE '\[.+\]$' | tr -d '[]'
-}
-
-debug() {
-  echo "$@" > /dev/stderr
-}
-
-. bw-unlock
-
-if is-entry-selected "$1"; then
-  selected="$1"
-
-  id="$(id-in-selection "$selected")"
-
-  if [[ -n $id ]]; then
-    case "$selected" in
-      '>> Copy password'*)
-        copy-account-field "$id" password ;;
-      '>> Copy username'*)
-        copy-account-field "$id" username ;;
-      '>> Copy URL'*)
-        copy-account-field "$id" uri ;;
-      '>> Copy ID'*)
-        copy-account-field "$id" id ;;
-      '>> Open'*)
-        open-account-url "$id" ;;
-      *)
-        show-account-options "$id" ;;
-    esac
-  else
-    echo "Could not detect the entry ID of \"${selection}\""
-    exit 1
-  fi
-else
-  print-account-list
-fi
+main "$@"
