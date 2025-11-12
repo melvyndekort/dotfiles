@@ -1,19 +1,62 @@
-#!/bin/sh
+#!/bin/bash
 
-OPTION=${1:-clipboard}
+set -euo pipefail
 
-choice="$(ykman oath accounts list | rofi -dmenu -p 'TOTP account (tap Yubikey after selection)')"
+OPTION="${1:-clipboard}"
+CLIPBOARD_TIMEOUT=30
 
-if [ -n "$choice" ]; then
-  code=$(ykman oath accounts code -s $choice)
+# Check dependencies
+for cmd in ykman rofi notify-send; do
+    command -v "$cmd" >/dev/null || { echo "$cmd not found" >&2; exit 1; }
+done
 
-  case $OPTION in
+case "$OPTION" in
+    clipboard) command -v xclip >/dev/null || { echo "xclip not found" >&2; exit 1; } ;;
+    direct) command -v xdotool >/dev/null || { echo "xdotool not found" >&2; exit 1; } ;;
+esac
+
+# Get TOTP accounts
+accounts=$(ykman oath accounts list 2>/dev/null) || {
+    notify-send "YubiKey Error" "Failed to list accounts. Is YubiKey connected?"
+    exit 1
+}
+
+[[ -n "$accounts" ]] || {
+    notify-send "YubiKey" "No TOTP accounts found"
+    exit 1
+}
+
+# Select account
+choice=$(echo "$accounts" | rofi -dmenu -p 'Select TOTP account' -i)
+[[ -n "$choice" ]] || exit 0
+
+# Get TOTP code
+notify-send "YubiKey" "Touch your YubiKey to generate code for: $choice"
+code=$(ykman oath accounts code -s "$choice" 2>/dev/null) || {
+    notify-send "YubiKey Error" "Failed to generate code for $choice"
+    exit 1
+}
+
+# Validate code format (6-8 digits)
+[[ "$code" =~ ^[0-9]{6,8}$ ]] || {
+    notify-send "YubiKey Error" "Invalid code format received"
+    exit 1
+}
+
+case "$OPTION" in
     clipboard)
-      echo -n "$code" | xclip -selection clipboard
-      notify-send "Your code for $choice is: $code"
-      ;;
+        echo -n "$code" | xclip -selection clipboard
+        notify-send "YubiKey" "Code copied to clipboard (expires in ${CLIPBOARD_TIMEOUT}s)"
+        
+        # Clear clipboard after timeout
+        (sleep "$CLIPBOARD_TIMEOUT" && echo -n "" | xclip -selection clipboard) &
+        ;;
     direct)
-      xdotool type $code
-      ;;
-  esac
-fi
+        xdotool type "$code"
+        notify-send "YubiKey" "Code typed for $choice"
+        ;;
+    *)
+        echo "Usage: $0 [clipboard|direct]" >&2
+        exit 1
+        ;;
+esac
