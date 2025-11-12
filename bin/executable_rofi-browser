@@ -1,7 +1,25 @@
-#!/bin/sh
+#!/bin/bash
 
-# Exit if rofi cancelled
-choice="$(rofi -dmenu -p 'Launch browser' << EOF
+set -euo pipefail
+
+# Check dependencies
+command -v rofi >/dev/null || { echo "rofi not found" >&2; exit 1; }
+
+# Helper function for chromium
+launch_chromium() {
+    local profile="$1"
+    command -v chromium >/dev/null || { echo "chromium not found" >&2; exit 1; }
+    
+    local data_dir="${XDG_DATA_HOME:-$HOME/.local/share}/chromium/$profile"
+    if [[ "$(command -v chromium)" == "/snap/bin/chromium" ]]; then
+        data_dir="$HOME/snap/chromium/common/profiles/$profile"
+    fi
+    
+    chromium --user-data-dir="$data_dir" &
+}
+
+# Get user choice
+choice=$(rofi -dmenu -p 'Launch browser' << 'EOF'
 🦊 Firefox default
 🕵️ Firefox private
 ⚙️ Firefox ProfileManager
@@ -9,22 +27,9 @@ choice="$(rofi -dmenu -p 'Launch browser' << EOF
 🕵️ Chromium private
 🥷 Chromium incognito
 EOF
-)" || exit 1
+)
 
-[ -z "$choice" ] && exit 1
-
-# Helper function for chromium
-launch_chromium() {
-    profile="$1"
-    command -v chromium >/dev/null || { echo "chromium not found"; exit 1; }
-    
-    data_dir="${XDG_DATA_HOME:-$HOME/.local/share}/chromium/$profile"
-    if [ "$(command -v chromium)" = "/snap/bin/chromium" ]; then
-        data_dir="$HOME/snap/chromium/common/profiles/$profile"
-    fi
-    
-    chromium --user-data-dir="$data_dir" &
-}
+[[ -n "$choice" ]] || exit 0
 
 case "$choice" in
     '🦊 Firefox default')

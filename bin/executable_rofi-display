@@ -1,31 +1,46 @@
-#!/bin/sh
+#!/bin/bash
+
+set -euo pipefail
 
 SCREENLAYOUT_DIR="$HOME/.config/screenlayout"
 
+# Check dependencies
+for cmd in rofi xrandr notify-send; do
+    command -v "$cmd" >/dev/null || { echo "$cmd not found" >&2; exit 1; }
+done
+
 # Check if directory exists
-[ ! -d "$SCREENLAYOUT_DIR" ] && { notify-send "Error: $SCREENLAYOUT_DIR not found"; exit 1; }
+[[ -d "$SCREENLAYOUT_DIR" ]] || { 
+    notify-send "Error" "$SCREENLAYOUT_DIR not found"
+    exit 1
+}
+
+# Get available scripts (portable version)
+get_scripts() {
+    find "$SCREENLAYOUT_DIR" -name "*.sh" -executable | while read -r script; do
+        basename "$script" .sh
+    done | sort
+}
 
 # Get user choice
-choice="$(find "$SCREENLAYOUT_DIR" -name "*.sh" -executable -printf "%f\n" | sed 's/\.sh$//' | sort | rofi -dmenu -p 'Display setup')"
-
-# Exit if no selection made
-[ -z "$choice" ] && exit 0
+choice=$(get_scripts | rofi -dmenu -p 'Display setup')
+[[ -n "$choice" ]] || exit 0
 
 # Execute layout script
 script="$SCREENLAYOUT_DIR/$choice.sh"
-if [ -x "$script" ]; then
-  if "$script" && xrandr | grep -q " connected.*[0-9]"; then
-    sleep 3
-    ~/bin/wallpaper-set
-    ~/.config/polybar/launch.sh
-    notify-send "Configured display setup: $choice"
-  else
-    # Fallback to first available display if script fails or no displays active
-    primary=$(xrandr | grep " connected" | head -1 | awk '{print $1}')
-    xrandr --output "$primary" --primary --auto
-    notify-send "Display setup failed, reverted to $primary"
-  fi
+if [[ -x "$script" ]]; then
+    if "$script" && xrandr | grep -q " connected.*[0-9]"; then
+        sleep 3  # Deliberate delay for display settling
+        ~/bin/wallpaper-set
+        ~/.config/polybar/launch.sh
+        notify-send "Display" "Configured setup: $choice"
+    else
+        # Fallback to first available display if script fails or no displays active
+        primary=$(xrandr | grep " connected" | head -1 | awk '{print $1}')
+        xrandr --output "$primary" --primary --auto
+        notify-send "Display" "Setup failed, reverted to $primary"
+    fi
 else
-  notify-send "Error: Script not found or not executable"
-  exit 1
+    notify-send "Error" "Script not found or not executable"
+    exit 1
 fi
