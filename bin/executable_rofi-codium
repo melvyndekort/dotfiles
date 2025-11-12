@@ -1,16 +1,15 @@
-#!/bin/sh
+#!/bin/bash
 
-choice="$(rofi -dmenu -p 'Launch Visual Studio Code' << EOF
-Profile default
-Profile portbase
-EOF
-)"
+# Check if codium exists
+command -v codium >/dev/null || { echo "codium not found" >&2; exit 1; }
 
-case "$choice" in
-  'Profile default')
-    codium --profile Default
-    ;;
-  'Profile portbase')
-    codium --profile Portbase
-    ;;
-esac
+# Profile list - easy to modify
+profiles="Default
+Portbase"
+
+# Show rofi menu
+choice=$(echo "$profiles" | rofi -dmenu -p 'Launch VSCodium Profile' -i)
+[[ -n "$choice" ]] || exit 0
+
+# Launch with selected profile
+codium --profile "$choice" &
