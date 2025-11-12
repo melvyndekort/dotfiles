@@ -1,4 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
-AVD="$(avdmanager list avd -c | rofi -dmenu -p 'Pick Android Virtual Device')"
-$HOME/Android/Sdk/emulator/emulator -avd "$AVD"
+EMULATOR="${ANDROID_HOME:-$HOME/Android/Sdk}/emulator/emulator"
+
+# Check if emulator exists
+[[ -x "$EMULATOR" ]] || { echo "Android emulator not found" >&2; exit 1; }
+
+# Get AVD selection
+AVD=$(avdmanager list avd -c | rofi -dmenu -p 'Pick Android Virtual Device' || true)
+[[ -n "$AVD" ]] || exit 0
+
+# Start emulator
+nohup "$EMULATOR" -avd "$AVD" >/dev/null 2>&1 &
