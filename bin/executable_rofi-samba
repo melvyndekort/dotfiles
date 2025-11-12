@@ -6,11 +6,21 @@ readonly BASEDIR="$HOME/mnt"
 readonly HOSTS="lmserver"
 readonly USERNAME="melvyn"
 
+# Check dependencies
+for cmd in rofi pass smbclient notify-send getent; do
+    command -v "$cmd" >/dev/null || { echo "$cmd not found" >&2; exit 1; }
+done
+
+# Cache password for the session
+PASSWORD=""
 get_password() {
-    pass show samba/lmserver/melvyn 2>/dev/null || {
-        notify-send "Error" "Failed to retrieve password"
-        exit 1
-    }
+    if [[ -z "$PASSWORD" ]]; then
+        PASSWORD=$(pass show samba/lmserver/melvyn 2>/dev/null) || {
+            notify-send "Error" "Failed to retrieve password"
+            exit 1
+        }
+    fi
+    echo "$PASSWORD"
 }
 
 do_mount() {
@@ -21,7 +31,7 @@ do_mount() {
     password=$(get_password)
     
     local ip
-    ip=$(getent hosts "$host" | awk '{print $1}') || {
+    ip=$(timeout 5 getent hosts "$host" | awk '{print $1}') || {
         notify-send "Error" "Cannot resolve host: $host"
         exit 1
     }
@@ -30,7 +40,7 @@ do_mount() {
     mkdir -p "$mount_point"
     
     if sudo -n /usr/sbin/mount.cifs -o "ip=$ip,username=$USERNAME,password=$password,uid=$(id -u),gid=$(id -g),forceuid,forcegid" "//$share" "$mount_point"; then
-        notify-send "Mounted" "$share at $mount_point"
+        notify-send "SAMBA" "Mounted $share"
     else
         notify-send "Error" "Failed to mount $share"
         rmdir "$mount_point" 2>/dev/null || true
@@ -44,7 +54,7 @@ do_umount() {
     
     if sudo -n /usr/bin/umount "$mount_point"; then
         find "$BASEDIR" -type d -empty -delete 2>/dev/null || true
-        notify-send "Unmounted" "$share"
+        notify-send "SAMBA" "Unmounted $share"
     else
         notify-send "Error" "Failed to unmount $share"
         exit 1
@@ -57,7 +67,7 @@ list_options() {
     
     for host in $HOSTS; do
         local shares
-        shares=$(smbclient -U "$USERNAME%$password" -L "//$host" -g 2>/dev/null | grep '^Disk' | cut -d'|' -f2 | sort) || {
+        shares=$(timeout 10 smbclient -U "$USERNAME%$password" -L "//$host" -g 2>/dev/null | grep '^Disk' | cut -d'|' -f2 | sort) || {
             notify-send "Error" "Failed to list shares from $host"
             continue
         }
@@ -65,9 +75,9 @@ list_options() {
         while IFS= read -r share; do
             [[ -n "$share" ]] || continue
             if grep -q "//$host/$share" /proc/mounts; then
-                echo "unmount $host/$share"
+                echo "🔌 unmount $host/$share"
             else
-                echo "mount $host/$share"
+                echo "📥 mount $host/$share"
             fi
         done <<< "$shares"
     done
@@ -78,11 +88,11 @@ main() {
     choice=$(list_options | rofi -dmenu -p 'Manage SAMBA shares' -i) || exit 0
     
     case "$choice" in
-        "mount "*)
-            do_mount "${choice#mount }"
+        *"unmount "*)
+            do_umount "${choice#*unmount }"
             ;;
-        "unmount "*)
-            do_umount "${choice#unmount }"
+        *"mount "*)
+            do_mount "${choice#*mount }"
             ;;
         *)
             notify-send "Error" "Invalid choice: $choice"

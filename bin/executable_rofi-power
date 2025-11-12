@@ -1,5 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
 set -euo pipefail
+
+# Check dependencies
+for cmd in rofi loginctl systemctl; do
+    command -v "$cmd" >/dev/null || { echo "$cmd not found" >&2; exit 1; }
+done
 
 # Get session ID safely
 get_session() {
