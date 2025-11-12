@@ -1,46 +1,111 @@
-#!/bin/sh
+#!/bin/bash
 
+set -euo pipefail
+
+# Configuration
+ROFI_THEME="${ROFI_THEME:-}"
+NOTIFICATION_TIMEOUT=3000
+
+# Utility functions
+notify() {
+    notify-send -t "$NOTIFICATION_TIMEOUT" "Terraform" "$1"
+}
+
+error_exit() {
+    notify "Error: $1"
+    exit 1
+}
+
+# Core functions
 get_latest() {
-  tfenv list-remote | egrep -v 'alpha|beta|rc[0-9]' | head -n 1
+    tfenv list-remote | grep -E -v 'alpha|beta|rc[0-9]' | head -n 1 || error_exit "Failed to get latest version"
 }
 
 select_remote() {
-  tfenv list-remote | rofi -dmenu -p 'Pick Terraform version' | awk '{print $1}'
+    local version
+    version=$(tfenv list-remote | rofi -dmenu -p 'Pick Terraform version to install' -i)
+    [[ -n "$version" ]] || exit 1
+    echo "$version" | awk '{print $1}'
 }
 
 select_local() {
-  tfenv list | sed 's/^[ \t\*]*//; s/(.*)/ (activated)/' | rofi -dmenu -p 'Pick Terraform version' | awk '{print $1}'
+    local version
+    version=$(tfenv list | sed 's/^[ \t\*]*//; s/(.*)/ (current)/' | rofi -dmenu -p 'Pick installed Terraform version' -i)
+    [[ -n "$version" ]] || exit 1
+    echo "$version" | awk '{print $1}'
 }
 
 install() {
-  tfenv install "$1" && notify-send "Terraform version $1 installed"
+    local version="$1"
+    if tfenv install "$version"; then
+        notify "Successfully installed Terraform $version"
+    else
+        error_exit "Failed to install Terraform $version"
+    fi
 }
 
 uninstall() {
-  tfenv uninstall "$1" && notify-send "Terraform version $1 uninstalled"
+    local version="$1"
+    if tfenv uninstall "$version"; then
+        notify "Successfully uninstalled Terraform $version"
+    else
+        error_exit "Failed to uninstall Terraform $version"
+    fi
 }
 
 activate() {
-  tfenv use "$1" && notify-send "Terraform version $1 activated"
+    local version="$1"
+    if tfenv use "$version"; then
+        notify "Activated Terraform $version"
+    else
+        error_exit "Failed to activate Terraform $version"
+    fi
 }
 
-ACTION="$(rofi -dmenu -p 'Pick tfenv action' << EOF
-upgrade
-install
-activate
-uninstall
+# Main menu
+main() {
+    local action
+    action=$(cat << EOF | rofi -dmenu -p 'Terraform Manager' -i
+🔄 Upgrade to latest
+📦 Install version
+✅ Switch version
+🗑️ Uninstall version
 EOF
-)"
+)
 
-case "$ACTION" in
-  upgrade)
-    VERSION="$(get_latest)"
-    install $VERSION
-    activate $VERSION;;
-  install)
-    install $(select_remote);;
-  activate)
-    activate $(select_local);;
-  uninstall)
-    uninstall $(select_local);;
-esac
+    case "$action" in
+        *"Upgrade"*)
+            local version
+            version=$(get_latest)
+            install "$version"
+            activate "$version"
+            ;;
+        *"Install"*)
+            local version
+            version=$(select_remote)
+            [[ -n "$version" ]] && install "$version"
+            ;;
+        *"Switch"*)
+            local version
+            version=$(select_local)
+            [[ -n "$version" ]] && activate "$version"
+            ;;
+        *"Uninstall"*)
+            local version
+            version=$(select_local)
+            [[ -n "$version" ]] && uninstall "$version"
+            ;;
+        "")
+            exit 0
+            ;;
+        *)
+            error_exit "Unknown action: $action"
+            ;;
+    esac
+}
+
+# Check dependencies
+command -v tfenv >/dev/null 2>&1 || error_exit "tfenv not found in PATH"
+command -v rofi >/dev/null 2>&1 || error_exit "rofi not found in PATH"
+
+main "$@"
