@@ -173,7 +173,6 @@ bindsym $mod+Shift+Control+z exec kitty --class=floating -e pulsemixer
 
 # F-key bindings
 bindsym $mod+F1 exec surf https://cheatsheets.mdekort.nl/
-bindsym $mod+F8 exec rofi-bluetooth
 bindsym $mod+F9 exec pass clip -r
 bindsym $mod+F10 exec rofi -modi Bitwarden:rofi-bw -show Bitwarden
 bindsym $mod+F12 exec rofi -modi power:rofi-power -show power
