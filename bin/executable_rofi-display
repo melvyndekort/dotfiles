@@ -31,7 +31,7 @@ script="$SCREENLAYOUT_DIR/$choice.sh"
 if [[ -x "$script" ]]; then
     if "$script" && xrandr | grep -q " connected.*[0-9]"; then
         sleep 3  # Deliberate delay for display settling
-        ~/bin/wallpaper-set
+        ~/bin/wallpaper-set.sh
         ~/.config/polybar/launch.sh
         notify-send "Display" "Configured setup: $choice"
     else
