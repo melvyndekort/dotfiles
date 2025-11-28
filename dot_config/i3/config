@@ -159,6 +159,7 @@ bindsym $mod+Shift+Control+a exec rofi-emulator
 bindsym $mod+Shift+Control+e exec subl
 bindsym $mod+Shift+Control+i exec intellij-idea-ultimate-edition
 bindsym $mod+Shift+Control+j exec rofi-java
+bindsym $mod+Shift+Control+k exec kitty -e kiro-cli
 bindsym $mod+Shift+Control+m exec rofi-samba
 bindsym $mod+Shift+Control+o exec obsidian
 bindsym $mod+Shift+Control+p exec postman
