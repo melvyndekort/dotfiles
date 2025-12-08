@@ -213,3 +213,6 @@ bindsym $mod+Control+Shift+n exec --no-startup-id dunstctl history-pop
 bindsym Print exec --no-startup-id screenshot all
 bindsym $mod+Print exec --no-startup-id screenshot window
 bindsym $mod+Shift+Print exec --no-startup-id flameshot gui
+
+# Keyboard layout bindings
+bindsym Mod1+Shift+k exec --no-startup-id kb_switch.sh
