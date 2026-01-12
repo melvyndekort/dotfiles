@@ -1,5 +1,5 @@
 # Font setup
-font pango:Hack Nerd Font Mono 10
+font pango:Hack, Symbols Nerd Font, Noto Color Emoji 10
 
 # Autostart backend applications
 exec_always --no-startup-id ~/bin/wallpaper-set.sh
