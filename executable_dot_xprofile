@@ -39,6 +39,11 @@ export GDK_BACKEND=x11
 # set default cursor to arrow
 xsetroot -cursor_name left_ptr
 
+# Set X11 screensaver and DPMS timers
+xset s 300 0
+xset +dpms
+xset dpms 600 600 600
+
 # configure dbus environment
 dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
 
