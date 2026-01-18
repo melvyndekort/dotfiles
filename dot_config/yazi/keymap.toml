@@ -1,7 +1,22 @@
+#####
+[[manager.prepend_keymap]]
+on   = [ "g", "/" ]
+run  = "cd /"
+desc = "Go to /"
+
 [[mgr.prepend_keymap]]
 on   = [ "g", "/" ]
 run  = "cd /"
 desc = "Go to /"
+
+
+#####
+[[manager.prepend_keymap]]
+on   = [ "g", "r" ]
+run  = '''
+  shell 'ya pub dds-cd --str "$(git rev-parse --show-toplevel)"' --confirm
+'''
+desc = "Go to root of git repo"
 
 [[mgr.prepend_keymap]]
 on   = [ "g", "r" ]
@@ -10,37 +25,87 @@ run  = '''
 '''
 desc = "Go to root of git repo"
 
+
+#####
+[[manager.prepend_keymap]]
+on   = [ "g", "s" ]
+run  = "cd ~/src"
+desc = "Go to ~/src"
+
 [[mgr.prepend_keymap]]
 on   = [ "g", "s" ]
 run  = "cd ~/src"
 desc = "Go to ~/src"
+
+
+#####
+[[manager.prepend_keymap]]
+on   = [ "g", "S" ]
+run  = "cd ~/Sync"
+desc = "Go to ~/Sync"
 
 [[mgr.prepend_keymap]]
 on   = [ "g", "S" ]
 run  = "cd ~/Sync"
 desc = "Go to ~/Sync"
 
+
+#####
+[[manager.prepend_keymap]]
+on   = [ "g", "." ]
+run  = "cd ~/.config"
+desc = "Go to ~/.config"
+
 [[mgr.prepend_keymap]]
 on   = [ "g", "." ]
 run  = "cd ~/.config"
 desc = "Go to ~/.config"
+
+
+#####
+[[manager.prepend_keymap]]
+on   = [ "g", "m" ]
+run  = "cd /media/$USER"
+desc = "Go to Arch mount dir"
 
 [[mgr.prepend_keymap]]
 on   = [ "g", "m" ]
 run  = "cd /media/$USER"
 desc = "Go to Arch mount dir"
 
+
+#####
+[[manager.prepend_keymap]]
+on   = [ "g", "M" ]
+run  = "cd /run/media/$USER"
+desc = "Go to Ubuntu mount dir"
+
 [[mgr.prepend_keymap]]
 on   = [ "g", "M" ]
 run  = "cd /run/media/$USER"
 desc = "Go to Ubuntu mount dir"
+
+
+#####
+[[manager.prepend_keymap]]
+on   = "<C-s>"
+run  = "shell zsh --block --confirm"
+desc = "Temporarily go to shell"
 
 [[mgr.prepend_keymap]]
 on   = "<C-s>"
 run  = "shell zsh --block --confirm"
 desc = "Temporarily go to shell"
 
+
+#####
+[[manager.prepend_keymap]]
+on   = "!"
+run  = 'suspend'
+desc = "Temporarily go back to parent shell"
+
 [[mgr.prepend_keymap]]
 on   = "!"
 run  = 'suspend'
 desc = "Temporarily go back to parent shell"
+
