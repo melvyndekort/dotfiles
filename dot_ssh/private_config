@@ -55,8 +55,9 @@ Host lmmini mini
 ##  BITBUCKET  ##
 #################
 Host bitbucket.org
+  Hostname altssh.bitbucket.org
+  Port 443
   User git
-  AddressFamily inet
 
 ##############
 ##  GITHUB  ##
