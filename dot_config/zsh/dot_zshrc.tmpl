@@ -186,7 +186,7 @@ alias alpine='podman container run --rm -it alpine:latest'
 # Fun command to wait a long time
 alias coffee='for i in `seq 0 100`;do timeout 6 dialog --gauge "Install..." 6 40 "$i";done'
 
-[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
+[ "$TERM" = "xterm-kitty" ] && alias s="kitten ssh"
 
 # TMUX configuration
 if [ ! -d "$XDG_CONFIG_HOME/tmux/plugins/tpm" ]; then
