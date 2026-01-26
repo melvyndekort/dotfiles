@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
-Name=kitty
-Exec=kitty
+Name=ghostty
+Exec=ghostty
