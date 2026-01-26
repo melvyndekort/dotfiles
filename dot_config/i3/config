@@ -128,6 +128,7 @@ for_window [class="qv4l2"] floating enable, move position center
 for_window [class="Emulator"] floating enable, move position center
 for_window [class="Sublime_text"] floating enable, resize set 1024 768, move position center
 for_window [class="Surf"] floating enable, resize set 1024 768, move position center
+for_window [class="Arandr"] floating enable
 
 # Reload, restart, exit
 bindsym $mod+Shift+c reload
