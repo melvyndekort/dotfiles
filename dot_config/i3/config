@@ -6,7 +6,7 @@ exec_always --no-startup-id ~/bin/wallpaper-set.sh
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- lock.sh
-exec --no-startup-id picom --config ~/.config/picom/picom.conf
+exec --no-startup-id picom -b
 exec --no-startup-id ~/.config/polybar/scripts/pulse_monitor.sh sink
 exec --no-startup-id ~/.config/polybar/scripts/pulse_monitor.sh source
 exec --no-startup-id ntfy sub --from-config
@@ -28,7 +28,6 @@ tiling_drag modifier titlebar
 default_border pixel 2
 default_floating_border pixel 2
 for_window [class="com.mitchellh.ghostty"] border pixel 2
-for_window [class="com.mitchellh.ghostty" instance="floating"] floating enable, resize set 1024 768, move position center
 
 # Color theme
 # class                 border      bground     text        indicator     child_border
@@ -154,8 +153,8 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Terminal and launcher
-bindsym $mod+Return exec ghostty
-bindsym $mod+Shift+Return exec ghostty -e yazi
+bindsym $mod+Return exec kitty
+bindsym $mod+Shift+Return exec kitty -e yazi
 bindsym $mod+d exec --no-startup-id "rofi -show combi"
 
 # Application launchers
@@ -163,7 +162,7 @@ bindsym $mod+Shift+Control+a exec rofi-emulator
 bindsym $mod+Shift+Control+e exec subl
 bindsym $mod+Shift+Control+i exec intellij-idea-ultimate-edition
 bindsym $mod+Shift+Control+j exec rofi-java
-bindsym $mod+Shift+Control+k exec ghostty -e kiro-cli
+bindsym $mod+Shift+Control+k exec kitty -e kiro-cli
 bindsym $mod+Shift+Control+m exec rofi-samba
 bindsym $mod+Shift+Control+o exec obsidian
 bindsym $mod+Shift+Control+p exec postman
@@ -174,7 +173,7 @@ bindsym $mod+Shift+Control+v exec rofi-codium
 bindsym $mod+Shift+Control+w exec rofi-browser
 bindsym $mod+y exec rofi-yubikey direct
 bindsym $mod+Shift+y exec rofi-yubikey clipboard
-bindsym $mod+Shift+Control+z exec ghostty --x11-instance-name=floating -e pulsemixer
+bindsym $mod+Shift+Control+z exec kitty --class=floating -e pulsemixer
 
 # F-key bindings
 bindsym $mod+F1 exec surf https://cheatsheets.mdekort.nl/
