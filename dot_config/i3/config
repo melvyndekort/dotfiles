@@ -6,7 +6,7 @@ exec_always --no-startup-id ~/bin/wallpaper-set.sh
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- lock.sh
-exec --no-startup-id picom -b
+exec --no-startup-id picom --config ~/.config/picom/picom.conf
 exec --no-startup-id ~/.config/polybar/scripts/pulse_monitor.sh sink
 exec --no-startup-id ~/.config/polybar/scripts/pulse_monitor.sh source
 exec --no-startup-id ntfy sub --from-config
