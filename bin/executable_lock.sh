@@ -2,7 +2,7 @@
 
 # Temporary files for the screenshot and lock screen image
 tmpbg='/tmp/screenlock.png'
-icon="$HOME/.config/awesome/icons/lock.png"
+icon="$HOME/.config/lockscreen/lock.png"
 
 # Take a screenshot with overwrite option
 scrot -o "$tmpbg"  # Capture screenshot of the entire screen
