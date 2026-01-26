@@ -7,7 +7,7 @@
     <menu id="root-menu" label="Openbox 3">
         <item label="Terminal">
             <action name="Execute">
-                <execute>ghostty</execute>
+                <execute>kitty</execute>
             </action>
         </item>
         <item label="Web browser">
@@ -22,7 +22,7 @@
         </item>
         <item label="Pulsemixer">
             <action name="Execute">
-                <execute>ghostty -e pulsemixer</execute>
+                <execute>kitty -e pulsemixer</execute>
             </action>
         </item>
         <separator />
