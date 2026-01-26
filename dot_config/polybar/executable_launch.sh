@@ -10,8 +10,8 @@ PRIMARY=$(xrandr --query | grep " primary" | cut -d" " -f1)
 
 for m in $(polybar --list-monitors | cut -d":" -f1); do
     if [ "$m" = "$PRIMARY" ]; then
-        MONITOR="$m" polybar --reload main &
+        MONITOR="$m" polybar --reload primary &
     else
-        MONITOR="$m" polybar --reload main-no-tray &
+        MONITOR="$m" polybar --reload secondary &
     fi
 done
