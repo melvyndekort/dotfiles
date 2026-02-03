@@ -28,6 +28,7 @@ tiling_drag modifier titlebar
 default_border pixel 2
 default_floating_border pixel 2
 for_window [class="com.mitchellh.ghostty"] border pixel 2
+for_window [class="obsidian"] border pixel 2
 
 # Color theme
 # class                 border      bground     text        indicator     child_border
