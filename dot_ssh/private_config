@@ -5,10 +5,6 @@ Host lmrouter
   Hostname lmrouter.mdekort.nl
   User melvyn
 
-Host pihole
-  Hostname pihole.mdekort.nl
-  User core
-
 Host lm-ap-1 lmap1 ap1
   Hostname lm-ap-1.mdekort.nl
   User root
@@ -25,25 +21,25 @@ Host lm-ap-4 lmap4 ap4
   Hostname lm-ap-4.mdekort.nl
   User root
 
-Host lmserver storage-1
+Host pihole-1 pihole
+  Hostname pihole-1.mdekort.nl
+  User core
+
+Host storage-1
   Hostname storage-1.mdekort.nl
+  User core
+
+Host compute-1
+  Hostname compute-1.mdekort.nl
   User core
 
 Host melvynpc
   Hostname melvynpc.mdekort.nl
   User melvyn
 
-Host kodi-1 kodi
+Host kodi-1 kodi1 kodi
   Hostname kodi-1.mdekort.nl
   User root
-
-Host lmnuc nuc
-  Hostname lmnuc.mdekort.nl
-  User melvyn
-
-Host tuinhuis
-  Hostname tuinhuis.mdekort.nl
-  User melvyn
 
 Host lmmini mini
   Hostname 10.205.0.1
