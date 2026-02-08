@@ -25,16 +25,16 @@ Host lm-ap-4 lmap4 ap4
   Hostname lm-ap-4.mdekort.nl
   User root
 
-Host lmserver
-  Hostname lmserver.mdekort.nl
+Host lmserver storage-1
+  Hostname storage-1.mdekort.nl
   User core
 
 Host melvynpc
   Hostname melvynpc.mdekort.nl
   User melvyn
 
-Host kodi1 kodi
-  Hostname kodi1.mdekort.nl
+Host kodi-1 kodi
+  Hostname kodi-1.mdekort.nl
   User root
 
 Host lmnuc nuc
