@@ -1,3 +1,6 @@
+[manager]
+linemode = "size"
+
 [mgr]
 linemode = "size"
 
