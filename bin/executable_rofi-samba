@@ -3,8 +3,12 @@
 set -euo pipefail
 
 readonly BASEDIR="$HOME/mnt"
-readonly HOSTS="lmserver"
+readonly HOSTS="storage-1 compute-1"
 readonly USERNAME="melvyn"
+declare -A HOST_IPS=(
+    ["storage-1"]="10.204.10.20"
+    ["compute-1"]="10.204.10.21"
+)
 
 # Check dependencies
 for cmd in rofi pass smbclient notify-send getent; do
@@ -15,7 +19,7 @@ done
 PASSWORD=""
 get_password() {
     if [[ -z "$PASSWORD" ]]; then
-        PASSWORD=$(pass show samba/lmserver/melvyn 2>/dev/null) || {
+        PASSWORD=$(pass show samba/melvyn 2>/dev/null) || {
             notify-send "Error" "Failed to retrieve password"
             exit 1
         }
@@ -30,11 +34,11 @@ do_mount() {
     
     password=$(get_password)
     
-    local ip
-    ip=$(timeout 5 getent hosts "$host" | awk '{print $1}') || {
-        notify-send "Error" "Cannot resolve host: $host"
+    local ip="${HOST_IPS[$host]}"
+    if [[ -z "$ip" ]]; then
+        notify-send "Error" "Unknown host: $host"
         exit 1
-    }
+    fi
     
     local mount_point="$BASEDIR/$share"
     mkdir -p "$mount_point"
