@@ -4,9 +4,11 @@ default-token: {{pass "ntfy/melvyn" }}
 subscribe:
   - topic: aws
     command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
+  - topic: grafana
+    command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
+  - topic: homeassistant
+    command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
+  - topic: homelab
+    command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
   - topic: media
-    command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
-  - topic: smarthome
-    command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
-  - topic: lmserver
     command: 'notify-send "ntfy: $NTFY_TOPIC" "$NTFY_MESSAGE"'
