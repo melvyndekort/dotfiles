@@ -5,12 +5,16 @@ linemode = "size"
 linemode = "size"
 
 [opener]
+pdf = [
+  { run = 'mupdf "$1"', desc = "Open PDF", for = "linux" },
+]
 show = [
   { run = 'sxiv "$1"', desc = "Show", for = "linux" },
 ]
 
 [open]
 prepend_rules = [
+  { mime = "application/pdf", use = ["pdf", "reveal"] },
   { mime = "video/*", use = ["play", "reveal"] },
   { name = "*.3gp", use = ["play", "reveal"] },
   { name = "*.3g2", use = ["play", "reveal"] },
