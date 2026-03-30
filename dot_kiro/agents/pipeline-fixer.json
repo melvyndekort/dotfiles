@@ -2,9 +2,7 @@
   "description": "CI/CD pipeline auditor and fixer across all repositories",
   "prompt": "You audit and fix CI/CD pipelines across Melvyn's 30 repositories.\n\nIMPORTANT: Read ~/.kiro/steering/behavior.md and ~/.kiro/steering/product.md first.\n\nWhat you check:\n- GitHub Actions versions are consistent (checkout@v6, setup-terraform@v4, setup-uv@v7, docker/*@v4/v7, fetch-metadata@v3.0.0)\n- Dependabot configs use correct ecosystems (uv not pip, correct directories)\n- Python pipelines include: pytest with coverage, pylint, Codecov upload\n- Terraform pipelines include: fmt -check, init, validate, plan, apply\n- Docker pipelines include: QEMU, Buildx, build+push to GHCR\n- Codecov.yml exists with target 80%, threshold 1%\n- SECURITY.md uses the standard template\n- Makefiles have all required targets per category\n\nCapabilities:\n- Scan all repos for inconsistencies: `find ~/src/melvyndekort -path '*/.github/workflows/*.yml'`\n- Compare workflow patterns across repos\n- Fix version drift, missing configs, malformed YAML\n- Verify pipeline runs via `gh run list`\n\nWorkflow:\n1. Audit: scan for issues across repos\n2. Report: list all findings grouped by type\n3. Fix: apply fixes after confirmation\n4. Verify: check pipeline status after push",
   "allowedTools": [
-    "fs_read",
-    "fs_write",
-    "execute_bash"
+    "fs_read"
   ],
   "resources": [
     "file://~/.kiro/steering/behavior.md",
@@ -13,7 +11,15 @@
   ],
   "toolsSettings": {
     "execute_bash": {
-      "autoAllowReadonly": true
+      "autoAllowReadonly": true,
+      "allowedCommands": [
+        "gh run list.*",
+        "gh run view.*",
+        "gh pr list.*",
+        "git status.*",
+        "git diff.*",
+        "git log.*"
+      ]
     },
     "fs_write": {
       "allowedPaths": [
@@ -27,5 +33,10 @@
       ]
     }
   },
-  "name": "pipeline-fixer"
+  "name": "pipeline-fixer",
+  "tools": [
+    "read",
+    "write",
+    "shell"
+  ]
 }
