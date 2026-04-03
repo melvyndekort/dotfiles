@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "portainer": {
+      "command": "{{ .chezmoi.homeDir }}/.local/bin/portainer-mcp",
+      "args": [
+        "-server", "10.204.10.21:9443",
+        "-token", "{{pass "portainer/api-token"}}",
+        "-disable-version-check"
+      ]
+    }
+  }
+}
