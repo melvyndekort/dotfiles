@@ -24,6 +24,20 @@
       "headers": {
         "Authorization": "Bearer {{ pass "homeassistant/mcp-token" }}"
       }
+    },
+    "grafana": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "GRAFANA_URL=https://mdekort.grafana.net GRAFANA_SERVICE_ACCOUNT_TOKEN=$(pass grafana/mcp-token) exec uvx mcp-grafana --disable-oncall --disable-incident --disable-sift --disable-asserts --disable-pyroscope --disable-admin"
+      ]
+    },
+    "mysql": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "MYSQL_HOST=10.204.10.21 MYSQL_PORT=3306 MYSQL_USER=$(pass mariadb/mcp-user) MYSQL_PASSWORD=$(pass mariadb/mcp-password) MYSQL_DATABASE=information_schema exec uvx --from mysql-mcp-server mysql_mcp_server"
+      ]
     }
   }
 }

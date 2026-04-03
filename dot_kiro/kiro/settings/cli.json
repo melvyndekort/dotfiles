@@ -1,4 +1,6 @@
 {
+  "chat.enableDelegate": true,
   "chat.enableNotifications": true,
+  "mcp.initTimeout": 3000,
   "telemetry.enabled": false
 }
