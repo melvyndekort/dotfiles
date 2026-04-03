@@ -4,9 +4,26 @@
       "command": "{{ .chezmoi.homeDir }}/.local/bin/portainer-mcp",
       "args": [
         "-server", "10.204.10.21:9443",
-        "-token", "{{pass "portainer/api-token"}}",
-        "-disable-version-check"
+        "-token", "{{ pass "portainer/api-token" }}",
+        "-disable-version-check",
+        "-tools", "/tmp/portainer-tools.yaml"
       ]
+    },
+    "github": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "GITHUB_PERSONAL_ACCESS_TOKEN=$(pass github/cli-token) exec podman run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN -e GITHUB_TOOLSETS=default,actions,code_security,dependabot,notifications ghcr.io/github/github-mcp-server"
+      ]
+    },
+    "cloudflare": {
+      "url": "https://mcp.cloudflare.com/mcp"
+    },
+    "homeassistant": {
+      "url": "http://10.204.10.21:8123/api/mcp",
+      "headers": {
+        "Authorization": "Bearer {{ pass "homeassistant/mcp-token" }}"
+      }
     }
   }
 }
