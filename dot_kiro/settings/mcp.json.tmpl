@@ -1,14 +1,5 @@
 {
   "mcpServers": {
-    "portainer": {
-      "command": "{{ .chezmoi.homeDir }}/.local/bin/portainer-mcp",
-      "args": [
-        "-server", "10.204.10.21:9443",
-        "-token", "{{ pass "portainer/api-token" }}",
-        "-disable-version-check",
-        "-tools", "/tmp/portainer-tools.yaml"
-      ]
-    },
     "github": {
       "command": "bash",
       "args": [
@@ -16,28 +7,11 @@
         "GITHUB_PERSONAL_ACCESS_TOKEN=$(pass github/cli-token) exec podman run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN -e GITHUB_TOOLSETS=default,actions,code_security,dependabot,notifications ghcr.io/github/github-mcp-server"
       ]
     },
-    "cloudflare": {
-      "url": "https://mcp.cloudflare.com/mcp"
-    },
     "homeassistant": {
-      "url": "http://10.204.10.21:8123/api/mcp",
+      "url": "http://compute-1.mdekort.nl:8123/api/mcp",
       "headers": {
         "Authorization": "Bearer {{ pass "homeassistant/mcp-token" }}"
       }
-    },
-    "grafana": {
-      "command": "bash",
-      "args": [
-        "-c",
-        "GRAFANA_URL=https://mdekort.grafana.net GRAFANA_SERVICE_ACCOUNT_TOKEN=$(pass grafana/mcp-token) exec uvx mcp-grafana --disable-oncall --disable-incident --disable-sift --disable-asserts --disable-pyroscope --disable-admin"
-      ]
-    },
-    "mysql": {
-      "command": "bash",
-      "args": [
-        "-c",
-        "MYSQL_HOST=10.204.10.21 MYSQL_PORT=3306 MYSQL_USER=$(pass mariadb/mcp-user) MYSQL_PASSWORD=$(pass mariadb/mcp-password) MYSQL_DATABASE=information_schema exec uvx --from mysql-mcp-server mysql_mcp_server"
-      ]
     }
   }
 }
