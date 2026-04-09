@@ -136,6 +136,12 @@ tf-backup → provides B2 keys to:
 - **GitHub Pages**: melvyndekort.github.io
 - **Portainer stacks**: homelab (compute-1 and storage-1)
 
+## Dotfiles (Chezmoi)
+
+- Managed by [chezmoi](https://www.chezmoi.io/) via the `dotfiles` repo
+- Source directory: `~/.local/share/chezmoi` (chezmoi default)
+- When adding, modifying, or removing configuration files under `~` (e.g. `~/.config/i3/config`, `~/.bashrc`), use `chezmoi add <target>` to sync changes back to the source directory, then commit and push from `~/.local/share/chezmoi`
+
 ## Home Network
 
 - Network: 10.204.0.0/16 with VLAN segmentation
