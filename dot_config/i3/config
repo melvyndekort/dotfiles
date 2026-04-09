@@ -159,6 +159,7 @@ bindsym $mod+r mode "resize"
 # Terminal and launcher
 bindsym $mod+Return exec kitty
 bindsym $mod+Shift+Return exec kitty -e yazi
+bindsym $mod+Ctrl+Return exec kitty --class floating
 bindsym $mod+d exec --no-startup-id "rofi -show combi"
 
 # Application launchers
