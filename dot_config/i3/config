@@ -201,6 +201,11 @@ bindsym $mod+Down exec --no-startup-id brightnessctl s 10%-
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl s +10%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 10%-
 
+# Webcam bindings
+bindsym $mod+Prior exec --no-startup-id webcam-brightness.sh /dev/video4 5
+bindsym $mod+Next exec --no-startup-id webcam-brightness.sh /dev/video4 -5
+bindsym $mod+End exec --no-startup-id webcam-brightness.sh /dev/video4 reset
+
 # Special bindings
 bindsym $mod+x exec --no-startup-id xset s activate
 bindsym $mod+Shift+x exec --no-startup-id systemctl suspend
