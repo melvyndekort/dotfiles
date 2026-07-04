@@ -1,0 +1,191 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# Check dependencies
+for cmd in rofi bluetoothctl pactl notify-send; do
+    command -v "$cmd" >/dev/null || { echo "$cmd not found" >&2; exit 1; }
+done
+
+# --- Bluetooth helpers ---
+
+# Get paired + trusted audio devices with connection status
+# Output: MAC|Name|connected/disconnected
+get_audio_devices() {
+    {
+        bluetoothctl devices Paired 2>/dev/null
+        bluetoothctl devices Trusted 2>/dev/null
+    } | sort -u | while read -r _ mac name; do
+        local info
+        info=$(bluetoothctl info "$mac" 2>/dev/null)
+        # Filter to audio devices only (have Audio Sink UUID or audio-card icon)
+        if echo "$info" | grep -qE '(UUID: Audio Sink|Icon: audio-card)'; then
+            local connected
+            connected=$(echo "$info" | awk '/Connected:/ {print $2}')
+            if [[ "$connected" == "yes" ]]; then
+                echo "$mac|$name|connected"
+            else
+                echo "$mac|$name|disconnected"
+            fi
+        fi
+    done
+}
+
+# --- PulseAudio helpers (for profile switching) ---
+
+# Get all bluetooth audio cards with their current profile
+get_bt_cards() {
+    pactl list cards 2>/dev/null | awk '
+        /Name: bluez_card\./ { card = $2 }
+        card && /device\.description = / {
+            gsub(/"/, "", $0)
+            sub(/.*device\.description = /, "", $0)
+            desc = $0
+        }
+        card && /Active Profile:/ {
+            profile = $3
+            print card "|" desc "|" profile
+            card = ""
+            desc = ""
+        }
+    '
+}
+
+# Get available profiles for a card (only available ones, excluding "off")
+get_profiles() {
+    local card="$1"
+    pactl list cards 2>/dev/null | awk -v target="$card" '
+        /Name: / { current = $2 }
+        current == target && /Profiles:/ { show = 1; next }
+        current == target && /Active Profile:/ { show = 0 }
+        current == target && show && /^\t\t[a-z].*available: yes/ {
+            sub(/^\t\t/, "")
+            idx = index($0, ": ")
+            id = substr($0, 1, idx - 1)
+            rest = substr($0, idx + 2)
+            sub(/ \(sinks:.*/, "", rest)
+            if (id != "off") print id "|" rest
+        }
+    '
+}
+
+# --- Rofi script mode ---
+
+echo -e "\0no-custom\x1ftrue"
+
+if [[ $# -eq 0 ]]; then
+    # Top-level menu
+    echo -e "\0prompt\x1fBluetooth"
+    echo "🔊 Switch Profile"
+    echo "🔗 Connect"
+    echo "🔌 Disconnect"
+    exit 0
+fi
+
+SELECTION="$*"
+
+case "$SELECTION" in
+    "🔊 Switch Profile")
+        echo -e "\0prompt\x1fSwitch Profile"
+        cards=$(get_bt_cards)
+        if [[ -z "$cards" ]]; then
+            notify-send "Bluetooth" "No connected Bluetooth audio devices"
+            exit 0
+        fi
+        while IFS='|' read -r _ desc active; do
+            echo "🔊 $desc [$active]"
+        done <<< "$cards"
+        ;;
+
+    "🔗 Connect")
+        echo -e "\0prompt\x1fConnect"
+        devices=$(get_audio_devices | grep '|disconnected$' || true)
+        if [[ -z "$devices" ]]; then
+            notify-send "Bluetooth" "No disconnected audio devices available"
+            exit 0
+        fi
+        while IFS='|' read -r _ name _; do
+            echo "🔗 $name"
+        done <<< "$devices"
+        ;;
+
+    "🔌 Disconnect")
+        echo -e "\0prompt\x1fDisconnect"
+        devices=$(get_audio_devices | grep '|connected$' || true)
+        if [[ -z "$devices" ]]; then
+            notify-send "Bluetooth" "No connected audio devices"
+            exit 0
+        fi
+        while IFS='|' read -r _ name _; do
+            echo "🔌 $name"
+        done <<< "$devices"
+        ;;
+
+    "🔗 "*)
+        # Connect action
+        device_name="${SELECTION#🔗 }"
+        mac=$(get_audio_devices | awk -F'|' -v name="$device_name" '$2 == name {print $1; exit}')
+        if [[ -z "$mac" ]]; then
+            notify-send "Bluetooth" "Device not found: $device_name"
+            exit 1
+        fi
+        notify-send "Bluetooth" "Connecting to $device_name..."
+        if bluetoothctl connect "$mac" 2>/dev/null | grep -q "Connection successful"; then
+            notify-send "Bluetooth" "Connected: $device_name"
+        else
+            notify-send "Bluetooth" "Failed to connect: $device_name"
+        fi
+        ;;
+
+    "🔌 "*)
+        # Disconnect action
+        device_name="${SELECTION#🔌 }"
+        mac=$(get_audio_devices | awk -F'|' -v name="$device_name" '$2 == name {print $1; exit}')
+        if [[ -z "$mac" ]]; then
+            notify-send "Bluetooth" "Device not found: $device_name"
+            exit 1
+        fi
+        if bluetoothctl disconnect "$mac" 2>/dev/null | grep -q "Successful disconnected"; then
+            notify-send "Bluetooth" "Disconnected: $device_name"
+        else
+            notify-send "Bluetooth" "Failed to disconnect: $device_name"
+        fi
+        ;;
+
+    "🔊 "*)
+        # Profile switching - device selected, show profiles
+        if [[ "$SELECTION" =~ \[.*\]$ ]]; then
+            device_desc="${SELECTION#🔊 }"
+            device_desc="${device_desc% \[*\]}"
+            card=$(get_bt_cards | awk -F'|' -v desc="$device_desc" '$2 == desc {print $1; exit}')
+            if [[ -z "$card" ]]; then
+                notify-send "Bluetooth" "Device not found: $device_desc"
+                exit 1
+            fi
+            echo -e "\0prompt\x1f$device_desc"
+            profiles=$(get_profiles "$card")
+            while IFS='|' read -r _ desc; do
+                echo "$desc"
+            done <<< "$profiles"
+        else
+            # Profile description selected - find and apply
+            while IFS='|' read -r card desc _; do
+                profiles=$(get_profiles "$card")
+                while IFS='|' read -r pid pdesc; do
+                    if [[ "$SELECTION" == "$pdesc" ]]; then
+                        pactl set-card-profile "$card" "$pid"
+                        notify-send "Bluetooth" "$desc → $pdesc"
+                        exit 0
+                    fi
+                done <<< "$profiles"
+            done <<< "$(get_bt_cards)"
+            notify-send "Bluetooth" "Profile not found: $SELECTION"
+            exit 1
+        fi
+        ;;
+
+    *)
+        notify-send "Bluetooth" "Unknown selection: $SELECTION"
+        exit 1
+        ;;
+esac
