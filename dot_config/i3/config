@@ -171,6 +171,7 @@ bindsym $mod+Shift+Control+k exec kitty -e kiro-cli
 bindsym $mod+Shift+Control+m exec rofi-samba
 bindsym $mod+Shift+Control+o exec obsidian
 bindsym $mod+Shift+Control+p exec postman
+bindsym $mod+Shift+Control+b exec rofi -modi bt:rofi-bluetooth-profile -show bt
 bindsym $mod+Shift+Control+r exec galculator
 bindsym $mod+Shift+Control+s exec slack
 bindsym $mod+Shift+Control+t exec rofi-terraform
