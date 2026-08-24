@@ -20,9 +20,7 @@ launch_chromium() {
 
 # Get user choice
 choice=$(rofi -dmenu -p 'Launch browser' << 'EOF'
-🦊 Firefox default
-🕵️ Firefox private
-⚙️ Firefox ProfileManager
+🦊 Firefox
 🌐 Chromium default
 🕵️ Chromium private
 🥷 Chromium incognito
@@ -32,14 +30,8 @@ EOF
 [[ -n "$choice" ]] || exit 0
 
 case "$choice" in
-    '🦊 Firefox default')
-        command -v firefox >/dev/null && firefox -P default &
-        ;;
-    '🕵️ Firefox private')
-        command -v firefox >/dev/null && firefox -P private &
-        ;;
-    '⚙️ Firefox ProfileManager')
-        command -v firefox >/dev/null && firefox --ProfileManager &
+    '🦊 Firefox')
+        command -v firefox >/dev/null && firefox &
         ;;
     '🌐 Chromium default')
         launch_chromium default
