@@ -1,7 +1,11 @@
+---
+name: new-repo-workflow
+description: Use whenever creating a new personal GitHub repo under melvyndekort, or when asked to scaffold a repo, bootstrap a project, set up a new Terraform/Python/Lambda/static-site repo, or add a repo to tf-github. Covers the Terraform-based repo creation workflow (never `gh repo create`), AWS subaccount decisions, and the standard files every new repo needs.
+---
+
 # Creating a new personal repo
 
-Ported from Kiro's retired `repo-manager` agent. Applies to any new repo under
-`melvyndekort` on GitHub.
+Applies to any new repo under `melvyndekort` on GitHub.
 
 ## Repository creation workflow
 
@@ -24,8 +28,8 @@ ALL repositories are created via Terraform in `~/src/melvyndekort/tf-github`.
 - `CLAUDE.md` (from `~/.claude/templates/<category>.md`)
 - `.github/dependabot.yml` (use `uv` ecosystem, not `pip`, for Python repos)
 - `.github/workflows/dependabot.yml` (auto-approve patch/minor)
-- `.github/workflows/` (project-specific pipelines — see
-  `~/.claude/references/pipeline-checklist.md`)
+- `.github/workflows/` (project-specific pipelines — see the
+  `pipeline-checklist` skill for what each pipeline type needs)
 - `Makefile` with standard targets
 - `SECURITY.md` (standard template)
 - `LICENSE` (MIT)

@@ -1,8 +1,12 @@
+---
+name: pipeline-checklist
+description: Use when auditing, fixing, or reviewing CI/CD pipelines and GitHub Actions workflows across melvyndekort personal repos — checking Action version drift, Dependabot config, Codecov setup, pylint/ruff/terraform fmt gates, or Docker/GHCR pipeline steps. Also use when scaffolding a new repo's CI/CD to match existing conventions.
+---
+
 # CI/CD pipeline audit checklist
 
-Ported from Kiro's retired `pipeline-fixer` and `brutal-critic` agents. Use
-when asked to audit, fix, or scaffold CI/CD for a personal (`melvyndekort`)
-repo.
+Use when asked to audit, fix, or scaffold CI/CD for a personal
+(`melvyndekort`) repo.
 
 ## What to check
 
@@ -33,8 +37,8 @@ repo.
 find ~/src/melvyndekort -path '*/.github/workflows/*.yml'
 ```
 Compare workflow patterns across repos to spot drift. Verify pipeline health
-with `gh run list` (see `~/.claude/CLAUDE.md` → Tooling for why `gh` CLI over
-a GitHub MCP server).
+with `gh run list` — use the `gh` CLI, not a GitHub MCP server (see
+`~/.claude/CLAUDE.md` → Tooling for why).
 
 ## Workflow
 

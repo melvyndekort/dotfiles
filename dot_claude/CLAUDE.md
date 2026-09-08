@@ -5,8 +5,9 @@ I'm Melvyn de Kort, a DevOps engineer. My work is split across assistants:
 (you)**. This file is the global, cross-project steering for that personal
 side. As of 2026-09-08, Kiro's config has been fully stripped of the personal
 content that used to live there (agents, steering, templates, MCP servers) —
-this file and `~/.claude/references/`, `~/.claude/templates/` are the sole
-source of truth now, nothing to fall back to in `~/.kiro/` anymore.
+this file plus `~/.claude/references/`, `~/.claude/templates/`, and
+`~/.claude/skills/` are the sole source of truth now, nothing to fall back to
+in `~/.kiro/` anymore.
 
 ## Scope split
 
@@ -42,32 +43,10 @@ its own `CLAUDE.md`). Repos are cloned via `update-repos.sh`.
 
 ### Repository catalog
 
-**Terraform (central services, mostly account `075673041815`):**
-`tf-aws` (org/accounts/IAM/OIDC bootstrap), `tf-github` (repo mgmt, per-repo OIDC),
-`tf-cloudflare` (DNS/Zero Trust/tunnels), `tf-grafana` (dashboards), `tf-backup`
-(B2 + S3 backup infra), `tf-cloudtrail` (audit logging), `tf-cognito` (auth).
-
-**Python — containerized → GHCR (run on homelab Docker):**
-`scheduler`, `image-refresher`, `internal-dns-sync`, `router-events`, `secrets-sync`.
-
-**Python — Lambda (account `075673041815`):**
-`aws-ntfy-alerts`, `get-cookies`, `email-infra`.
-
-**Static sites (S3/Cloudflare Pages/GitHub Pages):**
-`startpage`, `cheatsheets`, `assets`, `example.melvyn.dev`, `melvyn-dev`,
-`melvyndekort.github.io`.
-
-**Homelab & infra:**
-`homelab` (Docker Compose stacks + Terraform cloudflared + SOPS secrets),
-`ignition` (Butane/Ignition, Fedora IoT), `systemsetup` (Ansible),
-`network-monitor` (serverless monitoring, its own subaccount `844347863910`),
-`dotfiles` (chezmoi).
-
-**Special:** `minecraft-server` (ECS + Discord bot), `password-store` (pass),
-`dracula-hugo-theme`.
-
-New projects get their own AWS subaccount (pattern: `network-monitor`); existing
-repos in `075673041815` are migrated to subaccounts over time.
+Full list with categories and AWS accounts:
+`~/.claude/references/repo-catalog.md`. New projects get their own AWS
+subaccount (pattern: `network-monitor`); existing repos in `075673041815`
+are migrated to subaccounts over time.
 
 ### Engineering standards (all personal repos, before every commit)
 
@@ -93,17 +72,13 @@ repos in `075673041815` are migrated to subaccounts over time.
 
 ### Home network / homelab
 
-- Network `10.204.0.0/16`, VLAN-segmented, domain `mdekort.nl`.
-- Router: MikroTik RB4011iGS+ (`ssh melvyn@10.204.50.1`).
-- Servers: `pihole-1` (DNS, podman as root), `compute-1` (Docker+Portainer),
-  `storage-1` (Docker+Portainer Agent).
-- Deploys go through **Portainer webhooks** triggered by GitHub Actions push —
-  never `docker compose up` directly on the hosts.
-- Secrets: SOPS+age for homelab (age key in `pass show homelab/age-key`); AWS
-  KMS (`alias/generic`) elsewhere.
-- Full topology/service docs: `~/Sync/obsidian/Tech/Homelab/` — read `planning/`
-  before `infrastructure/`, it can be more current. See that folder's own
-  `CLAUDE.md` for the detailed structure.
+Network `10.204.0.0/16`, domain `mdekort.nl`. Full topology, server, and
+deploy details live in `~/Sync/obsidian/Tech/Homelab/CLAUDE.md` and its
+`infrastructure/`/`planning/` docs — that file auto-loads whenever the
+working directory is inside the vault, so it isn't duplicated here. One
+thing worth keeping top-of-mind even outside that directory: secrets there
+use SOPS+age (`pass show homelab/age-key`), and deploys go through
+**Portainer webhooks**, never `docker compose up` directly on the hosts.
 
 ### Syncthing (`~/Sync`)
 
@@ -137,8 +112,8 @@ path must be reflected in chezmoi, not just made live** — check first with
   `~/.config/mimeapps.list`, since recovered. If `--force` is needed to skip
   a `/dev/tty` prompt, scope it: `chezmoi apply --force <specific-target>`.
 - `~/.kiro` (Kiro config) and `~/.claude` (CLAUDE.md, settings.json,
-  references/, templates/ — not credentials/sessions/cache/plugins) are both
-  chezmoi-managed as of 2026-09-08.
+  references/, templates/, skills/ — not credentials/sessions/cache/plugins)
+  are both chezmoi-managed as of 2026-09-08.
 
 ### Tooling
 
@@ -151,9 +126,11 @@ path must be reflected in chezmoi, not just made live** — check first with
 - **MCP servers available:** `homeassistant` (HTTP, home automation at
   compute-1) and `portainer` (stdio, container management) — both ported
   from Kiro's config, registered at user scope. No CLI equivalent for either.
-- New-repo scaffolding workflow: `~/.claude/references/new-repo-workflow.md`
-- CI/CD audit checklist: `~/.claude/references/pipeline-checklist.md`
 - Repo-type `CLAUDE.md` scaffolds for new repos: `~/.claude/templates/`
+- Repo catalog: `~/.claude/references/repo-catalog.md`
+- New-repo scaffolding and CI/CD-audit procedures are `new-repo-workflow`
+  and `pipeline-checklist` **Skills** (`~/.claude/skills/`) — they trigger
+  automatically on relevant requests, no need to go read them proactively.
 
 ### Response style
 
