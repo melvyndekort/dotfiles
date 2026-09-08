@@ -105,12 +105,40 @@ repos in `075673041815` are migrated to subaccounts over time.
   before `infrastructure/`, it can be more current. See that folder's own
   `CLAUDE.md` for the detailed structure.
 
+### Syncthing (`~/Sync`)
+
+Everything under `~/Sync` (including `~/Sync/obsidian/Tech/`) is synced
+across multiple personal devices via **Syncthing**, not git — a materially
+different environment from the rest of the system:
+- No git history/blame/revert here (confirmed: the Homelab vault itself
+  isn't a git repo) — destructive edits are less recoverable than elsewhere.
+- Another device can change a file between reads in the same session — don't
+  assume exclusive access, especially across a long-running operation.
+- Watch for Syncthing conflict files (`*.sync-conflict-<date>-<device>.*`) —
+  if one shows up, flag it and ask rather than silently picking a side.
+
 ### Dotfiles
 
 Managed via [chezmoi](https://www.chezmoi.io/), source at
-`~/.local/share/chezmoi`, repo `dotfiles`. When editing config under `~`
-(e.g. `~/.bashrc`, `~/.config/i3/config`), run `chezmoi add <target>` to sync
-back to source, then commit/push from `~/.local/share/chezmoi`.
+`~/.local/share/chezmoi`, repo `dotfiles`, GPG-encrypted secrets via inline
+`{{ pass "..." }}` template calls. **Rule: any change to a chezmoi-managed
+path must be reflected in chezmoi, not just made live** — check first with
+`chezmoi managed | grep <path>` if unsure whether something is tracked.
+
+- For a managed path: either edit the source directly
+  (`~/.local/share/chezmoi/dot_foo/...`) then `chezmoi apply`, or edit the
+  live file then `chezmoi add <target>` to pull the change back into source.
+  Either way, confirm `chezmoi status` is clean for that path before calling
+  it done, then commit + push from `~/.local/share/chezmoi`.
+- **Never run `chezmoi apply --force` unscoped.** It applies *every* pending
+  change across all of `$HOME`, not just the path you're working on —
+  learned the hard way (2026-09-08): an unscoped `--force` silently reverted
+  unrelated local drift in `~/bin/granted-config.sh` and
+  `~/.config/mimeapps.list`, since recovered. If `--force` is needed to skip
+  a `/dev/tty` prompt, scope it: `chezmoi apply --force <specific-target>`.
+- `~/.kiro` (Kiro config) and `~/.claude` (CLAUDE.md, settings.json,
+  references/, templates/ — not credentials/sessions/cache/plugins) are both
+  chezmoi-managed as of 2026-09-08.
 
 ### Tooling
 
