@@ -114,6 +114,26 @@ path must be reflected in chezmoi, not just made live** — check first with
 - `~/.kiro` (Kiro config) and `~/.claude` (CLAUDE.md, settings.json,
   references/, templates/, skills/ — not credentials/sessions/cache/plugins)
   are both chezmoi-managed as of 2026-09-08.
+- **This laptop is dual-purpose.** The `dotfiles` repo is personal-scoped
+  (git/chezmoi hygiene here is mine to own), but its *contents* aren't all
+  personal — e.g. `~/bin/granted-config.sh` is a work AWS-SSO helper for
+  Portbase (`m.de.kort@portbase.com`, in `chezmoi.toml`'s `work`/`email`
+  data). Don't "fix" or genericize work-flavored scripts/aliases found in
+  here as if they were personal config — leave their content alone, only
+  touch chezmoi mechanics (tracking, drift, sync).
+
+### Secrets (`pass`)
+
+Not an exhaustive list — just entries encountered so far. Check `pass ls`
+(or `pass find <term>`) before assuming something doesn't exist rather than
+asking.
+
+| Entry | Used for |
+|---|---|
+| `homelab/age-key` | SOPS+age decryption key for `homelab` repo secrets |
+| `homeassistant/mcp-token` | Bearer token for the `homeassistant` MCP server |
+| `portainer/api-token` | Auth token for the `portainer` MCP server |
+| `github/cli-token` | Orphaned — was used by Kiro's retired `github` MCP server; `gh` CLI auths via the OS keyring instead, not `pass` |
 
 ### Tooling
 
