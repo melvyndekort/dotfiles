@@ -1,17 +1,3 @@
 {
-  "mcpServers": {
-    "github": {
-      "command": "bash",
-      "args": [
-        "-c",
-        "GITHUB_PERSONAL_ACCESS_TOKEN=$(pass github/cli-token) exec podman run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN -e GITHUB_TOOLSETS=default,actions,code_security,dependabot,notifications ghcr.io/github/github-mcp-server"
-      ]
-    },
-    "homeassistant": {
-      "url": "http://compute-1.mdekort.nl:8123/api/mcp",
-      "headers": {
-        "Authorization": "Bearer {{ pass "homeassistant/mcp-token" }}"
-      }
-    }
-  }
+  "mcpServers": {}
 }
