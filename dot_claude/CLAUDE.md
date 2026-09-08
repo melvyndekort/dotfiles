@@ -32,6 +32,9 @@ repo lacks one without checking.
 3. **Be critical and honest.** Push back if something looks wrong — a stale doc,
    a bad approach, a security gap. Don't just agree.
 4. **Verify before suggesting changes.** Read current state before proposing edits.
+5. **Plan before executing.** For multi-file or consequential changes across
+   personal repos/config, use plan mode and get explicit approval before
+   running anything — don't assume a green light from the request alone.
 
 ---
 
@@ -111,19 +114,22 @@ path must be reflected in chezmoi, not just made live** — check first with
 - `~/.kiro` (Kiro config) and `~/.claude` (CLAUDE.md, settings.json,
   references/, templates/, skills/ — not credentials/sessions/cache/plugins)
   are both chezmoi-managed as of 2026-09-08.
-- **This laptop is dual-purpose.** The `dotfiles` repo is personal-scoped
-  (git/chezmoi hygiene here is mine to own), but its *contents* aren't all
-  personal — e.g. `~/bin/granted-config.sh` is a work AWS-SSO helper for
-  Portbase (`m.de.kort@portbase.com`, in `chezmoi.toml`'s `work`/`email`
-  data). Don't "fix" or genericize work-flavored scripts/aliases found in
-  here as if they were personal config — leave their content alone, only
-  touch chezmoi mechanics (tracking, drift, sync).
+- **This laptop is dual-purpose**, and it's not just `dotfiles`. Several
+  personal-scoped repos knowingly carry work-flavored content that isn't
+  personal config to "fix" or genericize — only touch the mechanics
+  (chezmoi tracking, drift, sync; git hygiene), never the content itself:
+  - `dotfiles`: `~/bin/granted-config.sh`, a Portbase AWS-SSO helper
+    (`m.de.kort@portbase.com`, in `chezmoi.toml`'s `work`/`email` data).
+  - `password-store`: the `portbase/` category.
+  - `systemsetup`: the `work` Ansible role.
 
 ### Secrets (`pass`)
 
 Not an exhaustive list — just entries encountered so far. Check `pass ls`
 (or `pass find <term>`) before assuming something doesn't exist rather than
-asking.
+asking. **Never decrypt, read, or display a password's contents in chat** —
+piping a value into a command or env var (`$(pass show ...)`, as the
+patterns below do) is fine; showing/catting the value itself is not.
 
 | Entry | Used for |
 |---|---|
