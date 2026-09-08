@@ -20,12 +20,21 @@ tf-cloudflare → provides API tokens to:
 tf-grafana → provides Grafana tokens to:
   └── email-infra
 
-tf-aws → provides account info to:
-  └── tf-github (OIDC provider ARNs, role ARNs)
+tf-aws → provides account/bootstrap info to:
+  ├── tf-github (OIDC provider ARNs, role ARNs)
+  ├── tf-backup, tf-cloudtrail, tf-cognito, email-infra (account bootstrap)
+  ├── aws-ntfy-alerts, get-cookies, example.melvyn.dev, startpage (account info)
+  └── homelab (AWS backup IAM keys, via Makefile fetch-remote-secrets)
 
 tf-backup → provides B2 keys to:
   └── homelab (via Makefile fetch-remote-secrets)
 ```
+
+Verified against actual `terraform_remote_state` blocks (not just re-reading
+the old agent prompt) — `tf-aws` in particular is consumed far more widely
+than "just tf-github." Re-verify with
+`grep -rl terraform_remote_state ~/src/melvyndekort/*/terraform` before
+relying on this list for anything consequential; repos get added.
 
 Before changing an `output` in any of these repos, check who consumes it —
 a rename or type change breaks the downstream `terraform plan` silently

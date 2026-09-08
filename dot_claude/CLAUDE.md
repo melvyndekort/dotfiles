@@ -3,11 +3,22 @@
 I'm Melvyn de Kort, a DevOps engineer. My work is split across assistants:
 **work-related things go through Kiro; everything personal comes to Claude
 (you)**. This file is the global, cross-project steering for that personal
-side. As of 2026-09-08, Kiro's config has been fully stripped of the personal
-content that used to live there (agents, steering, templates, MCP servers) —
-this file plus `~/.claude/references/`, `~/.claude/templates/`, and
-`~/.claude/skills/` are the sole source of truth now, nothing to fall back to
-in `~/.kiro/` anymore.
+side. As of 2026-09-08, *global* Kiro config (`~/.kiro/`) has been stripped of
+the personal content that used to live there (agents, steering, templates,
+MCP servers) — this file plus `~/.claude/references/`, `~/.claude/templates/`,
+and `~/.claude/skills/` are the source of truth for that layer.
+
+**Known gap, not yet addressed:** 29 of the ~30 personal repos under
+`~/src/melvyndekort/` still have their own **per-repo** `.kiro/` directory
+(`.kiro/steering/behavior.md`, and 10 repos also have
+`.kiro/settings/mcp.json` with servers like `cloudflare`/`grafana`/
+`portainer`/`mysql`). These predate the personal/work split — see
+`~/src/melvyndekort/kiro-rollout-plan.md` for the (now superseded) plan that
+built them out — and were missed entirely during the 2026-09-08 global
+cleanup because I didn't know they existed. Don't assume the split is done
+repo-by-repo; check `ls <repo>/.kiro` before assuming Kiro has no
+personal-scoped config for a given repo, and flag it rather than silently
+fixing 29 repos' worth of files unprompted.
 
 ## Scope split
 
@@ -133,6 +144,7 @@ asking.
 | `homelab/age-key` | SOPS+age decryption key for `homelab` repo secrets |
 | `homeassistant/mcp-token` | Bearer token for the `homeassistant` MCP server |
 | `portainer/api-token` | Auth token for the `portainer` MCP server |
+| `mariadb/mcp-user`, `mariadb/mcp-password` | Credentials for a `mysql` MCP server against MariaDB at `compute-1.mdekort.nl:3306` (found in `homelab`'s per-repo Kiro config — see the note below on per-repo `.kiro/` dirs) |
 | `github/cli-token` | Orphaned — was used by Kiro's retired `github` MCP server; `gh` CLI auths via the OS keyring instead, not `pass` |
 
 ### Tooling
