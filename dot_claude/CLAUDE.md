@@ -3,19 +3,12 @@
 I'm Melvyn de Kort, a DevOps engineer. My work is split across assistants:
 **work-related things go through Kiro; everything personal comes to Claude
 (you)**. This file is the global, cross-project steering for that personal
-side. As of 2026-09-08, *global* Kiro config (`~/.kiro/`) has been stripped of
-the personal content that used to live there (agents, steering, templates,
-MCP servers) — this file plus `~/.claude/references/`, `~/.claude/templates/`,
-and `~/.claude/skills/` are the source of truth for that layer.
+side — `~/.claude/references/`, `~/.claude/templates/`, and
+`~/.claude/skills/` hold the rest, loaded on demand rather than every turn.
 
-All 29 personal repos that had per-repo `.kiro/` directories (predating the
-split — see `~/src/melvyndekort/kiro-rollout-plan.md` for the now-superseded
-plan that built them out) were migrated 2026-09-08: `.kiro/steering/
-behavior.md` → `CLAUDE.md` at each repo's root, `.kiro/settings/mcp.json` →
-a project-scoped `.mcp.json` for the 10 repos that had one. New personal
-repos get a `CLAUDE.md` from `~/.claude/templates/` via the
-`new-repo-workflow` skill; existing ones now all have one — don't assume a
-repo lacks a `CLAUDE.md` without checking.
+Every personal repo has a `CLAUDE.md` at its root; new ones get one from
+`~/.claude/templates/` via the `new-repo-workflow` skill — don't assume a
+repo lacks one without checking.
 
 ## Scope split
 
@@ -90,15 +83,12 @@ use SOPS+age (`pass show homelab/age-key`), and deploys go through
 
 ### Syncthing (`~/Sync`)
 
-Everything under `~/Sync` (including `~/Sync/obsidian/Tech/`) is synced
-across multiple personal devices via **Syncthing**, not git — a materially
-different environment from the rest of the system:
-- No git history/blame/revert here (confirmed: the Homelab vault itself
-  isn't a git repo) — destructive edits are less recoverable than elsewhere.
-- Another device can change a file between reads in the same session — don't
-  assume exclusive access, especially across a long-running operation.
-- Watch for Syncthing conflict files (`*.sync-conflict-<date>-<device>.*`) —
-  if one shows up, flag it and ask rather than silently picking a side.
+`~/Sync` (including `~/Sync/obsidian/Tech/`) syncs across devices via
+**Syncthing, not git** — no history/blame/revert, so destructive edits are
+less recoverable than elsewhere; another device can change a file mid-session,
+so don't assume exclusive access on long-running work; and a
+`*.sync-conflict-<date>-<device>.*` file must be flagged and asked about,
+never silently resolved by picking a side.
 
 ### Dotfiles
 
@@ -113,12 +103,11 @@ path must be reflected in chezmoi, not just made live** — check first with
   live file then `chezmoi add <target>` to pull the change back into source.
   Either way, confirm `chezmoi status` is clean for that path before calling
   it done, then commit + push from `~/.local/share/chezmoi`.
-- **Never run `chezmoi apply --force` unscoped.** It applies *every* pending
-  change across all of `$HOME`, not just the path you're working on —
-  learned the hard way (2026-09-08): an unscoped `--force` silently reverted
-  unrelated local drift in `~/bin/granted-config.sh` and
-  `~/.config/mimeapps.list`, since recovered. If `--force` is needed to skip
-  a `/dev/tty` prompt, scope it: `chezmoi apply --force <specific-target>`.
+- **Never run `chezmoi apply --force` unscoped** — it applies *every*
+  pending change across `$HOME`, not just your target (confirmed the hard
+  way: silently reverted unrelated live drift outside the path being
+  worked on). If `--force` is needed to skip a `/dev/tty` prompt, scope it:
+  `chezmoi apply --force <specific-target>`.
 - `~/.kiro` (Kiro config) and `~/.claude` (CLAUDE.md, settings.json,
   references/, templates/, skills/ — not credentials/sessions/cache/plugins)
   are both chezmoi-managed as of 2026-09-08.
@@ -141,30 +130,25 @@ asking.
 | `homelab/age-key` | SOPS+age decryption key for `homelab` repo secrets |
 | `homeassistant/mcp-token` | Bearer token for the `homeassistant` MCP server |
 | `portainer/api-token` | Auth token for the `portainer` MCP server |
-| `mariadb/mcp-user`, `mariadb/mcp-password` | Credentials for a `mysql` MCP server against MariaDB at `compute-1.mdekort.nl:3306` (found in `homelab`'s per-repo Kiro config — see the note below on per-repo `.kiro/` dirs) |
+| `mariadb/mcp-user`, `mariadb/mcp-password` | Credentials for the `mysql` MCP server against MariaDB at `compute-1.mdekort.nl:3306` |
 | `github/cli-token` | Orphaned — was used by Kiro's retired `github` MCP server; `gh` CLI auths via the OS keyring instead, not `pass` |
 
 ### Tooling
 
 - **Prefer an already-installed, already-authenticated CLI over an MCP
-  server for the same service.** An MCP server's full tool schema is added
-  to context on every turn once connected — a CLI costs nothing until
-  actually invoked. `gh` is the working example: installed, authenticated
-  via the OS keyring, so Kiro's old `github` MCP server (podman + a
-  `pass`-stored PAT) was retired rather than ported (2026-09-08). Checked
-  the same way for `cloudflare`/`grafana`/`mysql`/`portainer` that same
-  day: `wrangler`/`flarectl`/`cloudflared`, `grafana-cli`,
-  `mysql`/`mariadb`, `portainer-cli` were all absent from this machine, so
-  those stay as MCP servers for now — worth re-checking if any get
-  installed later, not assumed permanent.
+  server for the same service** — a connected MCP server's full tool schema
+  costs context every turn; a CLI costs nothing until invoked. `gh` over a
+  GitHub MCP server is the working example. See
+  `~/.claude/references/mcp-catalog.md` for the current
+  cloudflare/grafana/mysql/portainer CLI-availability check before adding
+  any new MCP server.
 - **MCP servers default to project scope, not user scope**, unless
-  genuinely repo-independent like `homeassistant` (HTTP, home automation —
-  the one server that's deliberately global, matching Kiro's own original
-  design). Project-scoped servers only connect — and only cost context —
-  when Claude Code's working directory is inside that specific repo; see
-  `~/.claude/references/mcp-catalog.md` for what's configured where and the
-  exact `claude mcp add -s project ...` commands, and suggest adding one
-  when a new or changing repo's scope touches a service it covers.
+  genuinely repo-independent like `homeassistant` (home automation, not
+  tied to a repo). Project-scoped servers only connect — and only cost
+  context — when Claude Code's working directory is inside that repo; see
+  `mcp-catalog.md` for what's configured where and the exact
+  `claude mcp add -s project ...` commands, and suggest adding one when a
+  new or changing repo's scope touches a service it covers.
 - Repo-type `CLAUDE.md` scaffolds for new repos: `~/.claude/templates/`
 - Repo catalog: `~/.claude/references/repo-catalog.md`
 - New-repo scaffolding and CI/CD-audit procedures are `new-repo-workflow`
