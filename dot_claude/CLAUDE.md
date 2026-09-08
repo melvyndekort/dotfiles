@@ -8,17 +8,14 @@ the personal content that used to live there (agents, steering, templates,
 MCP servers) — this file plus `~/.claude/references/`, `~/.claude/templates/`,
 and `~/.claude/skills/` are the source of truth for that layer.
 
-**Known gap, not yet addressed:** 29 of the ~30 personal repos under
-`~/src/melvyndekort/` still have their own **per-repo** `.kiro/` directory
-(`.kiro/steering/behavior.md`, and 10 repos also have
-`.kiro/settings/mcp.json` with servers like `cloudflare`/`grafana`/
-`portainer`/`mysql`). These predate the personal/work split — see
-`~/src/melvyndekort/kiro-rollout-plan.md` for the (now superseded) plan that
-built them out — and were missed entirely during the 2026-09-08 global
-cleanup because I didn't know they existed. Don't assume the split is done
-repo-by-repo; check `ls <repo>/.kiro` before assuming Kiro has no
-personal-scoped config for a given repo, and flag it rather than silently
-fixing 29 repos' worth of files unprompted.
+All 29 personal repos that had per-repo `.kiro/` directories (predating the
+split — see `~/src/melvyndekort/kiro-rollout-plan.md` for the now-superseded
+plan that built them out) were migrated 2026-09-08: `.kiro/steering/
+behavior.md` → `CLAUDE.md` at each repo's root, `.kiro/settings/mcp.json` →
+a project-scoped `.mcp.json` for the 10 repos that had one. New personal
+repos get a `CLAUDE.md` from `~/.claude/templates/` via the
+`new-repo-workflow` skill; existing ones now all have one — don't assume a
+repo lacks a `CLAUDE.md` without checking.
 
 ## Scope split
 
@@ -149,15 +146,25 @@ asking.
 
 ### Tooling
 
-- **GitHub: use the `gh` CLI, not a GitHub MCP server.** `gh` is installed and
-  already authenticated via the OS keyring — no container, no separate PAT to
-  maintain or rotate. This was a deliberate choice (2026-09-08) when
-  finishing the Kiro/Claude split: Kiro had a `github` MCP server (podman +
-  a `pass`-stored PAT); it was retired rather than ported. Don't re-add one
-  without a concrete reason `gh`/`gh api` can't cover.
-- **MCP servers available:** `homeassistant` (HTTP, home automation at
-  compute-1) and `portainer` (stdio, container management) — both ported
-  from Kiro's config, registered at user scope. No CLI equivalent for either.
+- **Prefer an already-installed, already-authenticated CLI over an MCP
+  server for the same service.** An MCP server's full tool schema is added
+  to context on every turn once connected — a CLI costs nothing until
+  actually invoked. `gh` is the working example: installed, authenticated
+  via the OS keyring, so Kiro's old `github` MCP server (podman + a
+  `pass`-stored PAT) was retired rather than ported (2026-09-08). Checked
+  the same way for `cloudflare`/`grafana`/`mysql`/`portainer` that same
+  day: `wrangler`/`flarectl`/`cloudflared`, `grafana-cli`,
+  `mysql`/`mariadb`, `portainer-cli` were all absent from this machine, so
+  those stay as MCP servers for now — worth re-checking if any get
+  installed later, not assumed permanent.
+- **MCP servers default to project scope, not user scope**, unless
+  genuinely repo-independent like `homeassistant` (HTTP, home automation —
+  the one server that's deliberately global, matching Kiro's own original
+  design). Project-scoped servers only connect — and only cost context —
+  when Claude Code's working directory is inside that specific repo; see
+  `~/.claude/references/mcp-catalog.md` for what's configured where and the
+  exact `claude mcp add -s project ...` commands, and suggest adding one
+  when a new or changing repo's scope touches a service it covers.
 - Repo-type `CLAUDE.md` scaffolds for new repos: `~/.claude/templates/`
 - Repo catalog: `~/.claude/references/repo-catalog.md`
 - New-repo scaffolding and CI/CD-audit procedures are `new-repo-workflow`

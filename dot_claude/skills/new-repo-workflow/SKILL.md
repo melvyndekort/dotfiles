@@ -22,6 +22,11 @@ ALL repositories are created via Terraform in `~/src/melvyndekort/tf-github`.
 6. Run `terraform plan` and `apply`.
 7. Clone and initialize the local repository.
 8. Detect project type and create all standard files.
+9. Check `~/.claude/references/mcp-catalog.md` against what the repo
+   actually touches (Cloudflare DNS/Pages/Tunnel, Grafana dashboards, the
+   MariaDB instance, Portainer-managed stacks) and suggest adding any
+   matching project-scoped MCP server — don't add one speculatively, ask
+   first.
 
 ## Standard files for every new repo
 
@@ -61,8 +66,14 @@ ALL repositories are created via Terraform in `~/src/melvyndekort/tf-github`.
 2. Ask: project type(s)?
 3. Ask: needs AWS? If yes, new subaccount.
 4. Find 2-3 similar existing repos as reference.
-5. Show the plan.
-6. Execute after confirmation.
+5. Check `~/.claude/references/mcp-catalog.md` for a matching MCP server.
+6. Show the plan.
+7. Execute after confirmation.
+
+The same MCP-catalog check applies later too, not just at creation — if an
+*existing* repo's scope changes (e.g. it starts managing Cloudflare DNS, or
+gets a Grafana dashboard), suggest adding the matching project-scoped
+server then, the same way.
 
 ## Never
 
