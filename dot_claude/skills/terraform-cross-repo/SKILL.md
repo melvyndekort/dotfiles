@@ -51,8 +51,12 @@ until someone runs it.
 
 New projects get a dedicated subaccount from day one (reference:
 `network-monitor`, account `844347863910`). Existing repos still in the
-management account (`075673041815`) get migrated to subaccounts over time,
-not proactively.
+management account (`075673041815`) get migrated to subaccounts
+incrementally, boy-scout style: whenever you're already touching one of
+those repos for something else, check
+`~/.claude/references/subaccount-migration.md` for whether it's a
+migration candidate, its priority, and why — don't go looking for
+migration work unprompted, but raise it when the repo is already open.
 
 ## AWS facts
 
