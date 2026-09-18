@@ -5,8 +5,10 @@
 
 **Terraform (central services, mostly account `075673041815`):**
 `tf-aws` (org/accounts/IAM/OIDC bootstrap), `tf-github` (repo mgmt, per-repo OIDC),
-`tf-cloudflare` (DNS/Zero Trust/tunnels), `tf-grafana` (dashboards), `tf-backup`
-(B2 + S3 backup infra), `tf-cloudtrail` (audit logging), `tf-cognito` (auth).
+`tf-cloudflare` (DNS/Zero Trust/tunnels), `tf-grafana` (Grafana Cloud stack + service
+accounts), `tf-backup` (B2 + S3 backup infra), `tf-cloudtrail` (audit logging),
+`tf-cognito` (auth), `kids-monitor` (Grafana dashboard-as-code for the kids' network
+activity, fed by `network-monitor`'s Pi-hole polling).
 
 **Python — containerized → GHCR (run on homelab Docker):**
 `scheduler`, `image-refresher`, `internal-dns-sync`, `router-events`, `secrets-sync`.

@@ -33,7 +33,7 @@ project, a Tunnel, or Zero Trust/Access policies.
 Stdio, `pass grafana/mcp-token`. Dashboards, data sources, alerts on
 Grafana Cloud (`mdekort.grafana.net`).
 
-**Repos:** `email-infra`, `network-monitor`, `tf-grafana`
+**Repos:** `email-infra`, `network-monitor`, `tf-grafana`, `kids-monitor`
 
 ```
 claude mcp add -s project grafana -- bash -c 'GRAFANA_URL=https://mdekort.grafana.net GRAFANA_SERVICE_ACCOUNT_TOKEN=$(pass grafana/mcp-token) exec uvx mcp-grafana --disable-oncall --disable-incident --disable-sift --disable-asserts --disable-pyroscope --disable-admin'
