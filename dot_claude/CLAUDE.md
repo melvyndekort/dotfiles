@@ -138,6 +138,7 @@ patterns below do) is fine; showing/catting the value itself is not.
 | `portainer/api-token` | Auth token for the `portainer` MCP server |
 | `mariadb/mcp-user`, `mariadb/mcp-password` | Credentials for the `mysql` MCP server against MariaDB at `compute-1.mdekort.nl:3306` |
 | `github/cli-token` | Orphaned — was used by Kiro's retired `github` MCP server; `gh` CLI auths via the OS keyring instead, not `pass` |
+| `pihole/pihole-1-api-password`, `pihole/pihole-2-api-password` | Pi-hole v6 REST API auth for pihole-1/pihole-2 — used by the `daan-whitelist` skill |
 
 ### Tooling
 
