@@ -1,0 +1,45 @@
+#!/bin/sh
+# Run ConvertX (https://github.com/C4illin/ConvertX) via podman.
+# Always pulls the latest image, replacing the previous one on disk.
+# The container is removed once you press Enter; the image is kept.
+
+set -eu
+
+IMAGE="ghcr.io/c4illin/convertx:latest"
+CONTAINER_NAME="convertx"
+PORT="3000"
+
+# In case a previous run was interrupted before cleanup.
+podman rm -f "$CONTAINER_NAME" >/dev/null 2>&1 || true
+
+OLD_ID=$(podman image inspect "$IMAGE" --format '{{.Id}}' 2>/dev/null || true)
+
+echo "Pulling latest ConvertX image..."
+podman pull "$IMAGE"
+
+NEW_ID=$(podman image inspect "$IMAGE" --format '{{.Id}}')
+
+if [ -n "$OLD_ID" ] && [ "$OLD_ID" != "$NEW_ID" ]; then
+	echo "Removing previous ConvertX image..."
+	podman rmi "$OLD_ID" >/dev/null 2>&1 || true
+fi
+
+echo "Starting ConvertX container..."
+# ALLOW_UNAUTHENTICATED skips the account/login flow entirely; HTTP_ALLOWED is
+# required alongside it so the session cookie isn't marked Secure (we serve
+# plain HTTP on localhost). Safe here because the port is only bound locally
+# and the container is thrown away afterwards -- never expose this to a network.
+podman run -d --rm --name "$CONTAINER_NAME" \
+	-p "127.0.0.1:${PORT}:3000" \
+	-e ALLOW_UNAUTHENTICATED=true \
+	-e HTTP_ALLOWED=true \
+	"$IMAGE" >/dev/null
+
+echo "ConvertX is running at http://localhost:${PORT}"
+printf 'Press Enter when you are done converting...'
+read -r _
+
+echo "Stopping and removing container..."
+podman stop "$CONTAINER_NAME" >/dev/null 2>&1 || true
+
+echo "Done. Container removed, image kept for next run."
