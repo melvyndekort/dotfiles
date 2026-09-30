@@ -1,8 +1,8 @@
 #!/bin/bash
 
 BASEDIR=$PWD
-REPOLIST=$(gh repo list melvyndekort --json name,isArchived -q '.[] | select(.isArchived == false) | .name' | sort)
-ARCHIVED_REPOS=$(gh repo list melvyndekort --json name,isArchived -q '.[] | select(.isArchived == true) | .name' | sort)
+REPOLIST=$(gh repo list melvyndekort --no-archived -L 100 --json name -q '.[].name' | sort)
+ARCHIVED_REPOS=$(gh repo list melvyndekort --archived --json name -q '.[].name' | sort)
 SIZE=$(echo $REPOLIST | wc -w)
 COUNT=1
 
