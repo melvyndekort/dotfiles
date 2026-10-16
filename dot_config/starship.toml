@@ -1,8 +1,5 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-# Clock first on the first line; $all renders every other module in default order
-format = '$time$all'
-
 [aws]
 symbol = " "
 
@@ -311,8 +308,3 @@ symbol = " "
 
 [zig]
 symbol = " "
-
-[time]
-disabled = false
-time_format = "%T"
-format = '[$time]($style) '
