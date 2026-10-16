@@ -18,7 +18,8 @@ Chezmoi-managed dotfiles for all Linux systems. Contains shell config, SSH confi
 - `bin/` — Custom scripts
 - `private_dot_gnupg/` — GPG configuration
 - `private_dot_granted/` — Granted (AWS profile switcher) config
-- `src/` — Source files for chezmoi templates
+- `src/` — Maps to `~/src/` (currently just `melvyndekort/update-repos.sh`)
+- `.chezmoiignore` — Keeps repo docs (`CLAUDE.md`, `SECURITY.md`) from being installed into `$HOME`
 - `.chezmoi.toml.tmpl` — Chezmoi configuration template
 - `.chezmoiexternal.toml` — External file downloads
 
