@@ -57,7 +57,7 @@ fi
 # Change foreground color of the autosuggest plugin
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=7'
 
-plugins=(aliases alias-finder archlinux aws chezmoi command-not-found common-aliases copyfile copypath docker docker-compose extract eza fancy-ctrl-z fzf gh git gpg-agent history httpie jsontools nmap pass safe-paste snap ssh sublime sudo systemd terraform tig tldr ubuntu ufw urltools vscode z zsh-interactive-cd zsh-autosuggestions history-substring-search zsh-syntax-highlighting)
+plugins=(aliases alias-finder {{ if eq .chezmoi.os "linux" }}archlinux {{ end }}aws chezmoi command-not-found common-aliases copyfile copypath docker docker-compose extract eza fancy-ctrl-z fzf gh git gpg-agent history httpie jsontools nmap pass safe-paste {{ if eq .chezmoi.os "linux" }}snap {{ end }}ssh sublime sudo {{ if eq .chezmoi.os "linux" }}systemd {{ end }}terraform tig tldr {{ if eq .chezmoi.os "linux" }}ubuntu ufw {{ end }}urltools vscode z zsh-interactive-cd zsh-autosuggestions history-substring-search zsh-syntax-highlighting)
 
 # Configure eza to alway print hyperlinks
 zstyle ':omz:plugins:eza' 'hyperlink' yes
@@ -108,12 +108,13 @@ bindkey '^f' autosuggest-accept
 bindkey '^j' history-substring-search-down
 bindkey '^k' history-substring-search-up
 
+{{ if eq .chezmoi.os "linux" -}}
 # Startx
 alias s="startx"
-
+{{ end }}
 # Override aliasses from plugins
 alias l='ls -lh'
-alias fd=fdfind
+(( $+commands[fdfind] )) && alias fd=fdfind
 
 # Set docker aliases
 alias d='docker'
@@ -122,7 +123,10 @@ alias di='docker image'
 alias dn='docker network'
 alias ds='docker system'
 alias dv='docker volume'
-
+{{ if eq .chezmoi.os "darwin" -}}
+# No docker CLI on macOS, podman is the container runtime
+alias docker='podman'
+{{ end }}
 # Set tool replacement aliases
 if [ -f "/usr/bin/batcat" ]; then
   alias cat='batcat'
@@ -130,7 +134,7 @@ if [ -f "/usr/bin/batcat" ]; then
   alias -g -- --help='--help 2>&1 | batcat --language=help --style=plain'
   export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
   export MANROFFOPT="-c"
-elif [ -f "/usr/bin/bat" ]; then
+elif command -v bat >/dev/null 2>&1; then
   alias cat='bat'
   alias fzf='fzf --preview "bat --color=always --style=numbers --line-range=:500 {}"'
   alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
@@ -158,22 +162,32 @@ alias n='nvim'
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
+{{ if eq .chezmoi.os "linux" -}}
 alias netstat='echo NETSTAT is unavailable on Arch, please use \"ss -tulpn\"'
 alias lspath='for i in $(echo $PATH | sed "s/:/\ /g"); do find $i -maxdepth 1 -xtype f -executable; done | sort -u'
 alias syncwatch='watch grep -e Dirty: -e Writeback: /proc/meminfo'
+{{ end -}}
 alias cm="chezmoi"
 alias cme="chezmoi edit --apply"
 alias k="kiro-cli"
 alias y="yazi"
 alias rg="rg -S --no-ignore --hidden --glob '!{.git,node_modules,**/.terraform}/**'"
 alias pdf="mupdf"
+{{ if eq .chezmoi.os "linux" -}}
 alias img='sxiv'
+{{ end -}}
 alias t='tmux new-session -A -s main'
+{{ if eq .chezmoi.os "linux" -}}
 alias lsmounts='mount | egrep "^/" | awk '"'"'{print $1" "$3}'"'"' | column -t | sort'
+{{ end -}}
 alias sshkillall='for s in ~/.ssh/control-*(N); do ssh -O exit -S "$s" x; done'
+{{ if eq .chezmoi.os "linux" -}}
 alias mtn='mtn -f /usr/share/fonts/TTF/DejaVuSans.ttf'
+{{ end -}}
 alias awslocal='aws --endpoint-url=http://localhost:4566'
+{{ if eq .chezmoi.os "linux" -}}
 alias ssudo='pass linux/melvyn | sudo -SH'
+{{ end -}}
 alias prettyfollow='batcat --paging=never -l log'
 alias bw-unlock='. $HOME/bin/bw-unlock'
 
@@ -207,6 +221,9 @@ pb-acct() {
   grep -C3 $1 $HOME/.config/aws/config
 }
 {{- end }}
+
+# direnv
+(( $+commands[direnv] )) && eval "$(direnv hook zsh)"
 
 export NVM_DIR="$HOME/.local/share/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"

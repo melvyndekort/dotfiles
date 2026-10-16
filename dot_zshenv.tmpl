@@ -1,0 +1,7 @@
+export ZDOTDIR="$HOME/.config/zsh"
+
+alias assume=". assume"
+
+fpath=({{ .chezmoi.homeDir }}/.granted/zsh_autocomplete/assume/ $fpath)
+
+fpath=({{ .chezmoi.homeDir }}/.granted/zsh_autocomplete/granted/ $fpath)

@@ -7,12 +7,18 @@
 #
 
 # Export some default variables
+{{ if eq .chezmoi.os "darwin" -}}
+export BROWSER='open'
+{{ else -}}
 export BROWSER='firefox'
+{{- end }}
 export EDITOR='nvim'
 export LESS="-XR"
 export PAGER='less'
 export TERMINAL='kitty'
+{{ if eq .chezmoi.os "linux" -}}
 export XIVIEWER='sxiv'
+{{- end }}
 
 # Set XDG variables
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -32,17 +38,28 @@ export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export HISTFILE="$XDG_DATA_HOME/zsh/history"
 export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
+{{ if eq .chezmoi.os "linux" -}}
 export LIBVIRT_DEFAULT_URI="qemu:///system"
+{{- end }}
 export PYLINTHOME="$XDG_CACHE_HOME/pylint"
 export SCREENRC="$XDG_CONFIG_HOME/screen/screenrc"
 export TF_CLI_CONFIG_FILE="$XDG_CONFIG_HOME/terraform/terraform.rc"
 export TMUX_PLUGIN_MANAGER_PATH="$XDG_CONFIG_HOME/tmux/plugins/"
+{{ if eq .chezmoi.os "linux" -}}
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
+{{- end }}
+{{ if eq .chezmoi.os "linux" -}}
 export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+{{- end }}
 
 # Set some defaults
 alias irssi="irssi --config=$XDG_CONFIG_HOME/irssi/config --home=$XDG_DATA_HOME/irssi "
 
+{{ if eq .chezmoi.os "darwin" -}}
+# Homebrew (before our PATH export below, so ~/bin etc. still win)
+[ -x /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+{{ end -}}
 # Set PATH variable
 export ANDROID_PATH="$HOME/Android/Sdk/cmdline-tools/latest/bin"
 export PATH="$HOME/bin:$HOME/Sync/bin:$HOME/.local/bin:$HOME/src/portbase-bin:$ANDROID_PATH:$PATH"
