@@ -18,6 +18,7 @@ brew "fzf"
 
 # Terminal emulator
 cask "kitty"
+cask "ghostty"
 
 # Text editors and file navigation
 brew "neovim"

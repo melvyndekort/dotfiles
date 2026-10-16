@@ -1,0 +1,19 @@
+# Ghostty: mirrors dot_config/kitty/kitty.conf.tmpl (Hack, Dracula, translucent)
+
+font-family = Hack
+font-family = Symbols Nerd Font
+font-size = {{ if eq .chezmoi.os "darwin" }}13{{ else }}10{{ end }}
+theme = Dracula
+background-opacity = 0.9
+background-blur = 20
+{{- if eq .chezmoi.os "linux" }}
+window-decoration = false
+{{- end }}
+{{- if eq .chezmoi.os "darwin" }}
+
+# Treat Option as Alt, like kitty's macos_option_as_alt
+macos-option-as-alt = true
+{{- end }}
+
+# Replaces `kitten ssh`: copy terminfo / set TERM on remote hosts that lack xterm-ghostty
+shell-integration-features = ssh-terminfo,ssh-env
