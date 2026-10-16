@@ -27,3 +27,5 @@ Chezmoi-managed dotfiles for all Linux systems. Contains shell config, SSH confi
 - No Terraform, no Python, no Makefile, no CI/CD pipeline
 - Managed by `chezmoi` — files use chezmoi naming conventions (`dot_`, `private_`, `executable_`)
 - Changes are applied via `chezmoi apply`. See `~/.claude/CLAUDE.md` → Dotfiles for the full workflow rule (edit source, apply, never unscoped `--force`).
+- The `starship` binary is **not** installed by chezmoi: on Linux it comes from the `cli` role in `~/src/melvyndekort/systemsetup` (pinned release + enforced sha256, `--tags starship`); on macOS via brew. This repo only carries `dot_config/starship.toml` and the `$+commands[starship]`-guarded init in `dot_config/zsh/dot_zshrc.tmpl`.
+- chezmoi 2.27.0 is pinned by systemsetup (`roles/workstation/tasks/chezmoi.yml`). It has no `archive-file` external type and silently ignores `checksum` on archive externals (verified with a deliberately wrong hash), so don't rely on externals for verified binary installs until that pin is bumped.

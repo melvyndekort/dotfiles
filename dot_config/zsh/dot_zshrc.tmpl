@@ -16,14 +16,6 @@ bashcompinit
 autoload -U compinit
 compinit
 
-if [ -f "$HOME/.config/oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme" ]; then
-  source $HOME/.config/oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
-elif [ -f "/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme" ]; then
-  source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-else
-  echo "WARNING: powerlevel10k not found!"
-fi
-
 # Path to your oh-my-zsh installation.
 if [ -d "$HOME/.config/oh-my-zsh" ]; then
   ZSH=$HOME/.config/oh-my-zsh/
@@ -33,9 +25,6 @@ else
   echo "ERROR: Oh-My-Zsh not found!"
   exit 1
 fi
-
-# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
-[[ -f ~/.config/zsh/.p10k.zsh ]] && source ~/.config/zsh/.p10k.zsh
 
 # Uncomment the following line to use hyphen-insensitive completion.
 HYPHEN_INSENSITIVE="true"
@@ -83,6 +72,13 @@ zstyle ':completion:*' rehash true
 
 # Load the oh-my-zsh framework
 source $ZSH/oh-my-zsh.sh
+
+# Prompt (config: ~/.config/starship.toml). Must come after oh-my-zsh so nothing overrides it.
+if (( $+commands[starship] )); then
+  eval "$(starship init zsh)"
+else
+  echo "WARNING: starship not found!"
+fi
 
 # Load ZSH command line edit through editor
 autoload edit-command-line
