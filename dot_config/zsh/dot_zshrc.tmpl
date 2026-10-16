@@ -57,7 +57,7 @@ fi
 # Change foreground color of the autosuggest plugin
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=7'
 
-plugins=(aliases alias-finder {{ if eq .chezmoi.os "linux" }}archlinux {{ end }}aws {{ if eq .chezmoi.os "darwin" }}brew {{ end }}chezmoi command-not-found common-aliases copyfile copypath docker docker-compose extract eza fancy-ctrl-z fzf gh git gpg-agent history httpie jsontools nmap pass safe-paste {{ if eq .chezmoi.os "linux" }}snap {{ end }}ssh sublime sudo {{ if eq .chezmoi.os "linux" }}systemd {{ end }}terraform tig tldr {{ if eq .chezmoi.os "linux" }}ubuntu ufw {{ end }}urltools vscode z zsh-interactive-cd you-should-use zsh-autosuggestions history-substring-search zsh-syntax-highlighting)
+plugins=(aliases {{ if eq .chezmoi.os "linux" }}archlinux {{ end }}aws {{ if eq .chezmoi.os "darwin" }}brew {{ end }}chezmoi command-not-found common-aliases copyfile copypath docker docker-compose extract eza fancy-ctrl-z fzf gh git gpg-agent history httpie jsontools nmap pass safe-paste {{ if eq .chezmoi.os "linux" }}snap {{ end }}ssh sublime sudo {{ if eq .chezmoi.os "linux" }}systemd {{ end }}terraform tig tldr {{ if eq .chezmoi.os "linux" }}ubuntu ufw {{ end }}urltools vscode z zsh-interactive-cd you-should-use zsh-autosuggestions history-substring-search zsh-syntax-highlighting)
 
 # Configure eza to alway print hyperlinks
 zstyle ':omz:plugins:eza' 'hyperlink' yes
