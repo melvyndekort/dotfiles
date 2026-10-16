@@ -45,3 +45,11 @@
 
 [includeIf "gitdir:~/src/melvyndekort/"]
   path = ~/.config/git/personal
+{{ with lookPath "gh" -}}
+[credential "https://github.com"]
+	helper = 
+	helper = !{{ . }} auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !{{ . }} auth git-credential
+{{ end -}}
