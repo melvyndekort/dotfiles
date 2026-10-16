@@ -283,6 +283,7 @@ symbol = " "
 
 [status]
 symbol = " "
+disabled = false
 
 [sudo]
 symbol = " "
@@ -307,3 +308,7 @@ symbol = " "
 
 [zig]
 symbol = " "
+
+[time]
+disabled = false
+time_format = "%T"
