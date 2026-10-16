@@ -1,3 +1,47 @@
-# Repo docs live in the source root; they are not dotfiles
+# Repo docs and provisioning files live in the source root; they are not dotfiles
 CLAUDE.md
 SECURITY.md
+Brewfile
+
+{{ if ne .chezmoi.os "linux" -}}
+# Linux desktop stack (X11, window managers, bars, launchers); not applicable elsewhere
+.xprofile
+.x11vncrc
+.config/X11
+.config/autostart
+.config/dunst
+.config/flameshot
+.config/fontconfig
+.config/gsimplecal
+.config/gtk-3.0
+.config/i3
+.config/libglabels
+.config/lockscreen
+.config/mimeapps.list
+.config/openbox
+.config/picom
+.config/polybar
+.config/rofi
+.config/screenlayout
+.config/sxiv
+.config/tint2
+.config/udiskie
+
+# Linux-only scripts in ~/bin
+bin/chvt-sudo
+bin/kb_switch.sh
+bin/list-aur-installed
+bin/lock.sh
+bin/ntfy-dunst.sh
+bin/rofi-*
+bin/screensaver-toggle.sh
+bin/screenshot
+bin/ssd-mount.sh
+bin/suspend-on-battery
+bin/syncps
+bin/vault.sh
+bin/vm-create
+bin/wallpaper-set.sh
+bin/webcam-brightness.sh
+bin/winbox
+{{- end }}

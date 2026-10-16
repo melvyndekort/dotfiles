@@ -1,6 +1,6 @@
-{{- $email := promptString "What is your e-mail address" -}}
-{{- $laptop := promptBool "Is this a laptop (y/n)" -}}
-{{- $work := promptBool "Do you use this device for work (y/n)" -}}
+{{- $email := promptStringOnce . "email" "What is your e-mail address" -}}
+{{- $laptop := promptBoolOnce . "laptop" "Is this a laptop (y/n)" -}}
+{{- $work := promptBoolOnce . "work" "Do you use this device for work (y/n)" -}}
 
 encryption = "gpg"
 
