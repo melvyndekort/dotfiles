@@ -49,6 +49,7 @@ brew "gh"
 brew "git-delta" # git pager, see dot_config/git/config.tmpl
 
 # Python development
+brew "python3"
 brew "uv"
 brew "ruff"
 
