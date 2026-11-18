@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+# Reclaim disk space: caches, old snap revisions, journal, apt, etc.
+# Dry-run by default; pass --yes to actually delete.
+set -uo pipefail
+
+usage() {
+  cat <<EOF
+Usage: ${0##*/} [--yes] [--aggressive] [--avd] [--podman] [--browsers] [--aws]
+
+  (default)    dry-run: show what each step would reclaim
+  --yes        actually perform the cleanup
+  --avd        also offer to delete Android emulators (asks per AVD)
+  --podman     also run 'podman system prune -a' (removes ALL unused images)
+  --browsers   also clear Firefox/Chromium snap caches (profiles untouched)
+  --aws        also clear ~/.cache/aws (SSO/Granted logins need redoing)
+  --aggressive all of the above
+
+Safe steps always included: dev package caches, terraform plugin cache,
+old snap revisions, journal, apt, trash, crash reports, unused flatpaks.
+EOF
+}
+
+DO=0 AVD=0 PODMAN=0 BROWSERS=0 AWS=0
+for a in "$@"; do
+  case $a in
+    --yes) DO=1 ;;
+    --avd) AVD=1 ;;
+    --podman) PODMAN=1 ;;
+    --browsers) BROWSERS=1 ;;
+    --aws) AWS=1 ;;
+    --aggressive) AVD=1 PODMAN=1 BROWSERS=1 AWS=1 ;;
+    -h|--help) usage; exit 0 ;;
+    *) usage; exit 1 ;;
+  esac
+done
+
+have() { command -v "$1" >/dev/null 2>&1; }
+size() { du -sh "$@" 2>/dev/null | awk '{s=$1} END{print s ? s : "0"}'; }
+step() { printf '\n==> %s\n' "$*"; }
+used() { df -h --output=used,pcent / | tail -1; }
+
+# run CMD... only when --yes; otherwise just print it
+run() {
+  if ((DO)); then "$@"; else printf '   [dry-run] %s\n' "$*"; fi
+}
+
+# remove directory contents (not the directory) with size report
+clear_dir() {
+  local d=$1
+  [[ -d $d ]] || return 0
+  printf '   %s: %s\n' "$d" "$(size "$d")"
+  if ((DO)); then find "$d" -mindepth 1 -delete 2>/dev/null || true; fi
+}
+
+# sudo only when actually deleting
+SUDO=""
+if ((DO)) && ((EUID != 0)); then
+  SUDO=sudo
+  sudo -v || { echo "sudo required"; exit 1; }
+fi
+
+before=$(used)
+echo "Disk before: $before"
+((DO)) || echo "DRY RUN - nothing will be deleted (use --yes)"
+
+# ---------------------------------------------------------------- dev caches
+step "Terraform plugin cache"
+clear_dir "$HOME/.cache/terraform-plugin-cache"
+
+step "Language/package caches"
+if have uv; then
+  # uv cache clean blocks forever if another uv (e.g. an MCP server) holds the lock
+  if ((DO)); then
+    timeout 20 uv cache clean || echo "   uv cache busy (another uv process running?) - skipped"
+  else
+    printf '   uv: %s\n' "$(size "$HOME/.cache/uv")"
+  fi
+fi
+have yarn && { printf '   yarn: %s\n' "$(size "$HOME/.cache/yarn")"; run yarn cache clean; }
+have pip && { printf '   pip: %s\n' "$(size "$HOME/.cache/pip")"; run pip cache purge; }
+have npm && { printf '   npm: %s\n' "$(size "$HOME/.npm")"; run npm cache clean --force; }
+clear_dir "$HOME/.cache/pypoetry/cache"
+clear_dir "$HOME/.cache/hugo_cache"
+clear_dir "$HOME/.cache/go-build"
+clear_dir "$HOME/.cache/node-gyp"
+
+# ------------------------------------------------------------------- system
+step "Old snap revisions"
+if have snap; then
+  snap list --all | awk '/disabled/{print $1, $3}' | while read -r name rev; do
+    printf '   %s (rev %s)\n' "$name" "$rev"
+    run $SUDO snap remove "$name" --revision="$rev"
+  done
+fi
+
+step "Journal (keep 200M)"
+journalctl --disk-usage
+run $SUDO journalctl --vacuum-size=200M
+
+step "APT (autoremove + clean)"
+printf '   apt cache: %s\n' "$(size /var/cache/apt)"
+run $SUDO apt-get autoremove --purge -y
+run $SUDO apt-get clean
+
+step "Unused flatpak runtimes"
+have flatpak && run flatpak uninstall --unused -y
+
+step "Trash and crash reports"
+clear_dir "$HOME/.local/share/Trash"
+printf '   /var/crash: %s\n' "$(size /var/crash)"
+run $SUDO find /var/crash -mindepth 1 -delete
+
+# ----------------------------------------------------------------- opt-in
+if ((BROWSERS)); then
+  step "Browser snap caches (profiles untouched)"
+  clear_dir "$HOME/snap/firefox/common/.cache"
+  clear_dir "$HOME/snap/chromium/common/.cache"
+  clear_dir "$HOME/.cache/Google"
+fi
+
+if ((PODMAN)); then
+  step "Podman (removes all unused images)"
+  have podman && { podman images; run podman system prune -a -f; }
+fi
+
+if ((AWS)); then
+  step "AWS CLI cache (re-login needed afterwards)"
+  clear_dir "$HOME/.cache/aws"
+fi
+
+if ((AVD)); then
+  step "Android emulators"
+  avd_dir=$HOME/.config/android/avd
+  for d in "$avd_dir"/*.avd; do
+    [[ -d $d ]] || continue
+    name=$(basename "$d" .avd)
+    printf '   %s: %s\n' "$name" "$(size "$d")"
+    if ((DO)); then
+      read -r -p "   delete $name? [y/N] " ans
+      if [[ $ans == y ]]; then
+        # the .ini name can differ from the .avd dir name; match on its path= entry
+        grep -lx "path=$d" "$avd_dir"/*.ini 2>/dev/null | xargs -r rm -f
+        rm -rf "$d"
+      fi
+    fi
+  done
+fi
+
+echo
+echo "Manual candidates: ~/Android/Sdk (old system-images/build-tools via SDK Manager): $(size "$HOME/Android/Sdk")"
+echo "Disk before: $before"
+echo "Disk after:  $(used)"
