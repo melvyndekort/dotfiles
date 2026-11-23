@@ -8,7 +8,7 @@ Linux and macOS systems administrator.
 
 ## What This Does
 
-Chezmoi-managed dotfiles for all Linux systems and the macOS MacBook. Contains shell config, SSH config, application configs, and custom scripts. **This repo is dual-purpose**: personal-scoped for git/chezmoi hygiene, but its contents include a few work-specific scripts (e.g. `bin/granted-config.sh`, a Portbase AWS-SSO helper) that aren't personal config — don't "fix" or genericize those as if they were.
+Chezmoi-managed dotfiles for all Linux systems and the macOS MacBook. Contains shell config, SSH config, application configs, and custom scripts. **This repo is dual-purpose**: personal-scoped for git/chezmoi hygiene, but its contents include a few work-specific scripts (e.g. `bin/granted-gencfg`, a Portbase AWS-SSO helper) that aren't personal config — don't "fix" or genericize those as if they were.
 
 ## Repository Structure
 
